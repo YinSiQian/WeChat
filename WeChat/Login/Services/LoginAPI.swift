@@ -17,7 +17,7 @@ public enum LoginAPI {
 
 extension LoginAPI: TargetType {
     public var baseURL: URL {
-        return testHostUrl
+        return baseUrl
     }
     
     public var path: String {

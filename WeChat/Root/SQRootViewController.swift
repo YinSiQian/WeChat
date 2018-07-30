@@ -12,6 +12,7 @@ class SQRootViewController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        UIApplication.shared.statusBarStyle = .lightContent
         setupViewcontrollers()
         // Do any additional setup after loading the view.
     }
@@ -19,7 +20,7 @@ class SQRootViewController: UITabBarController {
     fileprivate func setupViewcontrollers() {
         
         let messageVC = SQMessageViewController()
-        messageVC.title = "微信";
+        messageVC.title = "消息";
         let messageNav = SQNavigationViewController(rootViewController: messageVC);
         
         let friendVC = SQFriendsViewController()

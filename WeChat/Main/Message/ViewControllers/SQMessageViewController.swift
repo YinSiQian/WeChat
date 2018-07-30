@@ -18,20 +18,24 @@ class SQMessageViewController: UIViewController {
         tableView?.delegate = self
         tableView?.dataSource = self
         view.addSubview(tableView!)
-        setNavItem()
     }
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        connectServer()
     }
     
-    private func setNavItem() {
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "connection", style: .plain, target: self, action: #selector(SQMessageViewController.connectServer))
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "send", style: .plain, target: self, action: #selector(SQMessageViewController.sendMsg))
-    }
     
-    @objc private func connectServer() {
-        SQWebSocketService.sharedInstance.connectionServer()
+     private func connectServer() {
+        if !SQWebSocketService.sharedInstance.isConnection {
+            SQWebSocketService.sharedInstance.connectionServer(complectionHanlder: {
+                //            [weak self] in
+                
+            }) { [weak self] (error) in
+                
+            }
+        }
+
     }
     
     @objc private func sendMsg() {
@@ -40,9 +44,9 @@ class SQMessageViewController: UIViewController {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         let dateString = formatter.string(from: date)
-        let msg_seq = dateString + "userId" + "2"
+        let msg_seq = dateString + "userId" + UserModel.sharedInstance.id.StringValue
         
-        
+        //发送 消息体结构 status = 6001 表示xx发送  msg 消息唯一码
         let msg: [String: Any] = ["received_id": 3,
                                   "content": "大晚上的好饿啊",
                                   "is_group": 1,

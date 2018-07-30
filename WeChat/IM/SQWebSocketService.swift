@@ -11,14 +11,26 @@ import Starscream
 
 public class SQWebSocketService {
     
+    public typealias connectionSuccessHandler = () -> Void
+    
+    public typealias connectionErrorHandler = (_ error: Error?) -> Void
+    
     static let sharedInstance = SQWebSocketService()
+    
+    public var handler: connectionSuccessHandler!
+    
+    public var errorHandler: connectionErrorHandler!
+    
+    public var isConnection: Bool {
+        return webSocket.isConnected
+    }
     
     private var webSocket: WebSocket!
     
     private init() { setupSocket() }
     
     private func setupSocket() {
-        var request = URLRequest(url: URL(string: "ws://localhost:8080/webSocket")!)
+        var request = URLRequest(url: URL(string: "ws://120.79.10.111:8080/api/webSocket")!)
         request.timeoutInterval = 5
         request.addValue(UserModel.sharedInstance.accessToken, forHTTPHeaderField: "accessToken")
         request.addValue(UserModel.sharedInstance.id.StringValue, forHTTPHeaderField: "userId")
@@ -29,16 +41,23 @@ public class SQWebSocketService {
 
 extension SQWebSocketService {
     
-    public func connectionServer() {
+    public func connectionServer(complectionHanlder: @escaping () -> Void,
+                                 errorHanlder: @escaping (_ error: Error?) -> Void) {
+        handler = complectionHanlder
+        errorHandler = errorHanlder
         webSocket.connect()
     }
     
     public func disconnection() {
-        webSocket.disconnect()
+        if webSocket.isConnected {
+            webSocket.disconnect()
+        }
     }
     
     public func sendMsg(msg: String) {
-        webSocket.write(string: msg)
+        if webSocket.isConnected {
+            webSocket.write(string: msg)
+        }
     }
     
 }
@@ -47,11 +66,13 @@ extension SQWebSocketService: WebSocketDelegate {
     
     public func websocketDidConnect(socket: WebSocketClient) {
         print("connected to server")
+        handler?()
     }
     
     public func websocketDidDisconnect(socket: WebSocketClient, error: Error?) {
         print("it is disconnect")
         print(error as Any)
+        errorHandler?(error)
     }
     
     public func websocketDidReceiveMessage(socket: WebSocketClient, text: String) {

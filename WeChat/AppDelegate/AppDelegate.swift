@@ -24,7 +24,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = SQLoginViewController(nibName: "SQLoginViewController", bundle: Bundle.main)
         window?.makeKeyAndVisible()
         
-//        UIApplication.shared.statusBarStyle = .lightContent
         UINavigationBar.appearance().tintColor = UIColor.white
         UINavigationBar.appearance().barTintColor = UIColor.black
         UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white]

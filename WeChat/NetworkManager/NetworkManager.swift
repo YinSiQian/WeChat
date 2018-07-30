@@ -27,6 +27,7 @@ public class NetworkManager {
                 let response = try result.dematerialize()
                 let value = try response.mapJSON() as! [String: Any]
                 let code = value["code"] as! Int
+                print(value as Any)
                 if code == 200 {
                     let data = value["data"] as! [String: Any]
                     compection(data, nil)
