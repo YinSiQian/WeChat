@@ -13,9 +13,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
+    var currentAppDelegate: AppDelegate {
+        return UIApplication.shared.delegate as! AppDelegate
+    }
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.backgroundColor = UIColor.white
+        window?.rootViewController = SQLoginViewController(nibName: "SQLoginViewController", bundle: Bundle.main)
+        window?.makeKeyAndVisible()
+        
+//        UIApplication.shared.statusBarStyle = .lightContent
+        UINavigationBar.appearance().tintColor = UIColor.white
+        UINavigationBar.appearance().barTintColor = UIColor.black
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
+        
+        if #available(iOS 11, *) {
+            UITableView.appearance().estimatedRowHeight = 0
+            UITableView.appearance().estimatedSectionHeaderHeight = 0
+            UITableView.appearance().estimatedSectionFooterHeight = 0
+            //UITableView.appearance().contentInsetAdjustmentBehavior = .never
+            //UIScrollView.appearance().contentInsetAdjustmentBehavior = .never
+        }
+        
+        
+        
         return true
     }
 
@@ -39,6 +62,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    }
+    
+    public static func currentAppdelegate() -> AppDelegate {
+        return UIApplication.shared.delegate as! AppDelegate
     }
 
 

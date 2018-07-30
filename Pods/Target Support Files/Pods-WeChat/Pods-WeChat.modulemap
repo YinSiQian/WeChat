@@ -1,0 +1,6 @@
+framework module Pods_WeChat {
+  umbrella header "Pods-WeChat-umbrella.h"
+
+  export *
+  module * { export * }
+}

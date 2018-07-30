@@ -1,0 +1,34 @@
+PODS:
+  - Alamofire (4.7.2)
+  - Kingfisher (4.8.1)
+  - Moya (11.0.2):
+    - Moya/Core (= 11.0.2)
+  - Moya/Core (11.0.2):
+    - Alamofire (~> 4.1)
+    - Result (~> 3.0)
+  - Result (3.2.4)
+  - Starscream (3.0.5)
+
+DEPENDENCIES:
+  - Kingfisher (~> 4.8.1)
+  - Moya
+  - Starscream (~> 3.0.2)
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - Alamofire
+    - Kingfisher
+    - Moya
+    - Result
+    - Starscream
+
+SPEC CHECKSUMS:
+  Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
+  Kingfisher: 868c1149679a7ab6869be118faa9b5aed154aaf0
+  Moya: a725035953bc1c0eb1be505ab903984501d82440
+  Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
+  Starscream: faf918b2f2eff7d5dd21180646bf015a669673bd
+
+PODFILE CHECKSUM: 331f09f15974ccba878d3aaccd1d2319ecdf3ae8
+
+COCOAPODS: 1.5.0
