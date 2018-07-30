@@ -33,20 +33,11 @@ extension TimelineAPIs: TargetType {
         }
     }
     
-    public var sampleData: Data {
-        return Data()
-    }
-    
     public var task: Task {
         switch self {
         case .list(let timestamp):
-            return .requestParameters(parameters: ["accessToken": "0AD2A2CC8D7D2C8002FA30F1A7B38432", "timestamp": timestamp], encoding: URLEncoding.default)
+            return .requestParameters(parameters: ["timestamp": timestamp], encoding: URLEncoding.default)
         }
     }
-    
-    public var headers: [String : String]? {
-        return ["accessToken": UserModel.sharedInstance.accessToken]
-    }
-    
     
 }

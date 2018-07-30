@@ -16,6 +16,7 @@
 		8B1238EF210DFE9F0048D25D /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1238EE210DFE9F0048D25D /* UserModel.swift */; };
 		8B1238F1210E0DE10048D25D /* Number+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1238F0210E0DE10048D25D /* Number+Extension.swift */; };
 		8B3C2731210F577C0028953F /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3C2730210F577C0028953F /* UIViewController+Extension.swift */; };
+		8B3C2733210F63460028953F /* Extension+TargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3C2732210F63460028953F /* Extension+TargetType.swift */; };
 		8B5F5B371F700A2D007C07D0 /* SQMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5F5B361F700A2D007C07D0 /* SQMessageViewController.swift */; };
 		8B5F5B391F700A45007C07D0 /* SQFriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5F5B381F700A45007C07D0 /* SQFriendsViewController.swift */; };
 		8B5F5B3B1F700A54007C07D0 /* SQDiscoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5F5B3A1F700A54007C07D0 /* SQDiscoverViewController.swift */; };
@@ -71,6 +72,7 @@
 		8B1238F0210E0DE10048D25D /* Number+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Number+Extension.swift"; sourceTree = "<group>"; };
 		8B25E383BD640089DEF78B89 /* Pods_WeChatUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WeChatUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B3C2730210F577C0028953F /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
+		8B3C2732210F63460028953F /* Extension+TargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+TargetType.swift"; sourceTree = "<group>"; };
 		8B5F5B361F700A2D007C07D0 /* SQMessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQMessageViewController.swift; sourceTree = "<group>"; };
 		8B5F5B381F700A45007C07D0 /* SQFriendsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQFriendsViewController.swift; sourceTree = "<group>"; };
 		8B5F5B3A1F700A54007C07D0 /* SQDiscoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQDiscoverViewController.swift; sourceTree = "<group>"; };
@@ -189,6 +191,7 @@
 				8B8F39DC210CCE4500E53CBC /* Dictionary+Extension.swift */,
 				8B1238F0210E0DE10048D25D /* Number+Extension.swift */,
 				8B3C2730210F577C0028953F /* UIViewController+Extension.swift */,
+				8B3C2732210F63460028953F /* Extension+TargetType.swift */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -712,6 +715,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B3C2731210F577C0028953F /* UIViewController+Extension.swift in Sources */,
+				8B3C2733210F63460028953F /* Extension+TargetType.swift in Sources */,
 				8B8F39DD210CCE4500E53CBC /* Dictionary+Extension.swift in Sources */,
 				8B7417AD1F89187400A5D37E /* SQFriendsMomentsController.swift in Sources */,
 				8B7417B21F891B2B00A5D37E /* Macros.swift in Sources */,

@@ -33,19 +33,11 @@ extension FriendsAPI: TargetType {
         }
     }
     
-    public var sampleData: Data {
-        return Data()
-    }
-    
     public var task: Task {
         switch self {
         case .friendList:
-            return .requestParameters(parameters: ["accessToken": "0AD2A2CC8D7D2C8002FA30F1A7B38432"], encoding: URLEncoding.default)
+            return .requestPlain
         }
-    }
-    
-    public var headers: [String : String]? {
-        return nil
     }
 }
 

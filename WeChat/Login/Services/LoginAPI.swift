@@ -33,10 +33,6 @@ extension LoginAPI: TargetType {
         return .post
     }
     
-    public var sampleData: Data {
-        return Data()
-    }
-    
     public var task: Task {
         switch self {
         case .login(let phone, let password):
@@ -45,10 +41,6 @@ extension LoginAPI: TargetType {
             return .requestParameters(parameters: ["mobile": phone, "password": password], encoding: URLEncoding.default)
         }
     }
-    
-    public var headers: [String : String]? {
-        return nil
-    }
-    
+
     
 }
