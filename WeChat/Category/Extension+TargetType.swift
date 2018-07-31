@@ -11,6 +11,10 @@ import Moya
 
 extension TargetType {
     
+    public var baseURL: URL {
+        return baseUrl
+    }
+    
     public var headers: [String : String]? {
         guard UserModel.sharedInstance.accessToken != "" else {
             return nil

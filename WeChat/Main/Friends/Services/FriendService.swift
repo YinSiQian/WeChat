@@ -15,9 +15,6 @@ public enum FriendsAPI {
 }
 
 extension FriendsAPI: TargetType {
-    public var baseURL: URL {
-        return baseUrl
-    }
     
     public var path: String {
         switch self {
