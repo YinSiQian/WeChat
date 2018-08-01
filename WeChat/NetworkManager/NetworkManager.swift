@@ -11,9 +11,9 @@ import Moya
 
 public class NetworkManager {
     
-    typealias complectionHandler = (_ response: [String: Any], _ error: Error?) ->()
+    typealias complectionHandler = (_ response: [String: Any], _ error: NSError?) ->()
     
-    public static func request<T: TargetType>(targetType: T, compection: @escaping (_ response: [String: Any], _ error: Error?) ->()) -> Void {
+    public static func request<T: TargetType>(targetType: T, compection: @escaping (_ response: [String: Any], _ error: NSError?) ->()) -> Void {
         
         let provide = MoyaProvider<T>(plugins: [NetworkActivityPlugin(networkActivityClosure: { (changeType, targetType) in
             print("changeType--->\(changeType), targetType--->\(targetType)")
@@ -27,16 +27,17 @@ public class NetworkManager {
                 let response = try result.dematerialize()
                 let value = try response.mapJSON() as! [String: Any]
                 let code = value["code"] as! Int
-                print(value as Any)
                 if code == 200 {
                     let data = value["data"] as! [String: Any]
                     compection(data, nil)
                 } else {
-                    compection([:], nil)
+                    let customError = NSError(domain: baseUrl.absoluteString, code: code, userInfo: ["message": value["message"] as Any])
+                    compection([:], customError)
+                    AppDelegate.currentAppdelegate().root.selectedViewController?.showError(error: customError)
                 }
             } catch {
                 print(error.localizedDescription)
-                compection([:], error)
+                compection([:], NSError(domain: baseUrl.absoluteString, code: 500, userInfo: nil))
             }
         }
     }

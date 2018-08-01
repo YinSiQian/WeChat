@@ -17,28 +17,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return UIApplication.shared.delegate as! AppDelegate
     }
     
+    var root: UITabBarController {
+        return currentAppDelegate.window?.rootViewController as! UITabBarController
+    }
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
-        window = UIWindow(frame: UIScreen.main.bounds)
-        window?.backgroundColor = UIColor.white
-        window?.rootViewController = SQLoginViewController(nibName: "SQLoginViewController", bundle: Bundle.main)
-        window?.makeKeyAndVisible()
-        
-        UINavigationBar.appearance().tintColor = UIColor.white
-        UINavigationBar.appearance().barTintColor = UIColor.black
-        UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
+        setupRootVC()
         
         if #available(iOS 11, *) {
             UITableView.appearance().estimatedRowHeight = 0
             UITableView.appearance().estimatedSectionHeaderHeight = 0
             UITableView.appearance().estimatedSectionFooterHeight = 0
-            //UITableView.appearance().contentInsetAdjustmentBehavior = .never
-            //UIScrollView.appearance().contentInsetAdjustmentBehavior = .never
         }
-        
-        
-        
         return true
+    }
+    
+    private func setupRootVC() {
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.backgroundColor = UIColor.white
+        if UserModel.sharedInstance.accessToken == "" {
+            window?.rootViewController = SQLoginViewController()
+        } else {
+            window?.rootViewController = SQRootViewController()
+        }
+        window?.makeKeyAndVisible()
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

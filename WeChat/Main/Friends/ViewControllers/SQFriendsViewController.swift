@@ -9,7 +9,7 @@
 import UIKit
 
 class SQFriendsViewController: UIViewController {
-
+    
     var tableView: UITableView?
     
     var searchVC: UISearchController?
@@ -17,10 +17,7 @@ class SQFriendsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSubviews()
-        
-        NetworkManager.request(targetType: FriendsAPI.friendList) { (result, error) in
-            print(result)
-        }
+        loadData()
     }
     
     fileprivate func setupSubviews() {
@@ -51,6 +48,17 @@ class SQFriendsViewController: UIViewController {
         bar?.setBackgroundImage(#imageLiteral(resourceName: "searbar_bg"), for: .any, barMetrics: .default)
         
         
+    }
+    
+    // MARK: -- load Data
+    
+    private func loadData() {
+        NetworkManager.request(targetType: FriendsAPI.friendList) { [weak self] (result, error) in
+            if !result.isEmpty {
+                
+            }
+            print(result)
+        }
     }
 
     override func didReceiveMemoryWarning() {

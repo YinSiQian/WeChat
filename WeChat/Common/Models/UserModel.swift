@@ -26,7 +26,10 @@ struct UserModel {
     var address: String = ""
     
     private init() {
-        
+        let data = UserDefaults.standard.object(forKey: "userModel") as? [String: Any]
+        if data != nil {
+            initialData(data: data!)
+        }
     }
     
 }
@@ -34,6 +37,9 @@ struct UserModel {
 extension UserModel {
     
     public mutating func initialData(data: [String: Any]) {
+        
+        UserDefaults.standard.set(data, forKey: "userModel");
+        
         self.username = data["username"] as! String
         self.password = data["password"] as! String
         self.accessToken = data["accessToken"] as! String

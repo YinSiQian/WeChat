@@ -19,14 +19,14 @@ extension FriendsAPI: TargetType {
     public var path: String {
         switch self {
         case .friendList:
-            return "/user/userList"
+            return "/friend/list"
         }
     }
     
     public var method: Moya.Method {
         switch self {
         case .friendList:
-            return .post
+            return .get
         }
     }
     
@@ -36,9 +36,9 @@ extension FriendsAPI: TargetType {
             return .requestPlain
         }
     }
+    
+    public var headers: [String : String]? {
+        return nil
+    }
 }
-
-let friendProvider = MoyaProvider<FriendsAPI>(plugins: [NetworkActivityPlugin(networkActivityClosure: { (changeTyoe, targetType) in
-    print("changeType--->\(changeTyoe), targetType--->\(targetType)")
-})])
 

@@ -12,7 +12,9 @@ class SQNavigationViewController: UINavigationController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-      
+        UINavigationBar.appearance().tintColor = UIColor.white
+        UINavigationBar.appearance().barTintColor = UIColor.black
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
         // Do any additional setup after loading the view.
     }
 

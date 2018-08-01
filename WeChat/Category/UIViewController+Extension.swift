@@ -9,8 +9,26 @@
 import Foundation
 import UIKit
 
-extension UIViewController {
+protocol NetworkErrorHandler {
     
-    
-    
+    func showError(error: NSError?)
 }
+
+extension NetworkErrorHandler where Self: UIViewController {
+    
+    func showError(error: NSError? = NSError()) {
+        guard error != nil else {
+            return
+        }
+        let code = error!.code
+        let msg = error!.userInfo["message"] as! String
+        print("msg--->\(msg)   code---->\(code)")
+        
+    }
+}
+
+extension UIViewController: NetworkErrorHandler {
+
+}
+
+
