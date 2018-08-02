@@ -106,10 +106,7 @@ extension SQFriendsViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        guard section != 0 else {
-            return 0
-        }
-        return 20
+        return section == 0 ? 0 : 20
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -123,7 +120,7 @@ extension SQFriendsViewController: UITableViewDataSource, UITableViewDelegate {
     
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 44
+        return indexPath.section == 0 ? 44: 40
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -146,7 +143,6 @@ extension SQFriendsViewController: UITableViewDataSource, UITableViewDelegate {
             cell.setData(name: user.username, url: user.icon)
             return cell
         }
-        
     }
     
    

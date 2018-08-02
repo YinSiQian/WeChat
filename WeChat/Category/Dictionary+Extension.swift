@@ -16,6 +16,6 @@ extension Dictionary {
             let json = String(data: data, encoding: .utf8)
             return json!
         }
-        return nil
+        return ""
     }
 }
