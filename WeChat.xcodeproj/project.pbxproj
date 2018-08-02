@@ -11,6 +11,7 @@
 		0A6563902112EA2C00B3DB24 /* Mappable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A65638F2112EA2C00B3DB24 /* Mappable.swift */; };
 		0A6563992112FAA100B3DB24 /* FriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6563972112FAA100B3DB24 /* FriendCell.swift */; };
 		0A65639A2112FAA100B3DB24 /* FriendCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A6563982112FAA100B3DB24 /* FriendCell.xib */; };
+		0A65639D21130A4900B3DB24 /* MomentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A65639C21130A4900B3DB24 /* MomentModel.swift */; };
 		0D67BB0BCADAC71027EF78F5 /* Pods_WeChatTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B0542E27FB541926BA8969A /* Pods_WeChatTests.framework */; };
 		24EE167E4AA16A2BD4F30D3A /* Pods_WeChatUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B25E383BD640089DEF78B89 /* Pods_WeChatUITests.framework */; };
 		51D0CE0A38F05908826F95B9 /* Pods_WeChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4519258E74664E5BDD03B12C /* Pods_WeChat.framework */; };
@@ -68,6 +69,7 @@
 		0A65638F2112EA2C00B3DB24 /* Mappable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mappable.swift; sourceTree = "<group>"; };
 		0A6563972112FAA100B3DB24 /* FriendCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendCell.swift; sourceTree = "<group>"; };
 		0A6563982112FAA100B3DB24 /* FriendCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FriendCell.xib; sourceTree = "<group>"; };
+		0A65639C21130A4900B3DB24 /* MomentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentModel.swift; sourceTree = "<group>"; };
 		314EE026DBE1BC6C19D1E965 /* Pods-WeChatTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeChatTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-WeChatTests/Pods-WeChatTests.release.xcconfig"; sourceTree = "<group>"; };
 		4519258E74664E5BDD03B12C /* Pods_WeChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WeChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		50D505C4DC05ED1E5F736CED /* Pods-WeChatUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeChatUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WeChatUITests/Pods-WeChatUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -167,6 +169,14 @@
 				0A6563982112FAA100B3DB24 /* FriendCell.xib */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		0A65639B21130A0B00B3DB24 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				0A65639C21130A4900B3DB24 /* MomentModel.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		54B7CC7E600BBE1C92EAA074 /* Pods */ = {
@@ -313,18 +323,11 @@
 			isa = PBXGroup;
 			children = (
 				8BF4F90F20E28EFD00A6E693 /* Services */,
-				8BDCD90F1F65884900C53260 /* Models */,
+				0A65639B21130A0B00B3DB24 /* Models */,
 				8BDCD9101F65884900C53260 /* ViewControllers */,
 				8BDCD9111F65884900C53260 /* Views */,
 			);
 			path = Discover;
-			sourceTree = "<group>";
-		};
-		8BDCD90F1F65884900C53260 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		8BDCD9101F65884900C53260 /* ViewControllers */ = {
@@ -724,6 +727,7 @@
 				8B5F5B371F700A2D007C07D0 /* SQMessageViewController.swift in Sources */,
 				8B1238E6210DEBE90048D25D /* SQLoginViewController.swift in Sources */,
 				8B5F5B3D1F700A5E007C07D0 /* SQMineViewController.swift in Sources */,
+				0A65639D21130A4900B3DB24 /* MomentModel.swift in Sources */,
 				8BBBA65E1F7A9014008E18A5 /* SQMineUserInfoCell.swift in Sources */,
 				8B1238F1210E0DE10048D25D /* Number+Extension.swift in Sources */,
 				8B5F5B3B1F700A54007C07D0 /* SQDiscoverViewController.swift in Sources */,
