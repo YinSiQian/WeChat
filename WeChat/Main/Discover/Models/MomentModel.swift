@@ -18,20 +18,29 @@ struct MomentModel: Mappable {
     let uid: Int
     let urls: String
     let userIcon: String
+    //发布人
     let userId: Int
     let comments: [Comment]
     let loves: [Love]
-    
-    struct Comment: Mappable {
-        let id: Int
-        let momentId: Int
-    }
     
     struct Love: Mappable {
         let id: Int
         let momentId: Int
         let uid: Int
         let username: String
+    }
+    
+    struct Comment: Mappable {
+        let id: Int
+        let momentId: Int
+        let receivedId: Int
+        let replyId: Int
+        let username: String
+        let content: String
+        let createTime: String
+        let updateTime: String
+        let replyName: String
+        let receivedName: String
     }
 
 }

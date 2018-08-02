@@ -38,6 +38,7 @@
 		8BBBA65B1F79FCFA008E18A5 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBBA65A1F79FCFA008E18A5 /* UIColor+Extension.swift */; };
 		8BBBA65E1F7A9014008E18A5 /* SQMineUserInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBBA65C1F7A9014008E18A5 /* SQMineUserInfoCell.swift */; };
 		8BBBA65F1F7A9014008E18A5 /* SQMineUserInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BBBA65D1F7A9014008E18A5 /* SQMineUserInfoCell.xib */; };
+		8BC09DAF2113501400DC463D /* FriendMomentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC09DAE2113501400DC463D /* FriendMomentCell.swift */; };
 		8BDCD8DE1F65848300C53260 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BDCD8DD1F65848300C53260 /* AppDelegate.swift */; };
 		8BDCD8E51F65848300C53260 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8BDCD8E41F65848300C53260 /* Assets.xcassets */; };
 		8BDCD8F31F65848300C53260 /* WeChatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BDCD8F21F65848300C53260 /* WeChatTests.swift */; };
@@ -100,6 +101,7 @@
 		8BBBA65A1F79FCFA008E18A5 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		8BBBA65C1F7A9014008E18A5 /* SQMineUserInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQMineUserInfoCell.swift; sourceTree = "<group>"; };
 		8BBBA65D1F7A9014008E18A5 /* SQMineUserInfoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SQMineUserInfoCell.xib; sourceTree = "<group>"; };
+		8BC09DAE2113501400DC463D /* FriendMomentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendMomentCell.swift; sourceTree = "<group>"; };
 		8BDCD8DA1F65848300C53260 /* WeChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BDCD8DD1F65848300C53260 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; tabWidth = 5; };
 		8BDCD8E41F65848300C53260 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -342,6 +344,7 @@
 		8BDCD9111F65884900C53260 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				8BC09DAE2113501400DC463D /* FriendMomentCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -731,6 +734,7 @@
 				8BBBA65E1F7A9014008E18A5 /* SQMineUserInfoCell.swift in Sources */,
 				8B1238F1210E0DE10048D25D /* Number+Extension.swift in Sources */,
 				8B5F5B3B1F700A54007C07D0 /* SQDiscoverViewController.swift in Sources */,
+				8BC09DAF2113501400DC463D /* FriendMomentCell.swift in Sources */,
 				8B1238EF210DFE9F0048D25D /* UserModel.swift in Sources */,
 				8B7417B41F89249D00A5D37E /* SQMessageCell.swift in Sources */,
 				8BF4F91120E28F1C00A6E693 /* TimelineService.swift in Sources */,

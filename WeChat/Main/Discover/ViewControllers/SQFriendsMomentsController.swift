@@ -10,15 +10,15 @@ import UIKit
 
 class SQFriendsMomentsController: UITableViewController {
 
+    private var momentArr: [MomentModel] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "朋友圈"
   
         tableView.tableFooterView = UIView()
         
-        NetworkManager.request(targetType: TimelineAPIs.list(timestamp: "2018-06-21 16:13:33")) { (result, error) in
-            print(result)
-        }
+        loadData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -26,9 +26,15 @@ class SQFriendsMomentsController: UITableViewController {
         loadNavbarTheme(theme: .white)
     }
     
-    
-    @objc func miss() {
-        dismiss(animated: true, completion: nil)
+    private func loadData() {
+        NetworkManager.request(targetType: TimelineAPIs.list(timestamp: "2018-06-21 16:13:33")) {
+            [weak self] (result, error) in
+            if !result.isEmpty {
+                let arr = result["list"] as! [[String: Any]]
+                self?.momentArr = try! MomentModel.mapToArr(data: arr, type: Array<MomentModel>.self)
+                print(self?.momentArr as Any)
+            }
+        }
     }
     
     override func didReceiveMemoryWarning() {
