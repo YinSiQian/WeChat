@@ -36,9 +36,5 @@ extension FriendsAPI: TargetType {
             return .requestPlain
         }
     }
-    
-    public var headers: [String : String]? {
-        return nil
-    }
 }
 

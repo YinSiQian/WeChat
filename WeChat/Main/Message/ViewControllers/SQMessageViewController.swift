@@ -54,7 +54,7 @@ class SQMessageViewController: UIViewController {
                                   "msg_seq": msg_seq.md5,
                                   "msg_type": 1,
                                   "status": 6001]
-        SQWebSocketService.sharedInstance.sendMsg(msg: msg.convertToString())
+        SQWebSocketService.sharedInstance.sendMsg(msg: msg.convertToString()!)
     }
 
     override func didReceiveMemoryWarning() {

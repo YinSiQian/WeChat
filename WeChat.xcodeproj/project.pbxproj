@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A65638C2112E4FC00B3DB24 /* FriendModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A65638B2112E4FC00B3DB24 /* FriendModel.swift */; };
+		0A6563902112EA2C00B3DB24 /* Mappable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A65638F2112EA2C00B3DB24 /* Mappable.swift */; };
+		0A6563992112FAA100B3DB24 /* FriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6563972112FAA100B3DB24 /* FriendCell.swift */; };
+		0A65639A2112FAA100B3DB24 /* FriendCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A6563982112FAA100B3DB24 /* FriendCell.xib */; };
 		0D67BB0BCADAC71027EF78F5 /* Pods_WeChatTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B0542E27FB541926BA8969A /* Pods_WeChatTests.framework */; };
 		24EE167E4AA16A2BD4F30D3A /* Pods_WeChatUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B25E383BD640089DEF78B89 /* Pods_WeChatUITests.framework */; };
 		51D0CE0A38F05908826F95B9 /* Pods_WeChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4519258E74664E5BDD03B12C /* Pods_WeChat.framework */; };
@@ -60,6 +64,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0A65638B2112E4FC00B3DB24 /* FriendModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendModel.swift; sourceTree = "<group>"; };
+		0A65638F2112EA2C00B3DB24 /* Mappable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mappable.swift; sourceTree = "<group>"; };
+		0A6563972112FAA100B3DB24 /* FriendCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendCell.swift; sourceTree = "<group>"; };
+		0A6563982112FAA100B3DB24 /* FriendCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FriendCell.xib; sourceTree = "<group>"; };
 		314EE026DBE1BC6C19D1E965 /* Pods-WeChatTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeChatTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-WeChatTests/Pods-WeChatTests.release.xcconfig"; sourceTree = "<group>"; };
 		4519258E74664E5BDD03B12C /* Pods_WeChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WeChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		50D505C4DC05ED1E5F736CED /* Pods-WeChatUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeChatUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WeChatUITests/Pods-WeChatUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -136,6 +144,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0A65638A2112E4EB00B3DB24 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				0A65638B2112E4FC00B3DB24 /* FriendModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		0A65638E2112EA0300B3DB24 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				0A65638F2112EA2C00B3DB24 /* Mappable.swift */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
+		0A6563912112FA4E00B3DB24 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0A6563972112FAA100B3DB24 /* FriendCell.swift */,
+				0A6563982112FAA100B3DB24 /* FriendCell.xib */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		54B7CC7E600BBE1C92EAA074 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -239,8 +272,7 @@
 				8BDCD91F1F65884900C53260 /* NavigationController */,
 				8BDCD91E1F65884900C53260 /* NetworkManager */,
 				8BDCD9221F65887200C53260 /* Common */,
-				8BDCD90C1F65884900C53260 /* Util */,
-				8BDCD9201F65884900C53260 /* Vendor */,
+				0A65638E2112EA0300B3DB24 /* Util */,
 				8BDCD9211F65887200C53260 /* AppDelegate */,
 				8BDCD8E41F65848300C53260 /* Assets.xcassets */,
 				8BDCD8E91F65848300C53260 /* Info.plist */,
@@ -264,13 +296,6 @@
 				8BDCD8FF1F65848300C53260 /* Info.plist */,
 			);
 			path = WeChatUITests;
-			sourceTree = "<group>";
-		};
-		8BDCD90C1F65884900C53260 /* Util */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Util;
 			sourceTree = "<group>";
 		};
 		8BDCD90D1F65884900C53260 /* Main */ = {
@@ -322,18 +347,11 @@
 			isa = PBXGroup;
 			children = (
 				8BE1CD3320936AFF007E017D /* Services */,
-				8BDCD9131F65884900C53260 /* Models */,
+				0A65638A2112E4EB00B3DB24 /* Models */,
+				0A6563912112FA4E00B3DB24 /* Views */,
 				8BDCD9141F65884900C53260 /* ViewControllers */,
-				8BDCD9151F65884900C53260 /* Views */,
 			);
 			path = Friends;
-			sourceTree = "<group>";
-		};
-		8BDCD9131F65884900C53260 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		8BDCD9141F65884900C53260 /* ViewControllers */ = {
@@ -343,13 +361,6 @@
 				8B7417AF1F891AFD00A5D37E /* SQSearchResultViewController.swift */,
 			);
 			path = ViewControllers;
-			sourceTree = "<group>";
-		};
-		8BDCD9151F65884900C53260 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Views;
 			sourceTree = "<group>";
 		};
 		8BDCD9161F65884900C53260 /* Message */ = {
@@ -433,13 +444,6 @@
 				8B5F5B3E1F700A8C007C07D0 /* SQNavigationViewController.swift */,
 			);
 			path = NavigationController;
-			sourceTree = "<group>";
-		};
-		8BDCD9201F65884900C53260 /* Vendor */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Vendor;
 			sourceTree = "<group>";
 		};
 		8BDCD9211F65887200C53260 /* AppDelegate */ = {
@@ -599,6 +603,7 @@
 				8BDCD8E51F65848300C53260 /* Assets.xcassets in Resources */,
 				8B1238E7210DEBE90048D25D /* SQLoginViewController.xib in Resources */,
 				8BBBA65F1F7A9014008E18A5 /* SQMineUserInfoCell.xib in Resources */,
+				0A65639A2112FAA100B3DB24 /* FriendCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -713,6 +718,9 @@
 				8B7417B21F891B2B00A5D37E /* Macros.swift in Sources */,
 				8B5F5B3F1F700A8C007C07D0 /* SQNavigationViewController.swift in Sources */,
 				8B8F39D8210CC10600E53CBC /* SQWebSocketService.swift in Sources */,
+				0A6563992112FAA100B3DB24 /* FriendCell.swift in Sources */,
+				0A6563902112EA2C00B3DB24 /* Mappable.swift in Sources */,
+				0A65638C2112E4FC00B3DB24 /* FriendModel.swift in Sources */,
 				8B5F5B371F700A2D007C07D0 /* SQMessageViewController.swift in Sources */,
 				8B1238E6210DEBE90048D25D /* SQLoginViewController.swift in Sources */,
 				8B5F5B3D1F700A5E007C07D0 /* SQMineViewController.swift in Sources */,

@@ -14,6 +14,8 @@ class SQFriendsViewController: UIViewController {
     
     var searchVC: UISearchController?
     
+    var modelArr: [FriendModels] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSubviews()
@@ -26,12 +28,12 @@ class SQFriendsViewController: UIViewController {
         tableView?.dataSource = self
         tableView?.tableFooterView = UIView()
         view.addSubview(tableView!)
+        tableView?.register(UINib(nibName: "FriendCell", bundle: Bundle.main), forCellReuseIdentifier: "FriendCell")
     
         let searchResultVC = SQSearchResultViewController()
         searchResultVC.view.backgroundColor = UIColor.red
         searchVC = UISearchController(searchResultsController: searchResultVC)
         searchVC?.searchResultsUpdater = (searchResultVC as UISearchResultsUpdating)
-//        searchVC?.dimsBackgroundDuringPresentation = false
         searchVC?.hidesNavigationBarDuringPresentation = true
         searchVC?.delegate = self
         tableView?.tableHeaderView = searchVC?.searchBar
@@ -55,7 +57,9 @@ class SQFriendsViewController: UIViewController {
     private func loadData() {
         NetworkManager.request(targetType: FriendsAPI.friendList) { [weak self] (result, error) in
             if !result.isEmpty {
-                
+                let arr = result["data"] as! [[String: Any]]
+                self?.modelArr = try! FriendModels.mapToArr(data: arr, type: Array<FriendModels>.self)
+                self?.tableView?.reloadData()
             }
             print(result)
         }
@@ -91,44 +95,58 @@ extension SQFriendsViewController: UITableViewDataSource, UITableViewDelegate {
 //    }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-//        if tableView == indexTableView {
-//            return 1
-//        }
-        return 1
+        return modelArr.count + 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        if tableView == indexTableView {
-//            return 22
-//        }
+        guard section == 0 else {
+            return modelArr[section - 1].users.count
+        }
         return 4
     }
     
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        guard section != 0 else {
+            return 0
+        }
+        return 20
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let title = UILabel(frame: CGRect(x: 0, y: 0, width: kScreen_width, height: 20))
+        title.backgroundColor = #colorLiteral(red: 0.93985601, green: 1, blue: 0.9281028662, alpha: 0.956442637)
+        title.text = "    " + modelArr[section - 1].firstLetter
+        title.font = UIFont.systemFont(ofSize: 14)
+        title.textColor = #colorLiteral(red: 0.1411764771, green: 0.3960784376, blue: 0.5647059083, alpha: 1)
+        return title
+    }
+    
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        if tableView == indexTableView {
-//            return 20
-//        }
         return 44
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        
-        var cell = tableView.dequeueReusableCell(withIdentifier: "cell")
-        if cell == nil {
-            cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
-            
-        }
+   
         if indexPath.section == 0 {
+            var cell = tableView.dequeueReusableCell(withIdentifier: "cell")
+            if cell == nil {
+                cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
+                
+            }
             let names = ["新的朋友", "群聊", "标签", "公众号"]
             let images = [#imageLiteral(resourceName: "contact_newFriend"), #imageLiteral(resourceName: "contact_addFriend"), #imageLiteral(resourceName: "contact_tag"), #imageLiteral(resourceName: "contact_public")]
             cell?.textLabel?.text = names[indexPath.row]
             cell?.imageView?.image = images[indexPath.row]
+            return cell!
+
         } else {
-            
+            let cell = tableView.dequeueReusableCell(withIdentifier: "FriendCell", for: indexPath) as! FriendCell
+            let user = modelArr[indexPath.section - 1].users[indexPath.row]
+            cell.setData(name: user.username, url: user.icon)
+            return cell
         }
         
-        return cell!
     }
     
    

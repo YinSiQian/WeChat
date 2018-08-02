@@ -93,7 +93,7 @@ extension SQWebSocketService: WebSocketDelegate {
             print("server send msg to consumers: \(text)")
             let msg_seq = dict["msg_seq"] as! String
             let msg: [String: Any] = ["status": 6003, "msg_seq": msg_seq]
-            webSocket.write(string: msg.convertToString())
+            webSocket.write(string: msg.convertToString()!)
         default:
             print("default")
         }

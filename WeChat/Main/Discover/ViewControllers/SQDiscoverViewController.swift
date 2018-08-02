@@ -28,9 +28,7 @@ class SQDiscoverViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.navigationBar.barTintColor = UIColor.black;
-        navigationController?.navigationBar.tintColor = UIColor.white;
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
+        loadNavbarTheme()
     }
     
     override func didReceiveMemoryWarning() {
