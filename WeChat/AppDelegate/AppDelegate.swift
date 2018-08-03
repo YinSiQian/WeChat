@@ -24,6 +24,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         setupRootVC()
         
+        let json = "[{\"baseUrl\":\"http://pbcamiyri.bkt.clouddn.com\",\"height\":\"300\",\"path\":\"Fs0owSg-kjKQ7IHo-oZ__y0xpkZ7\",\"type\":\"jpg\",\"width\":\"486\"},{\"baseUrl\":\"http://pbcamiyri.bkt.clouddn.com\",\"height\":\"300\",\"path\":\"FtlPInwxHOTwQFEcCus-Cr9TYChn\",\"type\":\"jpg\",\"width\":\"533\"},{\"baseUrl\":\"http://pbcamiyri.bkt.clouddn.com\",\"height\":\"500\",\"path\":\"Fi-5WrnZk8vB9oFL5BapaW9Ytndo\",\"type\":\"jpg\",\"width\":\"500\"}]"
+        
+        let data = json.data(using: .utf8)
+        let result = try! JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as! [String: Any]
+        print(result as Any)
+        
         if #available(iOS 11, *) {
             UITableView.appearance().estimatedRowHeight = 0
             UITableView.appearance().estimatedSectionHeaderHeight = 0

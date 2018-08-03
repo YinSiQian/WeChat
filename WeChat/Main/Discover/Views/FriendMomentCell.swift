@@ -29,6 +29,7 @@ class FriendMomentPicView: UIView {
             
             let imageView = UIImageView()
             imageView.isUserInteractionEnabled = true
+            imageView.clipsToBounds = true
             imageView.isHidden = true
             imageView.isExclusiveTouch = true
             imageView.backgroundColor = UIColor(hex6: 0xf0f0f0)
@@ -162,7 +163,7 @@ class FriendMomentCell: UITableViewCell {
                 }
                 imageView.frame = rect
                 imageView.kf.setImage(with: self.layout.pics[index].url(), placeholder: nil, options: nil, progressBlock: nil) { (image, error, cacheType, url) in
-                    let scale = (imageView.width / imageView.height) / ((image?.size.width)! / (image?.size.height)!)
+                    let scale = (image?.size.height)! / (image?.size.width)!
                     if scale < 0.99 || scale.isNaN { // 宽图把左右两边裁掉
                         imageView.contentMode = .scaleAspectFit;
                         imageView.layer.contentsRect = CGRect(x: 0, y: 0, width: 1, height: 1)

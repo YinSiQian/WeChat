@@ -83,7 +83,11 @@ struct TimelineLayoutService {
                 default:
                     break
             }
-            self.picsHeight = kPicWidth * floor + kPicsPadding * (floor - 1)
+            if pics.count == 1 {
+                self.picsHeight = 2.0 * kPicWidth
+            } else {
+                self.picsHeight = kPicWidth * floor + kPicsPadding * (floor - 1)
+            }
             self.height += self.picsHeight + kLocationAndPicsPadding
         } else {
             self.picsHeight = 0
