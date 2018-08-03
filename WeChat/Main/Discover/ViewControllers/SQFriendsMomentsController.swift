@@ -9,15 +9,13 @@
 import UIKit
 
 class SQFriendsMomentsController: UITableViewController {
-
-    private var momentArr: [MomentModel] = []
+    
+    private var layouts: [TimelineLayoutService] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "朋友圈"
-  
         tableView.tableFooterView = UIView()
-        
         loadData()
     }
     
@@ -26,47 +24,53 @@ class SQFriendsMomentsController: UITableViewController {
         loadNavbarTheme(theme: .white)
     }
     
+    
+    
     private func loadData() {
         NetworkManager.request(targetType: TimelineAPIs.list(timestamp: "2018-06-21 16:13:33")) {
             [weak self] (result, error) in
             if !result.isEmpty {
                 let arr = result["list"] as! [[String: Any]]
-                self?.momentArr = try! MomentModel.mapToArr(data: arr, type: Array<MomentModel>.self)
-                print(self?.momentArr as Any)
+                let data = try! MomentModel.mapToArr(data: arr, type: Array<MomentModel>.self)
+                print(data as Any)
+                self?.handlerDataAsnyc(data: data)
             }
         }
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    private func handlerDataAsnyc(data: Array<MomentModel>) {
+        
+        DispatchQueue.global().async {
+            for element in data {
+                let layout = TimelineLayoutService(timelineModel: element)
+                self.layouts.append(layout)
+            }
+            
+            DispatchQueue.main.async(execute: {
+                self.tableView.reloadData()
+            })
+        }
+        
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 10
+        return layouts.count
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        return layouts[indexPath.row].height
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier")
-        if cell == nil {
-            cell = UITableViewCell(style: .default, reuseIdentifier: "reuseIdentifier")
-        }
-        // Configure the cell...
-
-        cell?.textLabel?.text = "index-->\(indexPath.row)"
-        return cell!
+        let cell = FriendMomentCell.cell(with: tableView)
+        cell.layout = layouts[indexPath.row]
+        return cell
     }
     
 }

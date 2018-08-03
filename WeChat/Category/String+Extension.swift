@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 extension String {
     
@@ -39,6 +40,11 @@ extension String {
         let data = self.data(using: .utf8)
         let json = try! JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.allowFragments) as? [String: Any]
         return json ?? [:]
+    }
+    
+    public func calculate(font: UIFont, size: CGSize) -> CGSize {
+        let size = (self as NSString).boundingRect(with: size, options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: [NSAttributedStringKey.font: font], context: nil).size
+        return size
     }
     
 }
