@@ -32,7 +32,6 @@ class SQFriendsMomentsController: UITableViewController {
             if !result.isEmpty {
                 let arr = result["list"] as! [[String: Any]]
                 let data = try! MomentModel.mapToArr(data: arr, type: Array<MomentModel>.self)
-                print(data as Any)
                 self?.handlerDataAsnyc(data: data)
             }
         }

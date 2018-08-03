@@ -27,7 +27,7 @@ let moreBtnPaddingBottomMargin: CGFloat = 15  //评论点赞按钮离底边距�
 
 let kPicsPadding: CGFloat = 5 //多张图片内边距
 let kMaxPicsCount: CGFloat = 3
-let kPicWidth: CGFloat = (kScreen_width - kPicsPaddingLeft - (kMaxPicsCount - 1.0) * kPicsPadding) / kMaxPicsCount
+let kPicWidth: CGFloat = (kScreen_width - kPicsPaddingLeft - (kMaxPicsCount - 1.0) * kPicsPadding - kTimelineCellRightMargin) / kMaxPicsCount
 
 //MARK: 字体
 let kNameFont = UIFont.systemFont(ofSize: 14)
@@ -51,12 +51,15 @@ struct TimelineLayoutService {
     
     var commentsHeight: CGFloat = 0;
     
+    var pics: [String] = []
+    
     public init(timelineModel: MomentModel, height: CGFloat = 0,
                 contentHeight: CGFloat = 0, picsHeight: CGFloat = 0,
                 locationHeight: CGFloat = 0, lovesHeight: CGFloat = 0,
                 commentsHeight: CGFloat = 0) {
         self.timelineModel = timelineModel
         layout()
+        
     }
     
     private mutating func layout() {
@@ -65,10 +68,12 @@ struct TimelineLayoutService {
         self.height = kTimelineCellTopMargin + kNameHeight
                       + kNameAndContentPadding + contentHeight + kContentAndPicsPadding;
         
-        let pic = self.timelineModel.urls.split(whereSeparator: { $0 == "," })
-        if !pic.isEmpty {
+        if !self.timelineModel.urls.isEmpty {
+            pics = self.timelineModel.urls.components(separatedBy: ",")
+        }
+        if !pics.isEmpty {
             var floor: CGFloat = 0
-            switch pic.count {
+            switch pics.count {
                 case 1, 2, 3:
                     floor = 1
                 case 4, 5, 6:
@@ -78,14 +83,14 @@ struct TimelineLayoutService {
                 default:
                     break
             }
-            self.picsHeight = picsHeight * floor
+            self.picsHeight = kPicWidth * floor + kPicsPadding * (floor - 1)
             self.height += self.picsHeight + kLocationAndPicsPadding
         } else {
             self.picsHeight = 0
         }
         
         //定位
-        if !self.timelineModel.location.isEmpty {
+        if !self.timelineModel.location.isCurrentEmpty {
             self.locationHeight = kTimeHeight
             self.height += kTimeHeight + kTimeAndLocationPadding
         } else {

@@ -28,6 +28,13 @@ extension String {
         return String(format: hash as String)
     }
     
+    var isCurrentEmpty: Bool {
+        if self == "" {
+            return true
+        }
+        return self.isEmpty
+    }
+    
     public func url() -> URL? {
         
         if let url = URL(string: self) {
