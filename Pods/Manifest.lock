@@ -1,6 +1,8 @@
 PODS:
   - Alamofire (4.7.2)
+  - ImagePicker (3.0.0)
   - Kingfisher (4.8.1)
+  - MBProgressHUD (1.1.0)
   - Moya (11.0.2):
     - Moya/Core (= 11.0.2)
   - Moya/Core (11.0.2):
@@ -10,25 +12,31 @@ PODS:
   - Starscream (3.0.5)
 
 DEPENDENCIES:
+  - ImagePicker (~> 3.0.0)
   - Kingfisher (~> 4.8.1)
+  - MBProgressHUD (~> 1.1.0)
   - Moya
   - Starscream (~> 3.0.2)
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - Alamofire
+    - ImagePicker
     - Kingfisher
+    - MBProgressHUD
     - Moya
     - Result
     - Starscream
 
 SPEC CHECKSUMS:
   Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
+  ImagePicker: 973953c25960fe04729a7082a56194321c6762d2
   Kingfisher: 868c1149679a7ab6869be118faa9b5aed154aaf0
+  MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
   Moya: a725035953bc1c0eb1be505ab903984501d82440
   Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
   Starscream: faf918b2f2eff7d5dd21180646bf015a669673bd
 
-PODFILE CHECKSUM: 5ca9962fa3c8f3197616a3aa112b105c28712dac
+PODFILE CHECKSUM: 5806eb3b505a7893695b03fea7f4ec2b7cba1529
 
 COCOAPODS: 1.5.0

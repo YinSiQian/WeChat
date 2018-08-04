@@ -12,11 +12,15 @@ class SQFriendsMomentsController: UITableViewController {
     
     private var layouts: [TimelineLayoutService] = []
     
+    private var urlJson: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "朋友圈"
         tableView.tableFooterView = UIView()
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "camera")!, style: .plain, target: self, action: #selector(SQFriendsMomentsController.openCamera))
         loadData()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -24,15 +28,35 @@ class SQFriendsMomentsController: UITableViewController {
         loadNavbarTheme(theme: .white)
     }
     
-    
+    //MARK: -- Network handler
     
     private func loadData() {
         NetworkManager.request(targetType: TimelineAPIs.list(timestamp: "2018-06-21 16:13:33")) {
             [weak self] (result, error) in
             if !result.isEmpty {
-                let arr = result["list"] as! [[String: Any]]
-                let data = try! MomentModel.mapToArr(data: arr, type: Array<MomentModel>.self)
-                self?.handlerDataAsnyc(data: data)
+                print(result as Any)
+//                let arr = result["list"] as! [[String: Any]]
+//                let data = try! MomentModel.mapToArr(data: arr, type: Array<MomentModel>.self)
+//                self?.handlerDataAsnyc(data: data)
+            }
+        }
+    }
+    
+    private func upload(images: [UIImage]) {
+        NetworkManager.request(targetType: UploadAPIs.upload(images), compection: {
+            (result, error) in
+            if !result.isEmpty {
+                self.urlJson = result["url"] as? String;
+                self.postMoment()
+            }
+        })
+    }
+    
+    private func postMoment() {
+        self.urlJson = self.urlJson ?? ""
+        NetworkManager.request(targetType: TimelineAPIs.post(content: "人工智能的最大优势在于强大的计算能力和实时最优解的快速判定，这点从当年阿尔法狗在围棋界的无敌就能看出来，在围棋这种规则透明清晰，胜负判定无争议，不存在模糊匹配的游戏中，人工智能是远胜于人类的，因为人脑思考一步的时间，人工智能可以思考无数步并找到最优解。", url: self.urlJson!, location: "春华四季园")) { (result, error) in
+            if !result.isEmpty {
+                print(result as Any)
             }
         }
     }
@@ -50,6 +74,17 @@ class SQFriendsMomentsController: UITableViewController {
             })
         }
         
+    }
+    
+    @objc private func openCamera() {
+        
+        SystemPhotoService.shard.open(sourceController: self, type: UIImagePickerControllerSourceType.photoLibrary) {
+            [weak self]  (image) in
+            
+            if !image.isEmpty {
+                self?.upload(images: image)
+            }
+        }
     }
 
     // MARK: - Table view data source

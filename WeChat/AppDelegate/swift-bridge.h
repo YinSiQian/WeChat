@@ -10,6 +10,7 @@
 #define swift_bridge_h
 
 #import <CommonCrypto/CommonDigest.h>
-
+#import <MBProgressHUD/MBProgressHUD.h>
+#import "TZImagePickerController.h"
 
 #endif /* swift_bridge_h */

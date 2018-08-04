@@ -25,8 +25,14 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>微信需要您的同意才能使用相机</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>App需要你授权后才能使用定位服务</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>微信需要您的同意才能添加相片</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>微信需要您的同意才能使用相册</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

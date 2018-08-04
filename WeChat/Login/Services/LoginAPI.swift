@@ -16,10 +16,7 @@ public enum LoginAPI {
 }
 
 extension LoginAPI: TargetType {
-    public var baseURL: URL {
-        return baseUrl
-    }
-    
+   
     public var path: String {
         switch self {
         case .login(phone: _, password: _):
