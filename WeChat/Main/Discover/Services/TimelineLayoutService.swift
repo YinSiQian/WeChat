@@ -50,9 +50,7 @@ struct TimelineLayoutService {
     var lovesHeight: CGFloat = 0
     
     var commentsHeight: CGFloat = 0;
-    
-    var pics: [String] = []
-    
+        
     public init(timelineModel: MomentModel, height: CGFloat = 0,
                 contentHeight: CGFloat = 0, picsHeight: CGFloat = 0,
                 locationHeight: CGFloat = 0, lovesHeight: CGFloat = 0,
@@ -68,12 +66,10 @@ struct TimelineLayoutService {
         self.height = kTimelineCellTopMargin + kNameHeight
                       + kNameAndContentPadding + contentHeight + kContentAndPicsPadding;
         
-        if !self.timelineModel.urls.isEmpty {
-            pics = self.timelineModel.urls.components(separatedBy: ",")
-        }
-        if !pics.isEmpty {
+        
+        if !self.timelineModel.urlInfo.isEmpty {
             var floor: CGFloat = 0
-            switch pics.count {
+            switch self.timelineModel.urlInfo.count {
                 case 1, 2, 3:
                     floor = 1
                 case 4, 5, 6:
@@ -83,8 +79,22 @@ struct TimelineLayoutService {
                 default:
                     break
             }
-            if pics.count == 1 {
-                self.picsHeight = 2.0 * kPicWidth
+            if self.timelineModel.urlInfo.count == 1 {
+                let maxWidth = kScreen_width - kPicsPaddingLeft - kTimelineCellRightMargin
+                
+                let scale = self.timelineModel.urlInfo[0].height / self.timelineModel.urlInfo[0].width
+                if scale >= 2.0 {
+                    //高图最宽为 2 * kPicWidth
+                    self.picsHeight = 2 * kPicWidth * 1.5 * scale
+                } else if scale >= 1.0 && scale < 2.0 {
+                    
+                    self.picsHeight = kPicWidth * scale * 1.5
+                } else if scale >= 0.5 && scale < 1.0 {
+                    //宽图最宽为 maxWidth
+                    self.picsHeight = kPicWidth * 1.5
+                } else {
+                    self.picsHeight = maxWidth * scale
+                }
             } else {
                 self.picsHeight = kPicWidth * floor + kPicsPadding * (floor - 1)
             }

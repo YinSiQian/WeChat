@@ -22,6 +22,7 @@ struct MomentModel: Mappable {
     let userId: Int
     let comments: [Comment]
     let loves: [Love]
+    let urlInfo: [ImageInfo]
     
     struct Love: Mappable {
         let id: Int
@@ -41,6 +42,14 @@ struct MomentModel: Mappable {
         let updateTime: String
         let replyName: String
         let receivedName: String
+    }
+    
+    struct ImageInfo: Mappable {
+        let baseUrl: String
+        let path: String
+        let type: String
+        let width: CGFloat
+        let height: CGFloat
     }
 
 }

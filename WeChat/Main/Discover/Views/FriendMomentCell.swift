@@ -9,6 +9,18 @@
 import UIKit
 import Kingfisher
 
+class FriendMomentCommentView: UIView {
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+}
+
 class FriendMomentPicView: UIView {
     
     override init(frame: CGRect) {
@@ -109,6 +121,11 @@ class FriendMomentCell: UITableViewCell {
         self.time.font = kTimeFont
         self.contentView.addSubview(self.time)
         
+        self.moreBtn = UIButton(frame: CGRect(x: kScreen_width - 15 - 25, y: 0, width: 25, height: 25))
+        self.moreBtn.setBackgroundImage(UIImage(named: "friend_operation_comment"), for: .normal)
+        self.moreBtn.addTarget(self, action: #selector(FriendMomentCell.showOperation(sender:)), for: .touchUpInside)
+        self.contentView.addSubview(self.moreBtn)
+        
     }
     
     private func setData() {
@@ -132,28 +149,43 @@ class FriendMomentCell: UITableViewCell {
         self.location.height = layout.locationHeight
         
         self.time.minY = layout.locationHeight == 0 ? locationTop : self.location.maxY + kTimeAndLocationPadding
-        
+        self.moreBtn.minY = self.time.minY - (self.moreBtn.height - self.time.height ) / 2
     }
     
     private func setupImages() {
        
-        let picsCount = self.layout.pics.count
+        let picsCount = self.layout.timelineModel.urlInfo.count
         for index in 0 ..< 9 {
             let imageView = self.picView.picsView[index]
             if index >= picsCount {
                 imageView.kf.cancelDownloadTask()
                 imageView.isHidden = true
             } else {
+                let urlInfo = self.layout.timelineModel.urlInfo[index]
                 imageView.isHidden = false
                 var rect = CGRect.zero
                 rect.size.width = kPicWidth
                 rect.size.height = kPicWidth
                 switch picsCount {
                 case 1:
+                    let scale = urlInfo.height / urlInfo.width
                     rect.origin.x = 0
                     rect.origin.y = 0
-                    rect.size.height = kPicWidth * 2.0
-                    rect.size.width = kPicWidth
+                    //高图
+                    if scale >= 2.0 {
+                        rect.size.height = kPicWidth * 2 * 1.5
+                        rect.size.width = rect.size.height / scale
+                    } else if scale >= 1.0 && scale < 2.0 {
+                        rect.size.height = kPicWidth * 1.5 * scale
+                        rect.size.width = rect.size.height / scale
+                    } else if scale >= 0.5 && scale < 1.0 {
+                        //宽图
+                        rect.size.width = kPicWidth / scale * 1.5
+                        rect.size.height = rect.size.width * scale
+                    } else {
+                        rect.size.width = kScreen_width - kPicsPaddingLeft - kTimelineCellRightMargin
+                        rect.size.height = rect.size.width * scale
+                    }
                 case 4:
                     rect.origin.x = CGFloat(index % 2) * kPicsPadding + CGFloat(index % 2) * (kPicWidth)
                     rect.origin.y = CGFloat(index / 2) * (kPicWidth + kPicsPadding);
@@ -162,8 +194,9 @@ class FriendMomentCell: UITableViewCell {
                     rect.origin.y = CGFloat(index / 3) * (kPicWidth + kPicsPadding);
                 }
                 imageView.frame = rect
-                imageView.kf.setImage(with: self.layout.pics[index].url(), placeholder: nil, options: nil, progressBlock: nil) { (image, error, cacheType, url) in
-                    let scale = (image?.size.height)! / (image?.size.width)!
+                let urlString = urlInfo.baseUrl + "/" + urlInfo.path
+                imageView.kf.setImage(with: urlString.url(), placeholder: nil, options: nil, progressBlock: nil) { (image, error, cacheType, url) in
+                    let scale =  ((image?.size.height)! / (image?.size.width)!)
                     if scale < 0.99 || scale.isNaN { // 宽图把左右两边裁掉
                         imageView.contentMode = .scaleAspectFit;
                         imageView.layer.contentsRect = CGRect(x: 0, y: 0, width: 1, height: 1)
@@ -175,6 +208,12 @@ class FriendMomentCell: UITableViewCell {
                 }
             }
         }
+    }
+    
+    // MARK: -- Events
+    
+    @objc private func showOperation(sender: UIButton) {
+        
     }
     
     required init?(coder aDecoder: NSCoder) {

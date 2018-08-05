@@ -16,7 +16,6 @@ class SQFriendsMomentsController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.red
         self.title = "朋友圈"
         tableView.tableFooterView = UIView()
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "camera")!, style: .plain, target: self, action: #selector(SQFriendsMomentsController.openCamera))
@@ -36,9 +35,9 @@ class SQFriendsMomentsController: UITableViewController {
             [weak self] (result, error) in
             if !result.isEmpty {
                 print(result as Any)
-//                let arr = result["list"] as! [[String: Any]]
-//                let data = try! MomentModel.mapToArr(data: arr, type: Array<MomentModel>.self)
-//                self?.handlerDataAsnyc(data: data)
+                let arr = result["list"] as! [[String: Any]]
+                let data = try! MomentModel.mapToArr(data: arr, type: Array<MomentModel>.self)
+                self?.handlerDataAsnyc(data: data)
             }
         }
     }
