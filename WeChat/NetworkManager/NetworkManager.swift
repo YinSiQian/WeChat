@@ -8,6 +8,7 @@
 
 import Foundation
 import Moya
+import Alamofire
 
 public class NetworkManager {
     
@@ -40,6 +41,31 @@ public class NetworkManager {
                 compection([:], NSError(domain: baseUrl.absoluteString, code: 500, userInfo: nil))
             }
         }
+    }
+    
+    public static func upload(images: [UIImage], success: @escaping (_ response : Any?) -> (), failture : @escaping (_ error : Error)->()) {
+        Alamofire.upload(multipartFormData: { multipartFormData in
+            for (_, value) in images.enumerated() {
+                let imageData = UIImageJPEGRepresentation(value, 1.0)
+                multipartFormData.append(imageData!, withName: "image", fileName: "", mimeType: "image/jpeg")
+            }
+        },                          to: "http://localhost:8080/file/upload",
+                               headers: ["accessToken": UserModel.sharedInstance.accessToken],
+                    encodingCompletion: { encodingResult in
+                            switch encodingResult {
+                            case .success(let upload, _, _):
+                                upload.responseJSON { response in
+                                    print("response = \(response)")
+                                    let result = response.result
+                                    if result.isSuccess {
+                                        success(response.value)
+                                    }
+                                }
+                            case .failure(let encodingError):
+                                failture(encodingError)
+                            }
+                        }
+        )
     }
     
 }

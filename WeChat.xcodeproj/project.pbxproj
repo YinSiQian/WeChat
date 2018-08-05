@@ -23,6 +23,7 @@
 		8B1238F1210E0DE10048D25D /* Number+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1238F0210E0DE10048D25D /* Number+Extension.swift */; };
 		8B3C2731210F577C0028953F /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3C2730210F577C0028953F /* UIViewController+Extension.swift */; };
 		8B3C2733210F63460028953F /* Extension+TargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3C2732210F63460028953F /* Extension+TargetType.swift */; };
+		8B4818CB21171A8600C290D8 /* UINavigationController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4818CA21171A8600C290D8 /* UINavigationController+Extension.swift */; };
 		8B5F5B371F700A2D007C07D0 /* SQMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5F5B361F700A2D007C07D0 /* SQMessageViewController.swift */; };
 		8B5F5B391F700A45007C07D0 /* SQFriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5F5B381F700A45007C07D0 /* SQFriendsViewController.swift */; };
 		8B5F5B3B1F700A54007C07D0 /* SQDiscoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5F5B3A1F700A54007C07D0 /* SQDiscoverViewController.swift */; };
@@ -104,6 +105,7 @@
 		8B25E383BD640089DEF78B89 /* Pods_WeChatUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WeChatUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B3C2730210F577C0028953F /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		8B3C2732210F63460028953F /* Extension+TargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+TargetType.swift"; sourceTree = "<group>"; };
+		8B4818CA21171A8600C290D8 /* UINavigationController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extension.swift"; sourceTree = "<group>"; };
 		8B5F5B361F700A2D007C07D0 /* SQMessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQMessageViewController.swift; sourceTree = "<group>"; };
 		8B5F5B381F700A45007C07D0 /* SQFriendsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQFriendsViewController.swift; sourceTree = "<group>"; };
 		8B5F5B3A1F700A54007C07D0 /* SQDiscoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQDiscoverViewController.swift; sourceTree = "<group>"; };
@@ -291,6 +293,7 @@
 				8B3C2730210F577C0028953F /* UIViewController+Extension.swift */,
 				8B3C2732210F63460028953F /* Extension+TargetType.swift */,
 				0AA8FD0B21140A0F0039C630 /* UIView+Extension.swift */,
+				8B4818CA21171A8600C290D8 /* UINavigationController+Extension.swift */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -841,6 +844,7 @@
 				0A6563992112FAA100B3DB24 /* FriendCell.swift in Sources */,
 				0A6563902112EA2C00B3DB24 /* Mappable.swift in Sources */,
 				0A65638C2112E4FC00B3DB24 /* FriendModel.swift in Sources */,
+				8B4818CB21171A8600C290D8 /* UINavigationController+Extension.swift in Sources */,
 				8B5F5B371F700A2D007C07D0 /* SQMessageViewController.swift in Sources */,
 				8B1238E6210DEBE90048D25D /* SQLoginViewController.swift in Sources */,
 				8BFA39E221155914004DAA90 /* UploadService.swift in Sources */,
@@ -1026,7 +1030,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = XEUU8QPCTR;
 				INFOPLIST_FILE = WeChat/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ysq.wechat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1045,7 +1049,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = XEUU8QPCTR;
 				INFOPLIST_FILE = WeChat/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ysq.wechat;
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -16,6 +16,7 @@ class SQFriendsMomentsController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = UIColor.red
         self.title = "朋友圈"
         tableView.tableFooterView = UIView()
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "camera")!, style: .plain, target: self, action: #selector(SQFriendsMomentsController.openCamera))
@@ -43,6 +44,7 @@ class SQFriendsMomentsController: UITableViewController {
     }
     
     private func upload(images: [UIImage]) {
+        
         NetworkManager.request(targetType: UploadAPIs.upload(images), compection: {
             (result, error) in
             if !result.isEmpty {
@@ -54,7 +56,7 @@ class SQFriendsMomentsController: UITableViewController {
     
     private func postMoment() {
         self.urlJson = self.urlJson ?? ""
-        NetworkManager.request(targetType: TimelineAPIs.post(content: "人工智能的最大优势在于强大的计算能力和实时最优解的快速判定，这点从当年阿尔法狗在围棋界的无敌就能看出来，在围棋这种规则透明清晰，胜负判定无争议，不存在模糊匹配的游戏中，人工智能是远胜于人类的，因为人脑思考一步的时间，人工智能可以思考无数步并找到最优解。", url: self.urlJson!, location: "春华四季园")) { (result, error) in
+        NetworkManager.request(targetType: TimelineAPIs.post(content: "因为人脑思考一步的时间，人工智能可以思考无数步并找到最优解。", url: self.urlJson!, location: "春华四季园")) { (result, error) in
             if !result.isEmpty {
                 print(result as Any)
             }

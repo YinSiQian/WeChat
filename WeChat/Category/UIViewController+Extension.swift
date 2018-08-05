@@ -59,6 +59,25 @@ extension NetworkErrorHandler where Self: UIViewController {
     }
 }
 
+var navbarAlphaKey = "navbarAlphaKey"
+
+extension UIViewController {
+    
+    var navbarAlpha: CGFloat {
+        set {
+            objc_setAssociatedObject(self, &navbarAlphaKey, newValue, .OBJC_ASSOCIATION_ASSIGN)
+            self.navigationController?.setNavbar(alpha: newValue)
+        }
+        get {
+            guard let value = objc_getAssociatedObject(self, &navbarAlphaKey) else {
+                return 1.0
+            }
+            return value as! CGFloat
+        }
+    }
+    
+}
+
 extension UIViewController: NetworkErrorHandler {
 
 }
