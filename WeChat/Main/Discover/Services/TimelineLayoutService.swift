@@ -29,8 +29,11 @@ let kPicsPadding: CGFloat = 5 //多张图片内边距
 let kMaxPicsCount: CGFloat = 3
 let kPicWidth: CGFloat = (kScreen_width - kPicsPaddingLeft - (kMaxPicsCount - 1.0) * kPicsPadding - kTimelineCellRightMargin) / kMaxPicsCount
 
+let kContentWidth: CGFloat = kScreen_width - kPicsPaddingLeft - kTimelineCellRightMargin
+
+
 //MARK: 字体
-let kNameFont = UIFont.systemFont(ofSize: 14)
+let kNameFont = UIFont.boldSystemFont(ofSize: 14)
 let kContentFont = UIFont.systemFont(ofSize: 14)
 let kTimeFont = UIFont.systemFont(ofSize: 12)
 let kPlaceFont = UIFont.systemFont(ofSize: 12)
@@ -47,22 +50,27 @@ struct TimelineLayoutService {
     
     var locationHeight: CGFloat = 0;
     
-    var lovesHeight: CGFloat = 0
-    
+    //点赞 评论
     var commentsHeight: CGFloat = 0;
+    
+    var loveHeight: CGFloat = 0
+    
+    var commentInfos: [CommentInfo] = []
+    
+    var loveInfo: NSAttributedString = NSAttributedString()
         
     public init(timelineModel: MomentModel, height: CGFloat = 0,
                 contentHeight: CGFloat = 0, picsHeight: CGFloat = 0,
-                locationHeight: CGFloat = 0, lovesHeight: CGFloat = 0,
-                commentsHeight: CGFloat = 0) {
+                locationHeight: CGFloat = 0,commentsHeight: CGFloat = 0) {
         self.timelineModel = timelineModel
+        
         layout()
         
     }
     
     private mutating func layout() {
         
-        self.contentHeight = self.timelineModel.content.calculate(font: kContentFont, size: CGSize(width: kScreen_width - kPicsPaddingLeft - kTimelineCellRightMargin, height: kScreen_height)).height
+        self.contentHeight = self.timelineModel.content.calculate(font: kContentFont, size: CGSize(width: kContentWidth, height: kScreen_height)).height
         self.height = kTimelineCellTopMargin + kNameHeight
                       + kNameAndContentPadding + contentHeight + kContentAndPicsPadding;
         
@@ -117,14 +125,64 @@ struct TimelineLayoutService {
         //点赞
         if !self.timelineModel.loves.isEmpty {
             //TODO:
+            let count = self.timelineModel.loves.count
+            var loveContent = " "
+            for (index, element) in self.timelineModel.loves.enumerated() {
+                loveContent.append(element.username)
+                if index == count - 1 {
+                    break
+                } else {
+                    loveContent.append("，")
+                }
+            }
+            loveContent.append("，风清扬，刘正风，曲洋，习大大，李克强，温家宝，江泽民，胡锦涛")
+            
+            let attach = NSTextAttachment(data: nil, ofType: nil)
+            attach.image = UIImage(named: "friend_loved")
+            attach.bounds = CGRect(x: 4, y: -4, width: 15, height: 15)
+            let attachAttributeString = NSAttributedString(attachment: attach)
+            let attribute = NSMutableAttributedString(string: loveContent)
+            attribute.insert(attachAttributeString, at: 0)
+            loveInfo = attribute.copy() as! NSAttributedString
+            
+            loveHeight = attribute.string.calculate(font: kContentFont, size: CGSize(width: kContentWidth, height: CGFloat(MAXFLOAT))).height + 5
+            commentsHeight += loveHeight
+            
         }
         
         //评论
         if !self.timelineModel.comments.isEmpty {
             //TODO:
+            for element in self.timelineModel.comments {
+                var content = ""
+                if element.replyId == element.receivedId {
+                    //未指定回复某个人即回复所有人
+                    content = element.replyName + ":" + element.content
+                } else if element.receivedName == "" {
+                    content = element.replyName + ":" + element.content
+                } else {
+                    content = element.replyName + "回复" + element.receivedName + ":" + element.content
+                }
+                let height = content.calculate(font: kContentFont, size: CGSize(width: kContentWidth - 5, height: CGFloat(MAXFLOAT))).height
+                let info = CommentInfo(content: content, height: height)
+                commentInfos.append(info)
+                
+                commentsHeight += height
+            }
         }
         
+        commentsHeight = commentsHeight > 0 ? commentsHeight + 5 : 0
+        
+        self.height += commentsHeight
+
         self.height += kTimelineCellTopMargin
+        
+    }
+    
+    struct CommentInfo {
+        
+        let content: String
+        let height: CGFloat
         
     }
     

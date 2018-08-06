@@ -11,8 +11,60 @@ import Kingfisher
 
 class FriendMomentCommentView: UIView {
     
+    var contentView: UIView!
+
+    var loveContentView: UIView!
+    
+    var loveNames: UILabel!
+    
+    var line: UIView!
+    
+    var comments: [TimelineLayoutService.CommentInfo] = [] {
+        didSet {
+            loadComments()
+        }
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
+        self.clipsToBounds = true
+        self.backgroundColor = UIColor.white
+        setupSubviews()
+    }
+    
+    private func setupSubviews() {
+        let arrowImageView = UIImageView(image: UIImage(named: "friend_triangle"))
+        arrowImageView.tintColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        self.addSubview(arrowImageView)
+        
+        self.loveContentView = UIView(frame: CGRect(x: 0, y: 5, width: self.width, height: 0))
+        self.loveContentView.clipsToBounds = true
+        self.loveContentView.backgroundColor = UIColor(hex6: 0xf0f0f0)
+        
+        self.loveNames = UILabel(frame: self.loveContentView.bounds)
+        self.loveNames.textColor = #colorLiteral(red: 0.1411764771, green: 0.3960784376, blue: 0.5647059083, alpha: 1)
+        self.loveNames.numberOfLines = 0
+        self.loveNames.font = kPlaceFont
+        self.loveContentView.addSubview(self.loveNames)
+        
+        self.addSubview(self.loveContentView)
+        
+        self.line = UIView(frame: CGRect(x: 0, y: 0, width: self.width, height: 1))
+        self.line.backgroundColor = #colorLiteral(red: 0.7288303684, green: 0.7288303684, blue: 0.7288303684, alpha: 1)
+        self.line.isHidden = true
+        self.loveContentView.addSubview(self.line)
+        
+        self.contentView = UIView(frame: CGRect(x: kPicsPaddingLeft, y: 0, width: self.width, height: 0))
+        self.contentView.backgroundColor = UIColor(hex6: 0xf0f0f0)
+        self.addSubview(self.contentView)
+    }
+    
+    private func loadComments() {
+        
+    }
+    
+    private func loadLoves() {
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -68,6 +120,8 @@ class FriendMomentCell: UITableViewCell {
     
     var moreBtn: UIButton!
     
+    var commentView: FriendMomentCommentView!
+    
     var layout: TimelineLayoutService! {
         didSet {
             setData()
@@ -98,11 +152,11 @@ class FriendMomentCell: UITableViewCell {
         self.contentView.addSubview(self.avatar)
         
         self.name = UILabel(frame: CGRect(x: kPicsPaddingLeft, y: kTimelineCellTopMargin, width: kScreen_width - kPicsPadding - kTimelineCellRightMargin, height: kNameHeight))
-        self.name.textColor = UIColor.black
+        self.name.textColor = #colorLiteral(red: 0.1411764771, green: 0.3960784376, blue: 0.5647059083, alpha: 1)
         self.name.font = kNameFont
         self.contentView.addSubview(self.name)
         
-        self.content = UILabel(frame: CGRect(x: kPicsPaddingLeft, y: self.name.maxY + kNameAndContentPadding, width: kScreen_width - kPicsPaddingLeft - kTimelineCellRightMargin, height: 0))
+        self.content = UILabel(frame: CGRect(x: kPicsPaddingLeft, y: self.name.maxY + kNameAndContentPadding, width: kContentWidth, height: 0))
         self.content.textColor = UIColor.black
         self.content.font = kContentFont
         self.content.numberOfLines = 0
@@ -112,7 +166,7 @@ class FriendMomentCell: UITableViewCell {
         self.contentView.addSubview(self.picView)
         
         self.location = UILabel(frame: CGRect(x: kPicsPaddingLeft, y: 0, width: self.content.width, height: 0))
-        self.location.textColor = UIColor.blue
+        self.location.textColor = #colorLiteral(red: 0.1411764771, green: 0.3960784376, blue: 0.5647059083, alpha: 1)
         self.location.font = kPlaceFont
         self.contentView.addSubview(self.location)
         
@@ -125,6 +179,9 @@ class FriendMomentCell: UITableViewCell {
         self.moreBtn.setBackgroundImage(UIImage(named: "friend_operation_comment"), for: .normal)
         self.moreBtn.addTarget(self, action: #selector(FriendMomentCell.showOperation(sender:)), for: .touchUpInside)
         self.contentView.addSubview(self.moreBtn)
+        
+        self.commentView = FriendMomentCommentView(frame: CGRect(x: kPicsPaddingLeft, y: 0, width: kContentWidth, height: 0))
+        self.contentView.addSubview(self.commentView)
         
     }
     
@@ -150,6 +207,24 @@ class FriendMomentCell: UITableViewCell {
         
         self.time.minY = layout.locationHeight == 0 ? locationTop : self.location.maxY + kTimeAndLocationPadding
         self.moreBtn.minY = self.time.minY - (self.moreBtn.height - self.time.height ) / 2
+        
+        self.commentView.height = layout.commentsHeight
+        self.commentView.minY = self.time.maxY + kTimeAndLocationPadding
+        
+        self.commentView.loveContentView.height = layout.loveHeight
+        self.commentView.loveNames.frame = self.commentView.loveContentView.bounds
+        self.commentView.contentView.minY = layout.loveHeight > 0 ? self.commentView.loveContentView.maxY : 5
+        
+        self.commentView.contentView.height = layout.commentsHeight - layout.loveHeight - 5
+        if self.commentView.contentView.height > 0 {
+            self.commentView.line.isHidden = false
+            self.commentView.line.minY = layout.loveHeight - 1
+        } else {
+            self.commentView.line.isHidden = true
+        }
+        self.commentView.comments = layout.commentInfos
+        self.commentView.loveNames.attributedText = layout.loveInfo
+        
     }
     
     private func setupImages() {

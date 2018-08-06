@@ -36,7 +36,6 @@ struct MomentModel: Mappable {
         let momentId: Int
         let receivedId: Int
         let replyId: Int
-        let username: String
         let content: String
         let createTime: String
         let updateTime: String
