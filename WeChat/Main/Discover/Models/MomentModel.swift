@@ -2,7 +2,7 @@
 //  MomentModel.swift
 //  WeChat
 //
-//  Created by ABJ on 2018/8/2.
+//  Created by ysq on 2018/8/2.
 //  Copyright © 2018年 ysq. All rights reserved.
 //
 
@@ -27,8 +27,8 @@ struct MomentModel: Mappable {
     struct Love: Mappable {
         let id: Int
         let momentId: Int
-        let uid: Int
-        let username: String
+        let uid: Int          //点赞人id
+        let username: String  //名字
     }
     
     struct Comment: Mappable {
@@ -39,8 +39,9 @@ struct MomentModel: Mappable {
         let content: String
         let createTime: String
         let updateTime: String
-        let replyName: String
-        let receivedName: String
+        let replyName: String      //回复人
+        let receivedName: String   //被回复人
+        let isComment: Int         //1 评论 2 回复
     }
     
     struct ImageInfo: Mappable {

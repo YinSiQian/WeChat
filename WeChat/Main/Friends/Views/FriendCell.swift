@@ -2,7 +2,7 @@
 //  FriendCell.swift
 //  WeChat
 //
-//  Created by ABJ on 2018/8/2.
+//  Created by ysq on 2018/8/2.
 //  Copyright © 2018年 ysq. All rights reserved.
 //
 

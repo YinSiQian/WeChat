@@ -12,5 +12,6 @@
 #import <CommonCrypto/CommonDigest.h>
 #import <MBProgressHUD/MBProgressHUD.h>
 #import "TZImagePickerController.h"
+#import <YYText/YYText.h>
 
 #endif /* swift_bridge_h */

@@ -2,7 +2,7 @@
 //  UIView+Extension.swift
 //  WeChat
 //
-//  Created by ABJ on 2018/8/3.
+//  Created by ysq on 2018/8/3.
 //  Copyright © 2018年 ysq. All rights reserved.
 //
 

@@ -10,6 +10,7 @@ PODS:
     - Result (~> 3.0)
   - Result (3.2.4)
   - Starscream (3.0.5)
+  - YYText (1.0.7)
 
 DEPENDENCIES:
   - ImagePicker (~> 3.0.0)
@@ -17,6 +18,7 @@ DEPENDENCIES:
   - MBProgressHUD (~> 1.1.0)
   - Moya
   - Starscream (~> 3.0.2)
+  - YYText (~> 1.0.7)
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
@@ -27,6 +29,7 @@ SPEC REPOS:
     - Moya
     - Result
     - Starscream
+    - YYText
 
 SPEC CHECKSUMS:
   Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
@@ -36,7 +39,8 @@ SPEC CHECKSUMS:
   Moya: a725035953bc1c0eb1be505ab903984501d82440
   Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
   Starscream: faf918b2f2eff7d5dd21180646bf015a669673bd
+  YYText: 5c461d709e24d55a182d1441c41dc639a18a4849
 
-PODFILE CHECKSUM: 5806eb3b505a7893695b03fea7f4ec2b7cba1529
+PODFILE CHECKSUM: 3702f10e526afc34772db726de0d62575853edb6
 
 COCOAPODS: 1.5.0

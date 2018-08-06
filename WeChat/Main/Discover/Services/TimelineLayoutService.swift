@@ -38,6 +38,8 @@ let kContentFont = UIFont.systemFont(ofSize: 14)
 let kTimeFont = UIFont.systemFont(ofSize: 12)
 let kPlaceFont = UIFont.systemFont(ofSize: 12)
 
+let kNameColor = UIColor(hex6: 0x4460BB)
+
 struct TimelineLayoutService {
     
     var timelineModel: MomentModel
@@ -124,7 +126,6 @@ struct TimelineLayoutService {
         
         //点赞
         if !self.timelineModel.loves.isEmpty {
-            //TODO:
             let count = self.timelineModel.loves.count
             var loveContent = " "
             for (index, element) in self.timelineModel.loves.enumerated() {
@@ -141,6 +142,7 @@ struct TimelineLayoutService {
             attach.image = UIImage(named: "friend_loved")
             attach.bounds = CGRect(x: 4, y: -4, width: 15, height: 15)
             let attachAttributeString = NSAttributedString(attachment: attach)
+            
             let attribute = NSMutableAttributedString(string: loveContent)
             attribute.insert(attachAttributeString, at: 0)
             loveInfo = attribute.copy() as! NSAttributedString
@@ -152,19 +154,25 @@ struct TimelineLayoutService {
         
         //评论
         if !self.timelineModel.comments.isEmpty {
-            //TODO:
             for element in self.timelineModel.comments {
                 var content = ""
-                if element.replyId == element.receivedId {
-                    //未指定回复某个人即回复所有人
-                    content = element.replyName + ":" + element.content
-                } else if element.receivedName == "" {
-                    content = element.replyName + ":" + element.content
-                } else {
-                    content = element.replyName + "回复" + element.receivedName + ":" + element.content
+                if element.isComment == 1 {
+                    //评论
+                    content = element.replyName + ": " + element.content
+                } else  {
+                    content = element.replyName + " 回复 " + element.receivedName + ": " + element.content
                 }
-                let height = content.calculate(font: kContentFont, size: CGSize(width: kContentWidth - 5, height: CGFloat(MAXFLOAT))).height
-                let info = CommentInfo(content: content, height: height)
+                let height = content.calculate(font: kTimeFont, size: CGSize(width: kContentWidth - 2, height: CGFloat(MAXFLOAT))).height + 5
+                let replyHighlightRange = (content as NSString).range(of: element.replyName)
+                let receivedHighlightRange = (content as NSString).range(of: element.receivedName)
+                
+                let attributeText = NSMutableAttributedString(string: content)
+                attributeText.addAttribute(NSAttributedStringKey.foregroundColor, value: kNameColor, range: replyHighlightRange)
+                if receivedHighlightRange.location != NSNotFound {
+                    attributeText.addAttribute(NSAttributedStringKey.foregroundColor, value: kNameColor, range: receivedHighlightRange)
+                }
+                
+                let info = CommentInfo(content: attributeText, height: height, replyHighlightRange: replyHighlightRange, receivedHighlightRange: receivedHighlightRange)
                 commentInfos.append(info)
                 
                 commentsHeight += height
@@ -181,9 +189,10 @@ struct TimelineLayoutService {
     
     struct CommentInfo {
         
-        let content: String
+        let content: NSAttributedString
         let height: CGFloat
-        
+        let replyHighlightRange: NSRange
+        let receivedHighlightRange: NSRange
     }
     
 }

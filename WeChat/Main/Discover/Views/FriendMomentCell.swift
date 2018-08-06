@@ -42,7 +42,7 @@ class FriendMomentCommentView: UIView {
         self.loveContentView.backgroundColor = UIColor(hex6: 0xf0f0f0)
         
         self.loveNames = UILabel(frame: self.loveContentView.bounds)
-        self.loveNames.textColor = #colorLiteral(red: 0.1411764771, green: 0.3960784376, blue: 0.5647059083, alpha: 1)
+        self.loveNames.textColor = kNameColor
         self.loveNames.numberOfLines = 0
         self.loveNames.font = kPlaceFont
         self.loveContentView.addSubview(self.loveNames)
@@ -54,17 +54,24 @@ class FriendMomentCommentView: UIView {
         self.line.isHidden = true
         self.loveContentView.addSubview(self.line)
         
-        self.contentView = UIView(frame: CGRect(x: kPicsPaddingLeft, y: 0, width: self.width, height: 0))
+        self.contentView = UIView(frame: CGRect(x: 0, y: 0, width: self.width, height: 0))
         self.contentView.backgroundColor = UIColor(hex6: 0xf0f0f0)
         self.addSubview(self.contentView)
     }
     
     private func loadComments() {
-        
-    }
-    
-    private func loadLoves() {
-        
+        // TODO: 优化多次创建
+        var top: CGFloat = 0
+        for element in self.comments {
+            let backView = UIView(frame: CGRect(x: 2, y: top, width: kContentWidth - 2, height: element.height))
+            let text = YYLabel(frame: CGRect(x: 2, y: 0, width: kContentWidth - 2, height: element.height))
+            text.font = kTimeFont
+            text.numberOfLines = 0
+            text.attributedText = element.content
+            backView.addSubview(text)
+            self.contentView.addSubview(backView)
+            top += element.height
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -152,7 +159,7 @@ class FriendMomentCell: UITableViewCell {
         self.contentView.addSubview(self.avatar)
         
         self.name = UILabel(frame: CGRect(x: kPicsPaddingLeft, y: kTimelineCellTopMargin, width: kScreen_width - kPicsPadding - kTimelineCellRightMargin, height: kNameHeight))
-        self.name.textColor = #colorLiteral(red: 0.1411764771, green: 0.3960784376, blue: 0.5647059083, alpha: 1)
+        self.name.textColor = kNameColor
         self.name.font = kNameFont
         self.contentView.addSubview(self.name)
         
@@ -166,7 +173,7 @@ class FriendMomentCell: UITableViewCell {
         self.contentView.addSubview(self.picView)
         
         self.location = UILabel(frame: CGRect(x: kPicsPaddingLeft, y: 0, width: self.content.width, height: 0))
-        self.location.textColor = #colorLiteral(red: 0.1411764771, green: 0.3960784376, blue: 0.5647059083, alpha: 1)
+        self.location.textColor = kNameColor
         self.location.font = kPlaceFont
         self.contentView.addSubview(self.location)
         

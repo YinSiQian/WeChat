@@ -9,6 +9,9 @@ target 'WeChat' do
   pod 'Starscream', '~> 3.0.2'
   pod 'Kingfisher', '~> 4.8.1'
   pod 'ImagePicker', '~> 3.0.0'
+  
+  # OC
+  pod 'YYText', '~> 1.0.7'
   pod 'MBProgressHUD', '~> 1.1.0'
   # Pods for WeChat
 
