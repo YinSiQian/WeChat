@@ -17,7 +17,7 @@ class MomentEditViewController: UIViewController {
     var urlInfo: String = ""
     
     lazy var placeholderLable: UILabel = {
-        let label = UILabel(frame: CGRect(x: 7, y: 8, width: 100, height: 18))
+        let label = UILabel(frame: CGRect(x: 7, y: 8, width: 160, height: 18))
         label.text = "输入这一刻的想法"
         label.textColor = UIColor.gray
         label.font = UIFont.systemFont(ofSize: 16)
@@ -37,11 +37,6 @@ class MomentEditViewController: UIViewController {
         setNavItem()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.navbarAlpha = 0.0
-    }
-    
     override func viewSafeAreaInsetsDidChange() {
         if #available(iOS 11.0, *) {
             super.viewSafeAreaInsetsDidChange()
@@ -53,6 +48,7 @@ class MomentEditViewController: UIViewController {
     }
     
     private func setupSubviews() {
+        self.navigationController?.navigationBar.barTintColor = UIColor.white
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.black]
         
         self.title = hasImage ? "" : "发表文字"

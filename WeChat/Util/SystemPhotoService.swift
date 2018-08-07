@@ -34,7 +34,7 @@ extension SystemPhotoService {
     
     private func openImagePickerController(type: UIImagePickerControllerSourceType) {
         if UIImagePickerController.isSourceTypeAvailable(type) {
-            let picker = TZImagePickerController(maxImagesCount: 9, columnNumber: 3, delegate: nil, pushPhotoPickerVc: true)
+            let picker = TZImagePickerController(maxImagesCount: 9, columnNumber: 4, delegate: nil, pushPhotoPickerVc: true)
             picker?.didFinishPickingPhotosWithInfosHandle = {
                 [weak self] (photos,_,isSelectOriginalPhoto,_) in
                 if photos?.isEmpty == false {

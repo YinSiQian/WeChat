@@ -64,7 +64,6 @@ class SQFriendsMomentsController: UITableViewController {
                 self.tableView.reloadData()
             })
         }
-        
     }
     
     // MARK: -- Events
@@ -106,6 +105,10 @@ class SQFriendsMomentsController: UITableViewController {
         let cell = FriendMomentCell.cell(with: tableView)
         cell.layout = layouts[indexPath.row]
         return cell
+    }
+    
+    deinit {
+        print("it is dealloc")
     }
     
 }

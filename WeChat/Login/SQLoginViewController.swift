@@ -24,8 +24,6 @@ class SQLoginViewController: UIViewController {
         super.viewDidLoad()
         self.phoneTF.delegate = self
         self.passwordTF.delegate = self
-        self.phoneTF.text = "18620895340"
-        self.passwordTF.text = "123456"
     }
     
     @IBAction func changeAction(_ sender: UIButton) {

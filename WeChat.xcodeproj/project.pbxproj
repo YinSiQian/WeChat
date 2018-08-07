@@ -50,6 +50,7 @@
 		8BDCD9251F658C0A00C53260 /* SQRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BDCD9241F658C0A00C53260 /* SQRootViewController.swift */; };
 		8BE1CD3220936AFA007E017D /* FriendService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1CD3120936AFA007E017D /* FriendService.swift */; };
 		8BF4F91120E28F1C00A6E693 /* TimelineService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF4F91020E28F1C00A6E693 /* TimelineService.swift */; };
+		8BF5313C2119F4B100DDDD29 /* FriendMomentOpeationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF5313B2119F4B100DDDD29 /* FriendMomentOpeationView.swift */; };
 		8BFA39B12115336C004DAA90 /* SystemPhotoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BFA39B02115336C004DAA90 /* SystemPhotoService.swift */; };
 		8BFA39D22115542A004DAA90 /* TZImageCropManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BFA39B72115542A004DAA90 /* TZImageCropManager.m */; };
 		8BFA39D32115542A004DAA90 /* TZAssetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BFA39B92115542A004DAA90 /* TZAssetCell.m */; };
@@ -140,6 +141,7 @@
 		8BDCD9241F658C0A00C53260 /* SQRootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQRootViewController.swift; sourceTree = "<group>"; };
 		8BE1CD3120936AFA007E017D /* FriendService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendService.swift; sourceTree = "<group>"; };
 		8BF4F91020E28F1C00A6E693 /* TimelineService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineService.swift; sourceTree = "<group>"; };
+		8BF5313B2119F4B100DDDD29 /* FriendMomentOpeationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendMomentOpeationView.swift; sourceTree = "<group>"; };
 		8BFA39B02115336C004DAA90 /* SystemPhotoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemPhotoService.swift; sourceTree = "<group>"; };
 		8BFA39B52115542A004DAA90 /* TZPhotoPreviewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TZPhotoPreviewCell.h; sourceTree = "<group>"; };
 		8BFA39B62115542A004DAA90 /* TZPhotoPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TZPhotoPickerController.h; sourceTree = "<group>"; };
@@ -406,6 +408,7 @@
 			isa = PBXGroup;
 			children = (
 				8BC09DAE2113501400DC463D /* FriendMomentCell.swift */,
+				8BF5313B2119F4B100DDDD29 /* FriendMomentOpeationView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -835,6 +838,7 @@
 				8B3C2731210F577C0028953F /* UIViewController+Extension.swift in Sources */,
 				8BFA39DB2115542A004DAA90 /* TZImageManager.m in Sources */,
 				8BFA39D32115542A004DAA90 /* TZAssetCell.m in Sources */,
+				8BF5313C2119F4B100DDDD29 /* FriendMomentOpeationView.swift in Sources */,
 				8B3C2733210F63460028953F /* Extension+TargetType.swift in Sources */,
 				8BFA39D82115542A004DAA90 /* TZPhotoPreviewController.m in Sources */,
 				8B8F39DD210CCE4500E53CBC /* Dictionary+Extension.swift in Sources */,
