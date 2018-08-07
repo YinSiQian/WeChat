@@ -67,6 +67,7 @@ class FriendMomentCommentView: UIView {
             let text = YYLabel(frame: CGRect(x: 2, y: 0, width: kContentWidth - 2, height: element.height))
             text.font = kTimeFont
             text.numberOfLines = 0
+            text.preferredMaxLayoutWidth = kContentWidth - 2
             text.attributedText = element.content
             backView.addSubview(text)
             self.contentView.addSubview(backView)
@@ -95,7 +96,7 @@ class FriendMomentPicView: UIView {
     var picsView: [UIImageView] = []
     
     private func loadPics() {
-        
+
         for _ in 0 ..< 9 {
             
             let imageView = UIImageView()

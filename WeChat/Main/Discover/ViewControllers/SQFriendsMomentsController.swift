@@ -42,26 +42,6 @@ class SQFriendsMomentsController: UITableViewController {
         }
     }
     
-    private func upload(images: [UIImage]) {
-        
-        NetworkManager.request(targetType: UploadAPIs.upload(images), compection: {
-            (result, error) in
-            if !result.isEmpty {
-                self.urlJson = result["url"] as? String;
-                self.postMoment()
-            }
-        })
-    }
-    
-    private func postMoment() {
-        self.urlJson = self.urlJson ?? ""
-        NetworkManager.request(targetType: TimelineAPIs.post(content: "因为人脑思考一步的时间，人工智能可以思考无数步并找到最优解。", url: self.urlJson!, location: "春华四季园")) { (result, error) in
-            if !result.isEmpty {
-                print(result as Any)
-            }
-        }
-    }
-    
     private func handlerDataAsnyc(data: Array<MomentModel>) {
         
         DispatchQueue.global().async {
@@ -83,7 +63,10 @@ class SQFriendsMomentsController: UITableViewController {
             [weak self]  (image) in
             
             if !image.isEmpty {
-                self?.upload(images: image)
+                let edit = MomentEditViewController()
+                edit.images = image
+                
+                self?.present(UINavigationController(rootViewController: edit), animated: true, completion: nil)
             }
         }
     }
