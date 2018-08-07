@@ -12,15 +12,54 @@ class MomentEditViewController: UIViewController {
 
     var images: [UIImage] = []
     
+    var hasImage: Bool = false
+    
+    var urlInfo: String = ""
+    
+    lazy var placeholderLable: UILabel = {
+        let label = UILabel(frame: CGRect(x: 7, y: 8, width: 100, height: 18))
+        label.text = "输入这一刻的想法"
+        label.textColor = UIColor.gray
+        label.font = UIFont.systemFont(ofSize: 16)
+        return label
+    }()
+    
+    lazy var textView: UITextView = {
+        let textView = UITextView(frame: CGRect(x: 30, y: 124, width: kScreen_width - 60, height: 140))
+        textView.font = UIFont.systemFont(ofSize: 16)
+        textView.textColor = UIColor.black
+        return textView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.white
+        setupSubviews()
         setNavItem()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navbarAlpha = 0.0
+    }
+    
+    override func viewSafeAreaInsetsDidChange() {
+        if #available(iOS 11.0, *) {
+            super.viewSafeAreaInsetsDidChange()
+            self.textView.minY = self.view.safeAreaInsets.top + 40
+        } else {
+            // Fallback on earlier versions
+        }
+        
+    }
+    
+    private func setupSubviews() {
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.black]
+        
+        self.title = hasImage ? "" : "发表文字"
+        self.view.backgroundColor = UIColor.white
+        self.view.addSubview(self.textView)
+        self.textView.addSubview(self.placeholderLable)
+        NotificationCenter.default.addObserver(self, selector: #selector(MomentEditViewController.textViewDidChanged(noti:)), name: NSNotification.Name.UITextViewTextDidChange, object: nil)
     }
     
     private func setNavItem() {
@@ -35,7 +74,8 @@ class MomentEditViewController: UIViewController {
     // MARK: -- Network Exchange
     
     private func postMoment() {
-        NetworkManager.request(targetType: TimelineAPIs.post(content: "因为人脑思考一步的时间，人工智能可以思考无数步并找到最优解。", url: "self.urlJson!", location: "春华四季园")) { (result, error) in
+        
+        NetworkManager.request(targetType: TimelineAPIs.post(content: self.textView.text, url: self.urlInfo, location: "春华四季园")) { (result, error) in
             if !result.isEmpty {
                 print(result as Any)
             }
@@ -47,10 +87,16 @@ class MomentEditViewController: UIViewController {
         NetworkManager.request(targetType: UploadAPIs.upload(images), compection: {
             (result, error) in
             if !result.isEmpty {
-//                self.urlJson = result["url"] as? String;
+                self.urlInfo = result["url"] as? String ?? "";
                 self.postMoment()
             }
         })
+    }
+    
+    // MARK: -- Notification
+    
+    @objc private func textViewDidChanged(noti: Notification) {
+        self.placeholderLable.isHidden = self.textView.text.count > 0
     }
     
     // MARK: -- Events
@@ -60,7 +106,16 @@ class MomentEditViewController: UIViewController {
     }
     
     @objc private func post() {
-        upload(images: images)
+        self.view.endEditing(true)
+        if hasImage {
+            upload(images: images)
+        } else {
+            postMoment()
+        }
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.textView.resignFirstResponder()
     }
 
 }

@@ -35,13 +35,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func setupRootVC() {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.backgroundColor = UIColor.white
-        window?.rootViewController = SQLoginViewController()
-
-//        if UserModel.sharedInstance.accessToken == "" {
-//            window?.rootViewController = SQLoginViewController()
-//        } else {
-//            window?.rootViewController = SQRootViewController()
-//        }
+        if UserModel.sharedInstance.accessToken == "" {
+            window?.rootViewController = SQLoginViewController()
+        } else {
+            window?.rootViewController = SQRootViewController()
+        }
         window?.makeKeyAndVisible()
     }
 

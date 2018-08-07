@@ -18,7 +18,7 @@ class SQFriendsMomentsController: UITableViewController {
         super.viewDidLoad()
         self.title = "朋友圈"
         tableView.tableFooterView = UIView()
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "camera")!, style: .plain, target: self, action: #selector(SQFriendsMomentsController.openCamera))
+        setNavItem()
         loadData()
         
     }
@@ -26,6 +26,16 @@ class SQFriendsMomentsController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         loadNavbarTheme(theme: .white)
+    }
+    
+    private func setNavItem() {
+        let btn = UIButton(frame: CGRect(x: 0, y: 0, width: 27, height: 27))
+        btn.setBackgroundImage(UIImage(named: "camera")!, for: .normal)
+        btn.addTarget(self, action: #selector(SQFriendsMomentsController.openCamera), for: .touchUpInside)
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(SQFriendsMomentsController.postTextMomentInfo))
+        longPress.minimumPressDuration = 1
+        btn.addGestureRecognizer(longPress)
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: btn)
     }
     
     //MARK: -- Network handler
@@ -57,6 +67,13 @@ class SQFriendsMomentsController: UITableViewController {
         
     }
     
+    // MARK: -- Events
+    
+    @objc private func postTextMomentInfo() {
+        let edit = MomentEditViewController()        
+        self.present(SQNavigationViewController(rootViewController: edit), animated: true, completion: nil)
+    }
+    
     @objc private func openCamera() {
         
         SystemPhotoService.shard.open(sourceController: self, type: UIImagePickerControllerSourceType.photoLibrary) {
@@ -64,9 +81,9 @@ class SQFriendsMomentsController: UITableViewController {
             
             if !image.isEmpty {
                 let edit = MomentEditViewController()
+                edit.hasImage = true
                 edit.images = image
-                
-                self?.present(UINavigationController(rootViewController: edit), animated: true, completion: nil)
+                self?.present(SQNavigationViewController(rootViewController: edit), animated: true, completion: nil)
             }
         }
     }
