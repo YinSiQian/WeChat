@@ -64,10 +64,12 @@ class SQFriendsMomentsController: UITableViewController {
         }
     }
     
-    private func love(id: Int, complection: (_ success: Bool) -> ()) {
+    private func love(id: Int, complection: @escaping (_ success: Bool) -> ()) {
         
         NetworkManager.request(targetType: TimelineAPIs.favorite(momentId: id)) { (result, error) in
-            
+            if !result.isEmpty {
+                complection(true)
+            }
         }
     }
     
@@ -91,10 +93,6 @@ class SQFriendsMomentsController: UITableViewController {
             }
         }
     }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        print(touches)
-    }
 
     // MARK: - Table view data source
 
@@ -117,10 +115,12 @@ class SQFriendsMomentsController: UITableViewController {
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        getOperationView()?.hide()
+    }
+    
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if  let view = UIApplication.shared.keyWindow?.viewWithTag(12306) as? FriendMomentOpeationView {
-            view.hide()
-        }
+        getOperationView()?.hide()
     }
     
     // MARK: -- Private method

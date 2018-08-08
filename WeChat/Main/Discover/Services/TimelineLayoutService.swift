@@ -74,6 +74,8 @@ struct TimelineLayoutService {
     
     private mutating func layout() {
         
+        self.height = 0
+        
         self.contentHeight = self.timelineModel.content.calculate(font: kContentFont, size: CGSize(width: kContentWidth, height: kScreen_height)).height
         self.height = kTimelineCellTopMargin + kNameHeight
                       + kNameAndContentPadding + contentHeight + kContentAndPicsPadding;
@@ -164,7 +166,7 @@ struct TimelineLayoutService {
                 } else  {
                     content = element.replyName + " 回复 " + element.receivedName + ": " + element.content
                 }
-                let height = content.calculate(font: kTimeFont, size: CGSize(width: kContentWidth - 2, height: CGFloat(MAXFLOAT))).height + 5
+                let height = content.calculate(font: kTimeFont, size: CGSize(width: kContentWidth - 2, height: CGFloat(MAXFLOAT))).height + 10
                 let replyHighlightRange = (content as NSString).range(of: element.replyName)
                 let receivedHighlightRange = (content as NSString).range(of: element.receivedName)
                 
