@@ -51,5 +51,6 @@ struct MomentModel: Mappable {
         let width: CGFloat
         let height: CGFloat
     }
+    
 
 }

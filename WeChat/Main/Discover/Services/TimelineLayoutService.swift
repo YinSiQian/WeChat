@@ -44,6 +44,8 @@ struct TimelineLayoutService {
     
     var timelineModel: MomentModel
     
+    var isLoved: Bool = false
+    
     var height: CGFloat = 0
     
     var contentHeight: CGFloat = 0

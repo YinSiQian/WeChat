@@ -12,8 +12,6 @@ class SQFriendsMomentsController: UITableViewController {
     
     private var layouts: [TimelineLayoutService] = []
     
-    private var urlJson: String?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "朋友圈"
@@ -66,6 +64,13 @@ class SQFriendsMomentsController: UITableViewController {
         }
     }
     
+    private func love(id: Int, complection: (_ success: Bool) -> ()) {
+        
+        NetworkManager.request(targetType: TimelineAPIs.favorite(momentId: id)) { (result, error) in
+            
+        }
+    }
+    
     // MARK: -- Events
     
     @objc private func postTextMomentInfo() {
@@ -86,6 +91,10 @@ class SQFriendsMomentsController: UITableViewController {
             }
         }
     }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        print(touches)
+    }
 
     // MARK: - Table view data source
 
@@ -103,12 +112,56 @@ class SQFriendsMomentsController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = FriendMomentCell.cell(with: tableView)
+        cell.delegate = self
         cell.layout = layouts[indexPath.row]
         return cell
+    }
+    
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if  let view = UIApplication.shared.keyWindow?.viewWithTag(12306) as? FriendMomentOpeationView {
+            view.hide()
+        }
+    }
+    
+    // MARK: -- Private method
+    
+    private func getOperationView() -> FriendMomentOpeationView? {
+        if  let view = UIApplication.shared.keyWindow?.viewWithTag(12306) as? FriendMomentOpeationView {
+            return view
+        }
+        return nil
     }
     
     deinit {
         print("it is dealloc")
     }
     
+}
+
+extension SQFriendsMomentsController: FriendMomentCellDelegate {
+    func showInterfaceColumnView(point: CGPoint, indexPath: NSIndexPath) {
+        
+        if let view = getOperationView() {
+            view.hide()
+            return
+        }
+        var layout = self.layouts[indexPath.row]
+
+        let operationView = FriendMomentOpeationView(frame: CGRect(x: 0, y: 0, width: 140, height: 34), point: point) {  [weak self] (type) in
+            if type == 1 {
+                //点赞
+                self?.love(id: layout.timelineModel.momentId, complection: {
+                    (success) in
+                    self?.getOperationView()?.loved = success
+                    layout.isLoved = success
+                })
+            } else {
+                //评论
+            }
+            self?.getOperationView()?.hide()
+        }
+        operationView.tag = 12306
+        operationView.loved = layout.isLoved
+        operationView.show()
+    }
 }

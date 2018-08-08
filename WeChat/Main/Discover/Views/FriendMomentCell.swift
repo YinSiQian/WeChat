@@ -112,6 +112,11 @@ class FriendMomentPicView: UIView {
     
 }
 
+protocol FriendMomentCellDelegate: NSObjectProtocol {
+    
+    func showInterfaceColumnView(point: CGPoint, indexPath: NSIndexPath)
+}
+
 class FriendMomentCell: UITableViewCell {
 
     var name: UILabel!
@@ -129,6 +134,8 @@ class FriendMomentCell: UITableViewCell {
     var moreBtn: UIButton!
     
     var commentView: FriendMomentCommentView!
+    
+    var delegate: FriendMomentCellDelegate?
     
     var layout: TimelineLayoutService! {
         didSet {
@@ -296,7 +303,11 @@ class FriendMomentCell: UITableViewCell {
     // MARK: -- Events
     
     @objc private func showOperation(sender: UIButton) {
-        
+        let point = self.convert(sender.frame.origin, to: AppDelegate.currentAppdelegate().window)
+        if let tableView = self.superview as? UITableView {
+            let indexPath = tableView.indexPath(for: self)
+            self.delegate?.showInterfaceColumnView(point: point, indexPath: indexPath! as NSIndexPath)
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
