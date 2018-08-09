@@ -13,5 +13,6 @@
 #import <MBProgressHUD/MBProgressHUD.h>
 #import "TZImagePickerController.h"
 #import <YYText/YYText.h>
+#import "YYFPSLabel.h"
 
 #endif /* swift_bridge_h */

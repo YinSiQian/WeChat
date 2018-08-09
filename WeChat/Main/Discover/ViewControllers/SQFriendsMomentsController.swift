@@ -12,6 +12,8 @@ class SQFriendsMomentsController: UITableViewController {
     
     private var layouts: [TimelineLayoutService] = []
     
+    private var fpsLabel: YYFPSLabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "朋友圈"
@@ -34,6 +36,11 @@ class SQFriendsMomentsController: UITableViewController {
         longPress.minimumPressDuration = 1
         btn.addGestureRecognizer(longPress)
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: btn)
+        
+        self.fpsLabel = YYFPSLabel(frame: CGRect(x: 10, y: kScreen_height - 100, width: 100, height: 30))
+        self.fpsLabel.sizeToFit()
+        self.fpsLabel.alpha = 0.0
+        UIApplication.shared.keyWindow?.addSubview(self.fpsLabel)
     }
     
     //MARK: -- Network handler
@@ -66,7 +73,18 @@ class SQFriendsMomentsController: UITableViewController {
     
     private func love(id: Int, complection: @escaping (_ success: Bool) -> ()) {
         
-        NetworkManager.request(targetType: TimelineAPIs.favorite(momentId: id)) { (result, error) in
+        NetworkManager.request(targetType: TimelineAPIs.favorite(momentId: id)) { (
+            result, error) in
+            if !result.isEmpty {
+                complection(true)
+            }
+        }
+    }
+    
+    private func cancelLove(id: Int, complection: @escaping (_ success: Bool) -> ()) {
+        
+        NetworkManager.request(targetType: TimelineAPIs.cancelFavorite(momentId: id)) {
+            (result, error) in
             if !result.isEmpty {
                 complection(true)
             }
@@ -119,6 +137,42 @@ class SQFriendsMomentsController: UITableViewController {
         getOperationView()?.hide()
     }
     
+    // MARK: -- UIScrollViewDelegate
+    
+    override func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        if self.fpsLabel.alpha == 0.0 {
+            UIView.animate(withDuration: 0.3, delay: 0, options: UIViewAnimationOptions.beginFromCurrentState, animations: {
+                self.fpsLabel.alpha = 1.0
+            }, completion: nil)
+        }
+    }
+    
+    override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        if self.fpsLabel.alpha != 0.0 {
+            UIView.animate(withDuration: 1, delay: 2, options: UIViewAnimationOptions.beginFromCurrentState, animations: {
+                self.fpsLabel.alpha = 0.0
+            }, completion: nil)
+        }
+    }
+    
+    override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if !decelerate {
+            if self.fpsLabel.alpha != 0.0 {
+                UIView.animate(withDuration: 1, delay: 2, options: UIViewAnimationOptions.beginFromCurrentState, animations: {
+                    self.fpsLabel.alpha = 0.0
+                }, completion: nil)
+            }
+        }
+    }
+    
+    override func scrollViewDidScrollToTop(_ scrollView: UIScrollView) {
+        if self.fpsLabel.alpha == 0.0 {
+            UIView.animate(withDuration: 0.3, delay: 0, options: UIViewAnimationOptions.beginFromCurrentState, animations: {
+                self.fpsLabel.alpha = 1.0
+            }, completion: nil)
+        }
+    }
+    
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         getOperationView()?.hide()
     }
@@ -150,11 +204,19 @@ extension SQFriendsMomentsController: FriendMomentCellDelegate {
         let operationView = FriendMomentOpeationView(frame: CGRect(x: 0, y: 0, width: 140, height: 34), point: point) {  [weak self] (type) in
             if type == 1 {
                 //点赞
-                self?.love(id: layout.timelineModel.momentId, complection: {
-                    (success) in
-                    self?.getOperationView()?.loved = success
-                    layout.isLoved = success
-                })
+                if layout.isLoved {
+                    self?.cancelLove(id: layout.timelineModel.momentId, complection: { (cancel) in
+                        self?.getOperationView()?.loved = cancel
+                        layout.isLoved = cancel
+                    })
+                } else {
+                    self?.love(id: layout.timelineModel.momentId, complection: {
+                        (success) in
+                        self?.getOperationView()?.loved = success
+                        layout.isLoved = success
+                    })
+                }
+                
             } else {
                 //评论
             }

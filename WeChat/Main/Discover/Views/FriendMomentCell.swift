@@ -19,6 +19,8 @@ class FriendMomentCommentView: UIView {
     
     var line: UIView!
     
+    var contentViewArr: [UIView] = []
+    
     var comments: [TimelineLayoutService.CommentInfo] = [] {
         didSet {
             loadComments()
@@ -60,19 +62,29 @@ class FriendMomentCommentView: UIView {
     }
     
     private func loadComments() {
-        // TODO: 优化多次创建
-        var top: CGFloat = 0
-        for element in self.comments {
-            let backView = UIView(frame: CGRect(x: 2, y: top, width: kContentWidth - 2, height: element.height))
-            let text = YYLabel(frame: CGRect(x: 2, y: 0, width: kContentWidth - 2, height: element.height))
-            text.font = kTimeFont
-            text.numberOfLines = 0
-            text.preferredMaxLayoutWidth = kContentWidth - 2
-            text.attributedText = element.content
-            backView.addSubview(text)
-            self.contentView.addSubview(backView)
-            top += element.height
+        
+        if self.comments.count > self.contentViewArr.count {
+            var top: CGFloat = self.contentViewArr.last?.maxY ?? 0
+            let count = self.contentViewArr.count
+            for (index, element) in self.comments.enumerated() {
+                if index >= count {
+                    let backView = UIView(frame: CGRect(x: 2, y: top, width: kContentWidth - 2, height: element.height))
+                    backView.addSubview(setupLable(element: element))
+                    top += element.height
+                    self.contentViewArr.append(backView)
+                    self.contentView.addSubview(backView)
+                }
+            }
         }
+    }
+    
+    private func setupLable(element: TimelineLayoutService.CommentInfo) -> YYLabel {
+        let text = YYLabel(frame: CGRect(x: 2, y: 0, width: kContentWidth - 2, height: element.height))
+        text.font = kTimeFont
+        text.numberOfLines = 0
+        text.preferredMaxLayoutWidth = kContentWidth - 2
+        text.attributedText = element.content
+        return text
     }
     
     required init?(coder aDecoder: NSCoder) {

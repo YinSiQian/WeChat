@@ -18,7 +18,7 @@ class FriendMomentOpeationView: UIView {
     
     var loved: Bool = false {
         didSet {
-            
+            updateLoveBtnTitle()
         }
     }
     
