@@ -31,7 +31,8 @@ class SQMessageViewController: UIViewController {
             SQWebSocketService.sharedInstance.connectionServer(complectionHanlder: {
                 //            [weak self] in
                 
-            }) { [weak self] (error) in
+            }) {
+                [weak self] (error) in
                 
             }
         }

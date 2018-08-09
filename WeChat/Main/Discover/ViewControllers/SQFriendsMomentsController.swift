@@ -49,7 +49,6 @@ class SQFriendsMomentsController: UITableViewController {
         NetworkManager.request(targetType: TimelineAPIs.list(timestamp: "2018-06-21 16:13:33")) {
             [weak self] (result, error) in
             if !result.isEmpty {
-                print(result as Any)
                 let arr = result["list"] as! [[String: Any]]
                 let data = try! MomentModel.mapToArr(data: arr, type: Array<MomentModel>.self)
                 self?.handlerDataAsnyc(data: data)
@@ -72,7 +71,7 @@ class SQFriendsMomentsController: UITableViewController {
     }
     
     private func love(id: Int, complection: @escaping (_ success: Bool) -> ()) {
-        
+
         NetworkManager.request(targetType: TimelineAPIs.favorite(momentId: id)) { (
             result, error) in
             if !result.isEmpty {
@@ -87,6 +86,19 @@ class SQFriendsMomentsController: UITableViewController {
             (result, error) in
             if !result.isEmpty {
                 complection(true)
+            }
+        }
+    }
+    
+    private func publishedComment(momentId: Int,
+                                  content: String,
+                                  receivedId: Int,
+                                  isComment: Int,
+                                  complection: @escaping (_ result: [String: Any]) -> ()) {
+        
+        NetworkManager.request(targetType: TimelineAPIs.addComment(momentId: momentId, content: content, uid: receivedId, isComment: isComment)) { (result, error) in
+            if result.isEmpty {
+                complection(result)
             }
         }
     }
@@ -199,7 +211,7 @@ extension SQFriendsMomentsController: FriendMomentCellDelegate {
             view.hide()
             return
         }
-        var layout = self.layouts[indexPath.row]
+        let layout = self.layouts[indexPath.row]
         print(layout as Any)
         let operationView = FriendMomentOpeationView(frame: CGRect(x: 0, y: 0, width: 140, height: 34), point: point) {  [weak self] (type) in
             if type == 1 {
@@ -207,20 +219,21 @@ extension SQFriendsMomentsController: FriendMomentCellDelegate {
                 if layout.isLoved {
                     self?.cancelLove(id: layout.timelineModel.momentId, complection: { (cancel) in
                         self?.getOperationView()?.loved = cancel
-                        layout.isLoved = cancel
+                        self?.layouts[indexPath.row].isLoved = cancel
                     })
                 } else {
                     self?.love(id: layout.timelineModel.momentId, complection: {
                         (success) in
                         self?.getOperationView()?.loved = success
-                        layout.isLoved = success
-                        print(layout as Any)
-
+                        self?.layouts[indexPath.row].isLoved = success
                     })
                 }
                 
             } else {
                 //评论
+                self?.publishedComment(momentId: layout.timelineModel.momentId, content: "text", receivedId: layout.timelineModel.userId, isComment: 1, complection: { (result) in
+                    
+                })
             }
             self?.getOperationView()?.hide()
         }

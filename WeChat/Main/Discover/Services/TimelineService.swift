@@ -18,7 +18,7 @@ public enum TimelineAPIs {
     //删除
     case delete(momentId: Int)
     //添加评论
-    case addComment(momentId: Int, content: String, uid: Int)
+    case addComment(momentId: Int, content: String, uid: Int, isComment: Int)
     //删除评论
     case deleteComment(id: Int)
     //点赞
@@ -39,7 +39,7 @@ extension TimelineAPIs: TargetType {
             return "moments/update"
         case .delete(momentId: _):
             return "moments/delete"
-        case .addComment(momentId: _, content: _, uid: _):
+        case .addComment(momentId: _, content: _, uid: _, isComment: _):
             return "moments/addComment"
         case .deleteComment(id: _):
             return "moments/deleteComment"
@@ -60,7 +60,7 @@ extension TimelineAPIs: TargetType {
             return .post
         case .delete(momentId: _):
             return .post
-        case .addComment(momentId: _, content: _, uid: _):
+        case .addComment(momentId: _, content: _, uid: _, isComment: _):
             return .post
         case .deleteComment(id: _):
             return .post
@@ -81,8 +81,8 @@ extension TimelineAPIs: TargetType {
             return .requestParameters(parameters: ["content": content, "momentId": momentId, "location": location], encoding: URLEncoding.default)
         case .delete(let momentId):
             return .requestParameters(parameters: ["momentId": momentId], encoding: URLEncoding.default)
-        case .addComment(let momentId, let content, let uid):
-            return .requestParameters(parameters: ["momentId": momentId, "content": content, "uid": uid], encoding: URLEncoding.default)
+        case .addComment(let momentId, let content, let uid, let isComment):
+            return .requestParameters(parameters: ["momentId": momentId, "content": content, "uid": uid, "isComment": isComment], encoding: URLEncoding.default)
         case .deleteComment(let id):
             return .requestParameters(parameters: ["id": id], encoding: URLEncoding.default)
         case .favorite(let momentId):
