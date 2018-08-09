@@ -34,7 +34,12 @@ public class NetworkManager {
                 } else {
                     let customError = NSError(domain: baseUrl.absoluteString, code: code, userInfo: ["message": value["message"] as Any])
                     compection([:], customError)
-                AppDelegate.currentAppdelegate().root.selectedViewController?.currentControllerInKeyWindow?.showError(error: customError)
+                    let root = AppDelegate.currentAppdelegate().root
+                    if root is UITabBarController {
+                        (root as! UITabBarController).selectedViewController?.currentControllerInKeyWindow?.showError(error: customError)
+                    } else {
+                        AppDelegate.currentAppdelegate().root?.currentControllerInKeyWindow?.showError(error: customError)
+                    }
                 }
             } catch {
                 print(error.localizedDescription)
