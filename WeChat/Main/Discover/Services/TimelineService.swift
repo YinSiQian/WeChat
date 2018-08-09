@@ -24,7 +24,7 @@ public enum TimelineAPIs {
     //点赞
     case favorite(momentId: Int)
     //取消点赞
-    case cancelFavorite(momentId: Int)
+    case cancelFavorite(id: Int)
 }
 
 extension TimelineAPIs: TargetType {
@@ -45,7 +45,7 @@ extension TimelineAPIs: TargetType {
             return "moments/deleteComment"
         case .favorite(momentId: _):
             return "moments/favorite"
-        case .cancelFavorite(momentId: _):
+        case .cancelFavorite(id: _):
             return "moments/cancelFavorite"
         }
     }
@@ -66,7 +66,7 @@ extension TimelineAPIs: TargetType {
             return .post
         case .favorite(momentId: _):
             return .post
-        case .cancelFavorite(momentId: _):
+        case .cancelFavorite(id: _):
             return .post
         }
     }
@@ -87,8 +87,8 @@ extension TimelineAPIs: TargetType {
             return .requestParameters(parameters: ["id": id], encoding: URLEncoding.default)
         case .favorite(let momentId):
             return .requestParameters(parameters: ["momentId": momentId], encoding: URLEncoding.default)
-        case .cancelFavorite(let momentId):
-            return .requestParameters(parameters: ["momentId": momentId], encoding: URLEncoding.default)
+        case .cancelFavorite(let id):
+            return .requestParameters(parameters: ["id": id], encoding: URLEncoding.default)
         }
     }
     

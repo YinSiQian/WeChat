@@ -83,7 +83,7 @@ class SQFriendsMomentsController: UITableViewController {
     
     private func cancelLove(id: Int, complection: @escaping (_ success: Bool) -> ()) {
         
-        NetworkManager.request(targetType: TimelineAPIs.cancelFavorite(momentId: id)) {
+        NetworkManager.request(targetType: TimelineAPIs.cancelFavorite(id: id)) {
             (result, error) in
             if !result.isEmpty {
                 complection(true)
@@ -200,7 +200,7 @@ extension SQFriendsMomentsController: FriendMomentCellDelegate {
             return
         }
         var layout = self.layouts[indexPath.row]
-
+        print(layout as Any)
         let operationView = FriendMomentOpeationView(frame: CGRect(x: 0, y: 0, width: 140, height: 34), point: point) {  [weak self] (type) in
             if type == 1 {
                 //点赞
@@ -214,6 +214,8 @@ extension SQFriendsMomentsController: FriendMomentCellDelegate {
                         (success) in
                         self?.getOperationView()?.loved = success
                         layout.isLoved = success
+                        print(layout as Any)
+
                     })
                 }
                 
