@@ -37,12 +37,16 @@ class SQLoginViewController: UIViewController {
             return
         }
         
-        
+        self.view.showIndicator(message: "正在登录...")
         NetworkManager.request(targetType: LoginAPI.login(phone: self.phoneTF.text!, password: self.passwordTF.text!)) { (response, error) in
             print(response)
             if !response.isEmpty {
+                self.view.hideHUD()
+                self.view.show(message: "登录成功!")
                 UserModel.sharedInstance.initialData(data: response["data"] as! [String : Any])
-                AppDelegate.currentAppdelegate().window?.rootViewController = SQRootViewController()
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2, execute: {
+                    AppDelegate.currentAppdelegate().window?.rootViewController = SQRootViewController()
+                })
             }
         }
     }

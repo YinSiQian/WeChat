@@ -34,7 +34,7 @@ public class NetworkManager {
                 } else {
                     let customError = NSError(domain: baseUrl.absoluteString, code: code, userInfo: ["message": value["message"] as Any])
                     compection([:], customError)
-                    AppDelegate.currentAppdelegate().root.selectedViewController?.showError(error: customError)
+                AppDelegate.currentAppdelegate().root.selectedViewController?.currentControllerInKeyWindow?.showError(error: customError)
                 }
             } catch {
                 print(error.localizedDescription)

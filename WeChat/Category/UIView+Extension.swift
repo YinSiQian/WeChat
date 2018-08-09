@@ -63,5 +63,32 @@ extension UIView {
         }
     }
     
+    public func hideHUD() {
+        MBProgressHUD.hide(for: self, animated: true)
+    }
+    
+    public func showIndicator(message: String) {
+        let hud = MBProgressHUD(view: self)
+        hud.mode = .indeterminate
+        hud.label.text = message
+        hud.show(animated: true)
+        self.addSubview(hud)
+    }
+    
+    public func show(message: String, delay: TimeInterval) {
+        
+        let hud = MBProgressHUD(view: UIApplication.shared.keyWindow!)
+        hud.mode = .text
+        hud.label.text = message
+        hud.show(animated: true)
+        hud.hide(animated: true, afterDelay: delay)
+        UIApplication.shared.keyWindow?.addSubview(hud)
+    }
+    
+    public func show(message: String) {
+        
+        self.show(message: message, delay: 2.0)
+    }
+    
     
 }

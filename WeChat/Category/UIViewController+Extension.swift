@@ -49,13 +49,14 @@ extension NavgationBarTheme where Self: UIViewController {
 extension NetworkErrorHandler where Self: UIViewController {
     
     func showError(error: NSError? = NSError(domain: baseUrl.absoluteString, code: 200, userInfo: ["message": "成功"])) {
+        self.view.hideHUD()
         guard error != nil else {
             return
         }
         let code = error!.code
         let msg = error!.userInfo["message"] as! String
         print("msg--->\(msg)   code---->\(code)")
-        
+        self.view.show(message: msg)
     }
 }
 
@@ -74,6 +75,23 @@ extension UIViewController {
             }
             return value as! CGFloat
         }
+    }
+    
+    var currentControllerInKeyWindow: UIViewController? {
+        
+        if self is UINavigationController {
+            let topViewController = (self as! UINavigationController).topViewController
+            if let top = topViewController {
+                if let presentViewController = top.presentedViewController {
+                    if presentViewController is UINavigationController {
+                        return (presentViewController as! UINavigationController).topViewController
+                    }
+                    return presentViewController
+                }
+            }
+            return topViewController
+        }
+        return self
     }
     
 }
