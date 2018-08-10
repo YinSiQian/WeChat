@@ -14,10 +14,19 @@ class SQFriendsMomentsController: UITableViewController {
     
     private var fpsLabel: YYFPSLabel!
     
+    lazy var commentInputView: FriendMomentInputView = {
+        let inputView = FriendMomentInputView(frame: CGRect(x: 0, y: kScreen_height - 40, width: kScreen_width, height: 40), placeholder: "评论", complectionHandler: { (text) in
+            
+        })
+        return inputView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "朋友圈"
         tableView.tableFooterView = UIView()
+        tableView.keyboardDismissMode = .onDrag
+        setObserver()
         setNavItem()
         loadData()
         
@@ -26,6 +35,11 @@ class SQFriendsMomentsController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         loadNavbarTheme(theme: .white)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewDidDisappear(true)
+        getOperationView()?.hide()
     }
     
     private func setNavItem() {
@@ -43,6 +57,12 @@ class SQFriendsMomentsController: UITableViewController {
         UIApplication.shared.keyWindow?.addSubview(self.fpsLabel)
     }
     
+    private func setObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(SQFriendsMomentsController.keyboardWillShow(noti:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SQFriendsMomentsController.keyboardWillHide(noti:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SQFriendsMomentsController.keyboardFrameChanged(noti:)), name: NSNotification.Name.UIKeyboardDidChangeFrame, object: nil)
+    }
+    
     //MARK: -- Network handler
     
     private func loadData() {
@@ -54,6 +74,63 @@ class SQFriendsMomentsController: UITableViewController {
                 self?.handlerDataAsnyc(data: data)
             }
         }
+    }
+    
+    private func love(index: Int) {
+        let layout = layouts[index]
+        NetworkManager.request(targetType: TimelineAPIs.favorite(momentId: layout.timelineModel.momentId, isLoved: layout.isLoved)) { (
+            result, error) in
+            if !result.isEmpty {
+                //点赞
+                if layout.isLoved == 0 {
+                    self.layouts[index].isLoved = 1
+                } else {
+                    self.layouts[index].isLoved = 0
+                }
+                self.handlerLoveData(data: result, isLoved: layout.isLoved, index: index)
+            }
+        }
+    }
+    
+    
+    private func publishedComment(index: Int, content: String) {
+        
+        let layout = layouts[index]
+        NetworkManager.request(targetType: TimelineAPIs.addComment(momentId: layout.timelineModel.momentId,
+                                                                   content: content,
+                                                                   uid: layout.timelineModel.userId,
+                                                                   isComment: 1)) {
+        (result, error) in
+            if result.isEmpty {
+                let dict = result["data"] as! [String: Any]
+                if let comment = try? MomentModel.Comment.mapToModel(data: dict, type: MomentModel.Comment.self) {
+                    self.layouts[index].timelineModel.comments.append(comment)
+                }
+            }
+        }
+    }
+    
+    // MARK: -- Handler Data
+    
+    private func handlerLoveData(data: [String: Any], isLoved: Int, index: Int) {
+        if isLoved == 1 {
+            //取消点赞成功
+            for (loveIndex, love) in layouts[index].timelineModel.loves.enumerated() {
+                if love.uid == UserModel.sharedInstance.id {
+                    layouts[index].timelineModel.loves.remove(at: loveIndex)
+                    break
+                }
+            }
+        } else {
+            //点赞成功
+            let dict = data["data"] as! [String: Any]
+            if let loveInfo = try? MomentModel.Love.mapToModel(data: dict, type: MomentModel.Love.self) {
+                self.layouts[index].timelineModel.loves.append(loveInfo)
+                
+            }
+        }
+        tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+
     }
     
     private func handlerDataAsnyc(data: Array<MomentModel>) {
@@ -69,45 +146,40 @@ class SQFriendsMomentsController: UITableViewController {
             })
         }
     }
-    
-    private func love(id: Int, complection: @escaping (_ success: Bool) -> ()) {
 
-        NetworkManager.request(targetType: TimelineAPIs.favorite(momentId: id)) { (
-            result, error) in
-            if !result.isEmpty {
-                complection(true)
-            }
-        }
-    }
-    
-    private func cancelLove(id: Int, complection: @escaping (_ success: Bool) -> ()) {
-        
-        NetworkManager.request(targetType: TimelineAPIs.cancelFavorite(id: id)) {
-            (result, error) in
-            if !result.isEmpty {
-                complection(true)
-            }
-        }
-    }
-    
-    private func publishedComment(momentId: Int,
-                                  content: String,
-                                  receivedId: Int,
-                                  isComment: Int,
-                                  complection: @escaping (_ result: [String: Any]) -> ()) {
-        
-        NetworkManager.request(targetType: TimelineAPIs.addComment(momentId: momentId, content: content, uid: receivedId, isComment: isComment)) { (result, error) in
-            if result.isEmpty {
-                complection(result)
-            }
-        }
-    }
     
     // MARK: -- Events
     
     @objc private func postTextMomentInfo() {
         let edit = MomentEditViewController()        
         self.present(SQNavigationViewController(rootViewController: edit), animated: true, completion: nil)
+    }
+    
+    @objc private func keyboardWillShow(noti: Notification) {
+        let rect = noti.userInfo?[UIKeyboardFrameEndUserInfoKey] as! CGRect
+        UIView.animate(withDuration: 0.25) {
+            self.commentInputView.minY = rect.origin.y - self.commentInputView.height
+            self.commentInputView.originY = rect.origin.y - self.commentInputView.height
+        }
+
+    }
+    
+    @objc private func keyboardWillHide(noti: NSNotification) {
+        let rect = noti.userInfo?[UIKeyboardFrameEndUserInfoKey] as! CGRect
+        UIView.animate(withDuration: 0.25) {
+            self.commentInputView.minY = rect.origin.y - self.commentInputView.height
+            self.commentInputView.originY = rect.origin.y - self.commentInputView.height
+        }
+        
+    }
+    
+    @objc private func keyboardFrameChanged(noti: NSNotification) {
+        let rect = noti.userInfo?[UIKeyboardFrameEndUserInfoKey] as! CGRect
+
+        UIView.animate(withDuration: 0.25) {
+            self.commentInputView.minY = rect.origin.y - self.commentInputView.height
+            self.commentInputView.originY = rect.origin.y - self.commentInputView.height
+        }
     }
     
     @objc private func openCamera() {
@@ -192,7 +264,7 @@ class SQFriendsMomentsController: UITableViewController {
     // MARK: -- Private method
     
     private func getOperationView() -> FriendMomentOpeationView? {
-        if  let view = UIApplication.shared.keyWindow?.viewWithTag(12306) as? FriendMomentOpeationView {
+        if let view = UIApplication.shared.keyWindow?.viewWithTag(12306) as? FriendMomentOpeationView {
             return view
         }
         return nil
@@ -216,24 +288,12 @@ extension SQFriendsMomentsController: FriendMomentCellDelegate {
         let operationView = FriendMomentOpeationView(frame: CGRect(x: 0, y: 0, width: 140, height: 34), point: point) {  [weak self] (type) in
             if type == 1 {
                 //点赞
-                if layout.isLoved {
-                    self?.cancelLove(id: layout.timelineModel.momentId, complection: { (cancel) in
-                        self?.getOperationView()?.loved = cancel
-                        self?.layouts[indexPath.row].isLoved = cancel
-                    })
-                } else {
-                    self?.love(id: layout.timelineModel.momentId, complection: {
-                        (success) in
-                        self?.getOperationView()?.loved = success
-                        self?.layouts[indexPath.row].isLoved = success
-                    })
-                }
+                self?.love(index: indexPath.row)
                 
             } else {
                 //评论
-                self?.publishedComment(momentId: layout.timelineModel.momentId, content: "text", receivedId: layout.timelineModel.userId, isComment: 1, complection: { (result) in
-                    
-                })
+                UIApplication.shared.keyWindow?.addSubview((self?.commentInputView)!)
+//                self?.publishedComment(index: indexPath.row, content: "text")
             }
             self?.getOperationView()?.hide()
         }

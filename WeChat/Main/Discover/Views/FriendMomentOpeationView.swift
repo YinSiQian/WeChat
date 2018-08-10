@@ -16,7 +16,7 @@ class FriendMomentOpeationView: UIView {
     
     var clickAction: action!
     
-    var loved: Bool = false {
+    var loved: Int = 0 {
         didSet {
             updateLoveBtnTitle()
         }
@@ -26,8 +26,6 @@ class FriendMomentOpeationView: UIView {
         super.init(frame: frame)
         self.backgroundColor = UIColor.clear
         self.clipsToBounds = true
-//        let tag = UITapGestureRecognizer(target: self, action: #selector(FriendMomentOpeationView.hide))
-//        self.addGestureRecognizer(tag)
     }
     
     convenience init(frame: CGRect, point: CGPoint, action: @escaping (_ type: Int) -> Void) {
@@ -56,7 +54,7 @@ class FriendMomentOpeationView: UIView {
         self.contentView.addSubview(commentBtn)
         
         let loveBtn = UIButton(frame: CGRect(x: 0, y: 0, width: self.width / 2, height: self.height))
-        if self.loved {
+        if self.loved == 1 {
             loveBtn.setTitle("取消", for: .normal)
         } else {
             loveBtn.setTitle("赞", for: .normal)
@@ -97,7 +95,7 @@ class FriendMomentOpeationView: UIView {
     
     private func updateLoveBtnTitle() {
         let btn = self.viewWithTag(1) as! UIButton
-        if self.loved {
+        if self.loved == 1 {
             btn.setTitle("取消", for: .normal)
         } else {
             btn.setTitle("赞", for: .normal)

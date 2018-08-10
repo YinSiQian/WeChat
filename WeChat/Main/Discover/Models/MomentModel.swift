@@ -20,8 +20,8 @@ struct MomentModel: Mappable {
     let userIcon: String
     //发布人
     let userId: Int
-    let comments: [Comment]
-    let loves: [Love]
+    var comments: [Comment]
+    var loves: [Love]
     let urlInfo: [ImageInfo]
     
     struct Love: Mappable {

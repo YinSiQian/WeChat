@@ -9,7 +9,7 @@
 import UIKit
 import Kingfisher
 
-class FriendMomentCommentView: UIView {
+class FriendMomentInputCommentView: UIView {
     
     var contentView: UIView!
 
@@ -36,7 +36,7 @@ class FriendMomentCommentView: UIView {
     
     private func setupSubviews() {
         let arrowImageView = UIImageView(image: UIImage(named: "friend_triangle"))
-        arrowImageView.tintColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        arrowImageView.tintColor = UIColor(hex6: 0xf0f0f0)
         self.addSubview(arrowImageView)
         
         self.loveContentView = UIView(frame: CGRect(x: 0, y: 5, width: self.width, height: 0))
@@ -51,8 +51,8 @@ class FriendMomentCommentView: UIView {
         
         self.addSubview(self.loveContentView)
         
-        self.line = UIView(frame: CGRect(x: 0, y: 0, width: self.width, height: 1))
-        self.line.backgroundColor = #colorLiteral(red: 0.7288303684, green: 0.7288303684, blue: 0.7288303684, alpha: 1)
+        self.line = UIView(frame: CGRect(x: 0, y: 0, width: self.width, height: 0.5))
+        self.line.backgroundColor = #colorLiteral(red: 0.8796480759, green: 0.8796480759, blue: 0.8796480759, alpha: 1)
         self.line.isHidden = true
         self.loveContentView.addSubview(self.line)
         
@@ -145,7 +145,7 @@ class FriendMomentCell: UITableViewCell {
     
     var moreBtn: UIButton!
     
-    var commentView: FriendMomentCommentView!
+    var commentView: FriendMomentInputCommentView!
     
     var delegate: FriendMomentCellDelegate?
     
@@ -207,7 +207,7 @@ class FriendMomentCell: UITableViewCell {
         self.moreBtn.addTarget(self, action: #selector(FriendMomentCell.showOperation(sender:)), for: .touchUpInside)
         self.contentView.addSubview(self.moreBtn)
         
-        self.commentView = FriendMomentCommentView(frame: CGRect(x: kPicsPaddingLeft, y: 0, width: kContentWidth, height: 0))
+        self.commentView = FriendMomentInputCommentView(frame: CGRect(x: kPicsPaddingLeft, y: 0, width: kContentWidth, height: 0))
         self.contentView.addSubview(self.commentView)
         
     }

@@ -30,7 +30,11 @@ public class NetworkManager {
                 let code = value["code"] as! Int
                 if code == 200 {
                     let data = value["data"] as! [String: Any]
-                    compection(data, nil)
+                    if data.isEmpty {
+                        compection(value, nil)
+                    } else {
+                        compection(data, nil)
+                    }
                 } else {
                     let customError = NSError(domain: baseUrl.absoluteString, code: code, userInfo: ["message": value["message"] as Any])
                     compection([:], customError)

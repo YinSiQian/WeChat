@@ -15,6 +15,7 @@
 		0A794503211BF2330045FCC9 /* YYFPSLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A794502211BF2330045FCC9 /* YYFPSLabel.m */; };
 		0A794506211BF3530045FCC9 /* YYWeakProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A794504211BF3530045FCC9 /* YYWeakProxy.m */; };
 		0AA8FD0C21140A0F0039C630 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA8FD0B21140A0F0039C630 /* UIView+Extension.swift */; };
+		0AD2081D211D77F40060E32F /* FriendMomentInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD2081C211D77F40060E32F /* FriendMomentInputView.swift */; };
 		0AEEF07D2119883A00378E69 /* MomentEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AEEF07C2119883A00378E69 /* MomentEditViewController.swift */; };
 		0D67BB0BCADAC71027EF78F5 /* Pods_WeChatTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B0542E27FB541926BA8969A /* Pods_WeChatTests.framework */; };
 		24EE167E4AA16A2BD4F30D3A /* Pods_WeChatUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B25E383BD640089DEF78B89 /* Pods_WeChatUITests.framework */; };
@@ -100,6 +101,7 @@
 		0A794504211BF3530045FCC9 /* YYWeakProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYWeakProxy.m; sourceTree = "<group>"; };
 		0A794505211BF3530045FCC9 /* YYWeakProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYWeakProxy.h; sourceTree = "<group>"; };
 		0AA8FD0B21140A0F0039C630 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
+		0AD2081C211D77F40060E32F /* FriendMomentInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendMomentInputView.swift; sourceTree = "<group>"; };
 		0AEEF07C2119883A00378E69 /* MomentEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentEditViewController.swift; sourceTree = "<group>"; };
 		314EE026DBE1BC6C19D1E965 /* Pods-WeChatTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeChatTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-WeChatTests/Pods-WeChatTests.release.xcconfig"; sourceTree = "<group>"; };
 		4519258E74664E5BDD03B12C /* Pods_WeChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WeChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -426,6 +428,7 @@
 			children = (
 				8BC09DAE2113501400DC463D /* FriendMomentCell.swift */,
 				8BF5313B2119F4B100DDDD29 /* FriendMomentOpeationView.swift */,
+				0AD2081C211D77F40060E32F /* FriendMomentInputView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -688,7 +691,7 @@
 		8BDCD8D21F65848300C53260 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				CLASSPREFIX = SQ;
+				CLASSPREFIX = "";
 				LastSwiftUpdateCheck = 0900;
 				LastUpgradeCheck = 1000;
 				ORGANIZATIONNAME = ysq;
@@ -905,6 +908,7 @@
 				8BFA39B12115336C004DAA90 /* SystemPhotoService.swift in Sources */,
 				8BE1CD3220936AFA007E017D /* FriendService.swift in Sources */,
 				8BFA39DC2115542A004DAA90 /* TZPhotoPickerController.m in Sources */,
+				0AD2081D211D77F40060E32F /* FriendMomentInputView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

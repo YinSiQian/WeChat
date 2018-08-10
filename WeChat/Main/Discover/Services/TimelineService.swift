@@ -22,9 +22,7 @@ public enum TimelineAPIs {
     //删除评论
     case deleteComment(id: Int)
     //点赞
-    case favorite(momentId: Int)
-    //取消点赞
-    case cancelFavorite(id: Int)
+    case favorite(momentId: Int, isLoved: Int)
 }
 
 extension TimelineAPIs: TargetType {
@@ -43,10 +41,8 @@ extension TimelineAPIs: TargetType {
             return "moments/addComment"
         case .deleteComment(id: _):
             return "moments/deleteComment"
-        case .favorite(momentId: _):
+        case .favorite(momentId: _, isLoved: _):
             return "moments/favorite"
-        case .cancelFavorite(id: _):
-            return "moments/cancelFavorite"
         }
     }
     
@@ -64,9 +60,7 @@ extension TimelineAPIs: TargetType {
             return .post
         case .deleteComment(id: _):
             return .post
-        case .favorite(momentId: _):
-            return .post
-        case .cancelFavorite(id: _):
+        case .favorite(momentId: _, isLoved: _):
             return .post
         }
     }
@@ -85,10 +79,9 @@ extension TimelineAPIs: TargetType {
             return .requestParameters(parameters: ["momentId": momentId, "content": content, "uid": uid, "isComment": isComment], encoding: URLEncoding.default)
         case .deleteComment(let id):
             return .requestParameters(parameters: ["id": id], encoding: URLEncoding.default)
-        case .favorite(let momentId):
-            return .requestParameters(parameters: ["momentId": momentId], encoding: URLEncoding.default)
-        case .cancelFavorite(let id):
-            return .requestParameters(parameters: ["id": id], encoding: URLEncoding.default)
+        case .favorite(let momentId, let isLoved):
+            return .requestParameters(parameters: ["momentId": momentId, "isLoved": isLoved], encoding: URLEncoding.default)
+        
         }
     }
     

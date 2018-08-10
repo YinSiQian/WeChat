@@ -42,9 +42,14 @@ let kNameColor = UIColor(hex6: 0x4460BB)
 
 struct TimelineLayoutService {
     
-    var timelineModel: MomentModel
+    var timelineModel: MomentModel {
+        didSet {
+            print("model is changed")
+            layout()
+        }
+    }
     
-    var isLoved: Bool = false
+    var isLoved: Int = 0
     
     var height: CGFloat = 0
     
@@ -61,7 +66,7 @@ struct TimelineLayoutService {
     
     var commentInfos: [CommentInfo] = []
     
-    var loveInfo: NSAttributedString = NSAttributedString()
+    var loveInfo: NSAttributedString!
         
     public init(timelineModel: MomentModel, height: CGFloat = 0,
                 contentHeight: CGFloat = 0, picsHeight: CGFloat = 0,
@@ -73,6 +78,10 @@ struct TimelineLayoutService {
     }
     
     private mutating func layout() {
+        
+        loveHeight = 0
+        loveInfo = NSAttributedString()
+        commentsHeight = 0
         
         self.height = 0
         
@@ -133,6 +142,9 @@ struct TimelineLayoutService {
             let count = self.timelineModel.loves.count
             var loveContent = " "
             for (index, element) in self.timelineModel.loves.enumerated() {
+                if element.uid == UserModel.sharedInstance.id {
+                    self.isLoved = 1
+                }
                 loveContent.append(element.username)
                 if index == count - 1 {
                     break
@@ -140,7 +152,7 @@ struct TimelineLayoutService {
                     loveContent.append("，")
                 }
             }
-            loveContent.append("，风清扬，刘正风，曲洋，习大大，李克强，温家宝，江泽民，胡锦涛")
+//            loveContent.append("，风清扬，刘正风，曲洋，习大大，李克强，温家宝，江泽民，胡锦涛")
             
             let attach = NSTextAttachment(data: nil, ofType: nil)
             attach.image = UIImage(named: "friend_loved")
@@ -149,9 +161,9 @@ struct TimelineLayoutService {
             
             let attribute = NSMutableAttributedString(string: loveContent)
             attribute.insert(attachAttributeString, at: 0)
-            loveInfo = attribute.copy() as! NSAttributedString
+            loveInfo = (attribute.copy() as! NSAttributedString)
             
-            loveHeight = attribute.string.calculate(font: kContentFont, size: CGSize(width: kContentWidth, height: CGFloat(MAXFLOAT))).height + 5
+            loveHeight = attribute.string.calculate(font: kContentFont, size: CGSize(width: kContentWidth, height: CGFloat(MAXFLOAT))).height + 10
             commentsHeight += loveHeight
             
         }
