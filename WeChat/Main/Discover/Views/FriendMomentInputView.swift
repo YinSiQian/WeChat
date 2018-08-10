@@ -16,6 +16,8 @@ class FriendMomentInputView: UIView {
 
     var placeholder: String?
     
+    var currentTextViewHeight: CGFloat = 33
+    
     var draft: String? {
         didSet {
             textView.text = draft
@@ -33,6 +35,7 @@ class FriendMomentInputView: UIView {
         self.backgroundColor = #colorLiteral(red: 0.9208731393, green: 0.9492385787, blue: 0.8798525198, alpha: 1)
         originY = self.minY
         setupSubviews()
+        addObserver()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -62,11 +65,18 @@ class FriendMomentInputView: UIView {
         textView.delegate = self
         self.addSubview(textView)
         
-        placeholderLable = UILabel(frame: CGRect(x: 0, y: 0, width: self.width, height: 30))
+        placeholderLable = UILabel(frame: CGRect(x: 3, y: 0, width: self.width, height: 30))
         placeholderLable.textColor = UIColor.lightText
         placeholderLable.font = UIFont.systemFont(ofSize: 14)
         placeholderLable.text = placeholder
         textView.addSubview(placeholderLable)
+        
+    }
+    
+    private func addObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(FriendMomentInputView.keyboardWillShow(noti:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(FriendMomentInputView.keyboardWillHide(noti:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(FriendMomentInputView.keyboardFrameChanged(noti:)), name: NSNotification.Name.UIKeyboardDidChangeFrame, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(FriendMomentInputView.textViewDidChanged(noti:)), name: NSNotification.Name.UITextViewTextDidChange, object: nil)
     }
@@ -77,16 +87,50 @@ class FriendMomentInputView: UIView {
         let rect = object.frame
         let constraintSize = CGSize(width: rect.size.width, height: CGFloat(MAXFLOAT))
         var size = object.sizeThatFits(constraintSize)
-        
+        let detla = size.height - currentTextViewHeight
+
         if size.height >= maxHeight {
             size.height = maxHeight
             object.isScrollEnabled = true
         } else {
             object.isScrollEnabled = false
         }
-        self.frame = CGRect(x: 0, y: originY , width: self.width, height: size.height + 10)
-        object.frame = CGRect(x: rect.origin.x, y: rect.origin.y, width: rect.size.width, height: size.height)
+        if size.height < maxHeight {
+            UIView.animate(withDuration: 0.2) {
+                self.frame = CGRect(x: 0, y: self.originY - detla , width: self.width, height: size.height + 10)
+            }
+        }
+        UIView.animate(withDuration: 0.2) {
+            object.frame = CGRect(x: rect.origin.x, y: rect.origin.y, width: rect.size.width, height: size.height)
+        }
         
+    }
+    
+    @objc private func keyboardWillShow(noti: Notification) {
+        let rect = noti.userInfo?[UIKeyboardFrameEndUserInfoKey] as! CGRect
+        UIView.animate(withDuration: 0.25) {
+            self.minY = rect.origin.y - self.height
+            self.originY = rect.origin.y - self.height
+        }
+        
+    }
+    
+    @objc private func keyboardWillHide(noti: NSNotification) {
+        let rect = noti.userInfo?[UIKeyboardFrameEndUserInfoKey] as! CGRect
+        UIView.animate(withDuration: 0.25) {
+            self.minY = rect.origin.y - self.height
+            self.originY = rect.origin.y - self.height
+        }
+        currentTextViewHeight = self.textView.height
+    }
+    
+    @objc private func keyboardFrameChanged(noti: NSNotification) {
+        let rect = noti.userInfo?[UIKeyboardFrameEndUserInfoKey] as! CGRect
+        
+        UIView.animate(withDuration: 0.25) {
+            self.minY = rect.origin.y - self.height
+            self.originY = rect.origin.y - self.height
+        }
     }
     
 }

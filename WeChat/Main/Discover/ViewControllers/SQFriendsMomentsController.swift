@@ -26,7 +26,7 @@ class SQFriendsMomentsController: UITableViewController {
         self.title = "朋友圈"
         tableView.tableFooterView = UIView()
         tableView.keyboardDismissMode = .onDrag
-        setObserver()
+//        setObserver()
         setNavItem()
         loadData()
         
@@ -78,16 +78,16 @@ class SQFriendsMomentsController: UITableViewController {
     
     private func love(index: Int) {
         let layout = layouts[index]
-        NetworkManager.request(targetType: TimelineAPIs.favorite(momentId: layout.timelineModel.momentId, isLoved: layout.isLoved)) { (
-            result, error) in
+        NetworkManager.request(targetType: TimelineAPIs.favorite(momentId: layout.timelineModel.momentId, isLoved: layout.isLoved)) {
+            [weak self] (result, error) in
             if !result.isEmpty {
                 //点赞
                 if layout.isLoved == 0 {
-                    self.layouts[index].isLoved = 1
+                    self?.layouts[index].isLoved = 1
                 } else {
-                    self.layouts[index].isLoved = 0
+                    self?.layouts[index].isLoved = 0
                 }
-                self.handlerLoveData(data: result, isLoved: layout.isLoved, index: index)
+                self?.handlerLoveData(data: result, isLoved: layout.isLoved, index: index)
             }
         }
     }
@@ -100,11 +100,11 @@ class SQFriendsMomentsController: UITableViewController {
                                                                    content: content,
                                                                    uid: layout.timelineModel.userId,
                                                                    isComment: 1)) {
-        (result, error) in
+        [weak self]  (result, error) in
             if result.isEmpty {
                 let dict = result["data"] as! [String: Any]
                 if let comment = try? MomentModel.Comment.mapToModel(data: dict, type: MomentModel.Comment.self) {
-                    self.layouts[index].timelineModel.comments.append(comment)
+                    self?.layouts[index].timelineModel.comments.append(comment)
                 }
             }
         }
@@ -147,7 +147,6 @@ class SQFriendsMomentsController: UITableViewController {
         }
     }
 
-    
     // MARK: -- Events
     
     @objc private func postTextMomentInfo() {
