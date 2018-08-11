@@ -10,11 +10,16 @@ import UIKit
 
 class FriendMomentInputView: UIView {
     
-    typealias complection = (_ text: String) -> Void
+    typealias complection = (_ text: String, _ index: Int) -> Void
     
     var complectionHandler: complection!
-
-    var placeholder: String?
+    
+    var placeholder: String? {
+        didSet {
+            placeholderLable.isHidden = false
+            placeholderLable.text = placeholder
+        }
+    }
     
     var currentTextViewHeight: CGFloat = 33
     
@@ -23,6 +28,8 @@ class FriendMomentInputView: UIView {
             textView.text = draft
         }
     }
+    
+    private var index: Int = 0
     
     private var placeholderLable: UILabel!
     
@@ -65,12 +72,12 @@ class FriendMomentInputView: UIView {
         textView.delegate = self
         self.addSubview(textView)
         
-        placeholderLable = UILabel(frame: CGRect(x: 3, y: 0, width: self.width, height: 30))
-        placeholderLable.textColor = UIColor.lightText
+        placeholderLable = UILabel(frame: CGRect(x: 8, y: 0, width: textView.width, height: 30))
+        placeholderLable.textColor = UIColor.lightGray
         placeholderLable.font = UIFont.systemFont(ofSize: 14)
         placeholderLable.text = placeholder
         textView.addSubview(placeholderLable)
-        
+                
     }
     
     private func addObserver() {
@@ -117,11 +124,16 @@ class FriendMomentInputView: UIView {
     
     @objc private func keyboardWillHide(noti: NSNotification) {
         let rect = noti.userInfo?[UIKeyboardFrameEndUserInfoKey] as! CGRect
-        UIView.animate(withDuration: 0.25) {
+        
+        UIView.animate(withDuration: 0.25, animations: {
             self.minY = rect.origin.y - self.height
             self.originY = rect.origin.y - self.height
+        }) { (_) in
+            self.isHidden = true
         }
+        
         currentTextViewHeight = self.textView.height
+        
     }
     
     @objc private func keyboardFrameChanged(noti: NSNotification) {
@@ -131,6 +143,25 @@ class FriendMomentInputView: UIView {
             self.minY = rect.origin.y - self.height
             self.originY = rect.origin.y - self.height
         }
+    }
+    
+    public func setIndex(currentIndex: Int) -> FriendMomentInputView {
+        if index != currentIndex {
+            draft = ""
+        }
+        index = currentIndex
+        return self
+    }
+    
+    public func hide() {
+        isHidden = true
+        self.textView.resignFirstResponder()
+    }
+    
+    public func show() -> FriendMomentInputView {
+        self.isHidden = false
+        self.textView.becomeFirstResponder()
+        return self
     }
     
 }
@@ -143,7 +174,9 @@ extension FriendMomentInputView: UITextViewDelegate {
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if text == "\n" {
-            complectionHandler?(textView.text)
+            complectionHandler?(textView.text, index)
+            textView.text = ""
+            textView.resignFirstResponder()
         }
         return true
     }

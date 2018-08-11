@@ -42,6 +42,8 @@ let kNameColor = UIColor(hex6: 0x4460BB)
 
 struct TimelineLayoutService {
     
+    private var isAdd = false
+    
     var timelineModel: MomentModel {
         didSet {
             print("model is changed")
@@ -79,9 +81,7 @@ struct TimelineLayoutService {
     
     private mutating func layout() {
         
-        loveHeight = 0
         loveInfo = NSAttributedString()
-        commentsHeight = 0
         
         self.height = 0
         
@@ -137,6 +137,7 @@ struct TimelineLayoutService {
         //时间
         self.height += kTimeHeight
         
+        commentsHeight -= loveHeight
         //点赞
         if !self.timelineModel.loves.isEmpty {
             let count = self.timelineModel.loves.count
@@ -152,25 +153,29 @@ struct TimelineLayoutService {
                     loveContent.append("，")
                 }
             }
-//            loveContent.append("，风清扬，刘正风，曲洋，习大大，李克强，温家宝，江泽民，胡锦涛")
             
             let attach = NSTextAttachment(data: nil, ofType: nil)
             attach.image = UIImage(named: "friend_loved")
             attach.bounds = CGRect(x: 4, y: -4, width: 15, height: 15)
             let attachAttributeString = NSAttributedString(attachment: attach)
             
+            let blankAttribute = NSAttributedString(string: " ")
+            
             let attribute = NSMutableAttributedString(string: loveContent)
-            attribute.insert(attachAttributeString, at: 0)
+            attribute.insert(blankAttribute, at: 0)
+            attribute.insert(attachAttributeString, at: 1)
             loveInfo = (attribute.copy() as! NSAttributedString)
             
             loveHeight = attribute.string.calculate(font: kContentFont, size: CGSize(width: kContentWidth, height: CGFloat(MAXFLOAT))).height + 10
             commentsHeight += loveHeight
             
+        } else {
+            loveHeight = 0
         }
         
         //评论
-        if !self.timelineModel.comments.isEmpty {
-            for element in self.timelineModel.comments {
+        for (elementIndex ,element) in self.timelineModel.comments.enumerated() {
+            if elementIndex >= self.commentInfos.count {
                 var content = ""
                 if element.isComment == 1 {
                     //评论
@@ -188,14 +193,23 @@ struct TimelineLayoutService {
                     attributeText.addAttribute(NSAttributedStringKey.foregroundColor, value: kNameColor, range: receivedHighlightRange)
                 }
                 
+                
                 let info = CommentInfo(content: attributeText, height: height, replyHighlightRange: replyHighlightRange, receivedHighlightRange: receivedHighlightRange)
                 commentInfos.append(info)
                 
                 commentsHeight += height
             }
         }
-        
-        commentsHeight = commentsHeight > 0 ? commentsHeight + 5 : 0
+            
+      
+        if commentsHeight > 0 {
+            if !self.isAdd {
+                commentsHeight += 5
+                self.isAdd = true
+            }
+        } else {
+            self.isAdd = false
+        }
         
         self.height += commentsHeight
 

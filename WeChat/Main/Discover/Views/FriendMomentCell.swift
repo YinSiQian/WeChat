@@ -9,7 +9,16 @@
 import UIKit
 import Kingfisher
 
+protocol FriendMomentInputCommentViewDelegate: NSObjectProtocol {
+    
+    func clickCommentUsername(with index: Int, isReply: Bool)
+    
+    func clickCommentView(with index: Int)
+}
+
 class FriendMomentInputCommentView: UIView {
+    
+    weak var delegate: FriendMomentInputCommentViewDelegate?
     
     var contentView: UIView!
 
@@ -63,27 +72,41 @@ class FriendMomentInputCommentView: UIView {
     
     private func loadComments() {
         
-        if self.comments.count > self.contentViewArr.count {
-            var top: CGFloat = self.contentViewArr.last?.maxY ?? 0
-            let count = self.contentViewArr.count
-            for (index, element) in self.comments.enumerated() {
-                if index >= count {
-                    let backView = UIView(frame: CGRect(x: 2, y: top, width: kContentWidth - 2, height: element.height))
-                    backView.addSubview(setupLable(element: element))
-                    top += element.height
-                    self.contentViewArr.append(backView)
-                    self.contentView.addSubview(backView)
-                }
-            }
+        for elment in contentViewArr {
+            elment.removeFromSuperview()
+        }
+        contentViewArr.removeAll()
+        var top: CGFloat = 0
+        for (index, element) in comments.enumerated() {
+            let backView = UIView(frame: CGRect(x: 2, y: top, width: kContentWidth - 2, height: element.height))
+            let text = setupLable(element: element)
+            text.tag = index + 1
+            backView.addSubview(text)
+            top += element.height
+            self.contentViewArr.append(backView)
+            self.contentView.addSubview(backView)
         }
     }
     
     private func setupLable(element: TimelineLayoutService.CommentInfo) -> YYLabel {
+        let attribute = NSMutableAttributedString(attributedString: element.content)
+        attribute.yy_setTextHighlight(element.replyHighlightRange, color: kNameColor, backgroundColor: UIColor.red) { (containerView, text, range, rect) in
+            self.delegate?.clickCommentUsername(with: containerView.tag - 1, isReply: true)
+        }
+        
+        attribute.yy_setTextHighlight(element.receivedHighlightRange, color: kNameColor, backgroundColor: UIColor.red) { (containerView, text, range, rect) in
+            self.delegate?.clickCommentUsername(with: containerView.tag - 1, isReply: false)
+        }
+        
         let text = YYLabel(frame: CGRect(x: 2, y: 0, width: kContentWidth - 2, height: element.height))
         text.font = kTimeFont
         text.numberOfLines = 0
         text.preferredMaxLayoutWidth = kContentWidth - 2
-        text.attributedText = element.content
+        text.attributedText = attribute
+        text.textTapAction = {
+            (containerView, text, range, rect) in
+            self.delegate?.clickCommentView(with: containerView.tag - 1)
+        }
         return text
     }
     
@@ -127,6 +150,10 @@ class FriendMomentPicView: UIView {
 protocol FriendMomentCellDelegate: NSObjectProtocol {
     
     func showInterfaceColumnView(point: CGPoint, indexPath: NSIndexPath)
+    
+    func watchUserInfo(cell index: Int, commentIndex: Int, isReply: Bool)
+    
+    func reply(cell index: Int, commentIndex: Int)
 }
 
 class FriendMomentCell: UITableViewCell {
@@ -147,7 +174,7 @@ class FriendMomentCell: UITableViewCell {
     
     var commentView: FriendMomentInputCommentView!
     
-    var delegate: FriendMomentCellDelegate?
+    weak var delegate: FriendMomentCellDelegate?
     
     var layout: TimelineLayoutService! {
         didSet {
@@ -208,6 +235,7 @@ class FriendMomentCell: UITableViewCell {
         self.contentView.addSubview(self.moreBtn)
         
         self.commentView = FriendMomentInputCommentView(frame: CGRect(x: kPicsPaddingLeft, y: 0, width: kContentWidth, height: 0))
+        self.commentView.delegate = self
         self.contentView.addSubview(self.commentView)
         
     }
@@ -316,10 +344,19 @@ class FriendMomentCell: UITableViewCell {
     
     @objc private func showOperation(sender: UIButton) {
         let point = self.convert(sender.frame.origin, to: AppDelegate.currentAppdelegate().window)
+        self.delegate?.showInterfaceColumnView(point: point, indexPath: forIndexPath())
+
+    }
+    
+    private func forIndexPath() -> NSIndexPath {
+        var indexPath = NSIndexPath(row: 0, section: 0)
         if let tableView = self.superview as? UITableView {
-            let indexPath = tableView.indexPath(for: self)
-            self.delegate?.showInterfaceColumnView(point: point, indexPath: indexPath! as NSIndexPath)
+            indexPath = tableView.indexPath(for: self)! as NSIndexPath
         }
+        if let tableView = self.superview?.superview as? UITableView {
+            indexPath = tableView.indexPath(for: self)! as NSIndexPath
+        }
+        return indexPath
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -332,4 +369,17 @@ class FriendMomentCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
+}
+
+extension FriendMomentCell: FriendMomentInputCommentViewDelegate {
+    
+    func clickCommentUsername(with index: Int, isReply: Bool) {
+        self.delegate?.watchUserInfo(cell: forIndexPath().row, commentIndex: index, isReply: isReply)
+    }
+    
+    func clickCommentView(with index: Int) {
+        self.delegate?.reply(cell: forIndexPath().row, commentIndex: index)
+
+    }
+    
 }
