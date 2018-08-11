@@ -38,7 +38,6 @@ class SQFriendsMomentsController: UIViewController {
         tableView.keyboardDismissMode = .onDrag
         setNavItem()
         loadData()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -96,16 +95,7 @@ class SQFriendsMomentsController: UIViewController {
             }
         }
     }
-    
-    
-    /// 发表评论
-    ///
-    /// - Parameters:
-    ///   - index: cell index
-    ///   - content: 评论内容
-    ///   - isComment: 1 评论 2 回复
-    
-    
+
     /// 发表评论
     ///
     /// - Parameters:

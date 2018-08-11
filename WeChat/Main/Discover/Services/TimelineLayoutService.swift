@@ -74,9 +74,7 @@ struct TimelineLayoutService {
                 contentHeight: CGFloat = 0, picsHeight: CGFloat = 0,
                 locationHeight: CGFloat = 0,commentsHeight: CGFloat = 0) {
         self.timelineModel = timelineModel
-        
         layout()
-        
     }
     
     private mutating func layout() {
