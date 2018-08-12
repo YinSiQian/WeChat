@@ -81,10 +81,15 @@ class MomentEditViewController: UIViewController {
     
     private func postMoment() {
         
-        NetworkManager.request(targetType: TimelineAPIs.post(content: self.textView.text, url: self.urlInfo, location: "春华四季园")) { (result, error) in
-            if !result.isEmpty {
-                print(result as Any)
+        NetworkManager.request(targetType: TimelineAPIs.post(content: self.textView.text, url: self.urlInfo, location: "北京天安门")) { (result, error) in
+            self.view.hideHUD()
+            if error == nil {
+                self.dismiss(animated: true, completion: nil)
             }
+            if !result.isEmpty {
+                
+            }
+            
         }
     }
     
@@ -113,6 +118,7 @@ class MomentEditViewController: UIViewController {
     
     @objc private func post() {
         self.view.endEditing(true)
+        self.view.showIndicator(message: "稍等片刻,马上就好")
         if hasImage {
             upload(images: images)
         } else {
