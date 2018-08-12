@@ -57,7 +57,7 @@ class SQFriendsMomentsController: UIViewController {
         btn.setBackgroundImage(UIImage(named: "camera")!, for: .normal)
         btn.addTarget(self, action: #selector(SQFriendsMomentsController.openCamera), for: .touchUpInside)
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(SQFriendsMomentsController.postTextMomentInfo))
-        longPress.minimumPressDuration = 1
+        longPress.minimumPressDuration = 0.5
         btn.addGestureRecognizer(longPress)
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: btn)
         
@@ -155,15 +155,6 @@ class SQFriendsMomentsController: UIViewController {
                 let layout = TimelineLayoutService(timelineModel: element)
                 self.layouts.append(layout)
             }
-            
-            self.layouts.append(contentsOf: self.layouts)
-            self.layouts.append(contentsOf: self.layouts)
-            self.layouts.append(contentsOf: self.layouts)
-            self.layouts.append(contentsOf: self.layouts)
-            self.layouts.append(contentsOf: self.layouts)
-            self.layouts.append(contentsOf: self.layouts)
-            self.layouts.append(contentsOf: self.layouts)
-            self.layouts.append(contentsOf: self.layouts)
 
             DispatchQueue.main.async(execute: {
                 self.tableView.reloadData()

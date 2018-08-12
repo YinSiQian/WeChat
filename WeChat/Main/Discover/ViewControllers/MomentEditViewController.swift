@@ -11,6 +11,7 @@ import UIKit
 class MomentEditViewController: UIViewController {
 
     var images: [UIImage] = []
+        
     
     var hasImage: Bool = false
     
@@ -35,6 +36,7 @@ class MomentEditViewController: UIViewController {
         super.viewDidLoad()
         setupSubviews()
         setNavItem()
+        setupPicsView()
     }
     
     override func viewSafeAreaInsetsDidChange() {
@@ -65,6 +67,14 @@ class MomentEditViewController: UIViewController {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "发表", style: .plain, target: self, action: #selector(MomentEditViewController.post))
         self.navigationItem.rightBarButtonItem?.tintColor = UIColor.green
         
+    }
+    
+    private func setupPicsView() {
+        
+        if !images.isEmpty {
+            let picsView = FriendMomentEditPicsView(frame: CGRect(x: 30, y: textView.maxY + 20, width: kScreen_width - 60, height: 0), images: images)
+            view.addSubview(picsView)
+        }
     }
     
     // MARK: -- Network Exchange

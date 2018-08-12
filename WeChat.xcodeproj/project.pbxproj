@@ -20,6 +20,7 @@
 		0D67BB0BCADAC71027EF78F5 /* Pods_WeChatTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B0542E27FB541926BA8969A /* Pods_WeChatTests.framework */; };
 		24EE167E4AA16A2BD4F30D3A /* Pods_WeChatUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B25E383BD640089DEF78B89 /* Pods_WeChatUITests.framework */; };
 		51D0CE0A38F05908826F95B9 /* Pods_WeChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4519258E74664E5BDD03B12C /* Pods_WeChat.framework */; };
+		8B077D6A21207718005A763A /* FriendMomentEditPicsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B077D6921207718005A763A /* FriendMomentEditPicsView.swift */; };
 		8B1238E6210DEBE90048D25D /* SQLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1238E4210DEBE90048D25D /* SQLoginViewController.swift */; };
 		8B1238E7210DEBE90048D25D /* SQLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B1238E5210DEBE90048D25D /* SQLoginViewController.xib */; };
 		8B1238EC210DF6470048D25D /* LoginAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1238EB210DF6470048D25D /* LoginAPI.swift */; };
@@ -108,6 +109,7 @@
 		50D505C4DC05ED1E5F736CED /* Pods-WeChatUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeChatUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WeChatUITests/Pods-WeChatUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		6B7B610F63FF91C8394C4FDC /* Pods-WeChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeChat.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WeChat/Pods-WeChat.debug.xcconfig"; sourceTree = "<group>"; };
 		8B0542E27FB541926BA8969A /* Pods_WeChatTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WeChatTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8B077D6921207718005A763A /* FriendMomentEditPicsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendMomentEditPicsView.swift; sourceTree = "<group>"; };
 		8B1238E4210DEBE90048D25D /* SQLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLoginViewController.swift; sourceTree = "<group>"; };
 		8B1238E5210DEBE90048D25D /* SQLoginViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SQLoginViewController.xib; sourceTree = "<group>"; };
 		8B1238EB210DF6470048D25D /* LoginAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginAPI.swift; sourceTree = "<group>"; };
@@ -429,6 +431,7 @@
 				8BC09DAE2113501400DC463D /* FriendMomentCell.swift */,
 				8BF5313B2119F4B100DDDD29 /* FriendMomentOpeationView.swift */,
 				0AD2081C211D77F40060E32F /* FriendMomentInputView.swift */,
+				8B077D6921207718005A763A /* FriendMomentEditPicsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -881,6 +884,7 @@
 				8B1238E6210DEBE90048D25D /* SQLoginViewController.swift in Sources */,
 				8BFA39E221155914004DAA90 /* UploadService.swift in Sources */,
 				8B5F5B3D1F700A5E007C07D0 /* SQMineViewController.swift in Sources */,
+				8B077D6A21207718005A763A /* FriendMomentEditPicsView.swift in Sources */,
 				0A65639D21130A4900B3DB24 /* MomentModel.swift in Sources */,
 				8BBBA65E1F7A9014008E18A5 /* SQMineUserInfoCell.swift in Sources */,
 				8B1238F1210E0DE10048D25D /* Number+Extension.swift in Sources */,
@@ -1062,7 +1066,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 75A4C99W3A;
+				DEVELOPMENT_TEAM = XEUU8QPCTR;
 				INFOPLIST_FILE = WeChat/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1081,7 +1085,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 75A4C99W3A;
+				DEVELOPMENT_TEAM = XEUU8QPCTR;
 				INFOPLIST_FILE = WeChat/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
