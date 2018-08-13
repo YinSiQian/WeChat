@@ -10,7 +10,15 @@ import UIKit
 
 class FriendMomentEditPicsView: UIView {
 
-    var images: [UIImage] = []
+    typealias openPhotoAlbumAction = () -> Void
+    
+    var action: openPhotoAlbumAction!
+    
+    var images: [UIImage] = [] {
+        didSet {
+            setupSubviews()
+        }
+    }
     
     private var imageViews = [UIImageView]()
    
@@ -26,6 +34,11 @@ class FriendMomentEditPicsView: UIView {
         setupSubviews()
     }
     
+    convenience init(frame: CGRect, images: [UIImage], complection: @escaping openPhotoAlbumAction) {
+        self.init(frame: frame, images: images)
+        self.action = complection
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -39,27 +52,27 @@ class FriendMomentEditPicsView: UIView {
         
         for (index, image) in images.enumerated() {
             
-            let imageView = UIImageView()
-            imageView.image = image
-            var rect = CGRect.zero
-            rect.size.width = width
-            rect.size.height = width
-            switch images.count {
-                case 4:
-                    let x = CGFloat(index % 2) * (width + space)
-                    rect = CGRect(x: x, y: width + space, width: width, height: width)
-                default:
-                    rect.origin.x = CGFloat(index % 3) * width + CGFloat(index % 3) * space;
-                    rect.origin.y = CGFloat(index / 3) * (width + space);
-                    
+            if index >= imageViews.count {
+                let imageView = UIImageView()
+                imageView.image = image
+                var rect = CGRect.zero
+                rect.size.width = width
+                rect.size.height = width
+                rect.origin.x = CGFloat(index % 3) * width + CGFloat(index % 3) * space
+                rect.origin.y = CGFloat(index / 3) * (width + space)
+                
+                imageView.frame = rect
+                addSubview(imageView)
+                imageViews.append(imageView)
             }
-            imageView.frame = rect
-            addSubview(imageView)
-            imageViews.append(imageView)
+           
         }
+        
+        viewWithTag(119)?.removeFromSuperview()
+        
         if imageViews.count < 9 {
             let addBtn = UIButton()
-       
+            addBtn.tag = 119
             var rect = CGRect.zero
             rect.size.width = width
             rect.size.height = width
@@ -86,7 +99,7 @@ class FriendMomentEditPicsView: UIView {
     
     
     @objc private func openPhotoAlbum() {
-        
+        action?()
     }
     
 }

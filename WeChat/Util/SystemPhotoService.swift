@@ -26,24 +26,35 @@ class SystemPhotoService: NSObject {
 
 extension SystemPhotoService {
     
-    public func open(sourceController: UIViewController!, type: UIImagePickerControllerSourceType, complectionHanlder: @escaping (_ resouce: [UIImage]) -> ()) {
-        self.vc = sourceController
-        self.handler = complectionHanlder
-        openImagePickerController(type: type)
+    public func open(sourceController: UIViewController!, complectionHanlder: @escaping (_ resouce: [UIImage]) -> ()) {
+        open(sourceController: sourceController, maxCount: 9, complectionHanlder: complectionHanlder)
+       
     }
     
-    private func openImagePickerController(type: UIImagePickerControllerSourceType) {
+    public func open(sourceController: UIViewController!, maxCount: Int, complectionHanlder: @escaping (_ resouce: [UIImage]) -> ()) {
+        self.vc = sourceController
+        self.handler = complectionHanlder
+        openImagePickerController(type: .photoLibrary, maxImagesCount: maxCount)
+    }
+    
+    private func openImagePickerController(type: UIImagePickerControllerSourceType, maxImagesCount: Int) {
         if UIImagePickerController.isSourceTypeAvailable(type) {
-            let picker = TZImagePickerController(maxImagesCount: 9, columnNumber: 4, delegate: nil, pushPhotoPickerVc: true)
+            let picker = TZImagePickerController(maxImagesCount: maxImagesCount, columnNumber: 4, delegate: nil, pushPhotoPickerVc: true)
             picker?.didFinishPickingPhotosWithInfosHandle = {
                 [weak self] (photos,_,isSelectOriginalPhoto,_) in
+                self?.vc = nil
                 if photos?.isEmpty == false {
                     self?.handler(photos!)
                 }
             }
+            picker?.imagePickerControllerDidCancelHandle = {
+                [weak self] in
+                self?.vc = nil
+            }
             vc.present(picker!, animated: true, completion: nil)
         }
     }
+
 }
 
 

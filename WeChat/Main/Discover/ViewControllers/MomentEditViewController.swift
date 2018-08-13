@@ -72,8 +72,22 @@ class MomentEditViewController: UIViewController {
     private func setupPicsView() {
         
         if !images.isEmpty {
-            let picsView = FriendMomentEditPicsView(frame: CGRect(x: 30, y: textView.maxY + 20, width: kScreen_width - 60, height: 0), images: images)
+            let picsView = FriendMomentEditPicsView(frame: CGRect(x: 30, y: textView.maxY + 20, width: kScreen_width - 60, height: 0), images: images) {
+                
+                SystemPhotoService.shard.open(sourceController: self, maxCount: 9 - self.images.count, complectionHanlder: {
+                    [weak self] (images) in
+                    self?.images.append(contentsOf: images)
+                    self?.reloadPics()
+                })
+            }
+            picsView.tag = 110
             view.addSubview(picsView)
+        }
+    }
+    
+    private func reloadPics() {
+        if let picsView = view.viewWithTag(110) as? FriendMomentEditPicsView {
+            picsView.images = self.images
         }
     }
     

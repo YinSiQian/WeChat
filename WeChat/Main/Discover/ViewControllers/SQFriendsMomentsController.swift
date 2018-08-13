@@ -171,7 +171,7 @@ class SQFriendsMomentsController: UIViewController {
     
     @objc private func openCamera() {
         
-        SystemPhotoService.shard.open(sourceController: self, type: UIImagePickerControllerSourceType.photoLibrary) {
+        SystemPhotoService.shard.open(sourceController: self) {
             [weak self]  (image) in
             
             if !image.isEmpty {
