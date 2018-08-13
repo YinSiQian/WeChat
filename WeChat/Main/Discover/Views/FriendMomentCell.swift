@@ -326,13 +326,15 @@ class FriendMomentCell: UITableViewCell {
                 imageView.frame = rect
                 let urlString = urlInfo.baseUrl + "/" + urlInfo.path
                 imageView.kf.setImage(with: urlString.url(), placeholder: nil, options: nil, progressBlock: nil) { (image, error, cacheType, url) in
-                    let scale =  ((image?.size.height)! / (image?.size.width)!)
-                    if scale < 0.99 || scale.isNaN { // 宽图把左右两边裁掉
-                        imageView.contentMode = .scaleAspectFit;
-                        imageView.layer.contentsRect = CGRect(x: 0, y: 0, width: 1, height: 1)
-                    } else { // 高图只保留顶部
-                        imageView.contentMode = .scaleAspectFill;
-                        imageView.layer.contentsRect = CGRect(x: 0, y: 0, width: 1, height: (image?.size.width)! / (image?.size.height)!)
+                    if let currentImage = image {
+                        let scale =  currentImage.size.height / currentImage.size.width
+                        if scale < 0.99 || scale.isNaN { // 宽图把左右两边裁掉
+                            imageView.contentMode = .scaleAspectFit;
+                            imageView.layer.contentsRect = CGRect(x: 0, y: 0, width: 1, height: 1)
+                        } else { // 高图只保留顶部
+                            imageView.contentMode = .scaleAspectFill;
+                            imageView.layer.contentsRect = CGRect(x: 0, y: 0, width: 1, height: currentImage.size.width / currentImage.size.height)
+                        }
                     }
                     imageView.image = image
                 }
