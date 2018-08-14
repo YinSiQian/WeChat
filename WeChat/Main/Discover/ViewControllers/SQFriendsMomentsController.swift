@@ -70,7 +70,11 @@ class SQFriendsMomentsController: UIViewController {
     //MARK: -- Network handler
     
     private func loadData() {
-        NetworkManager.request(targetType: TimelineAPIs.list(timestamp: "2018-06-21 16:13:33")) {
+        var timestamp = "2010-06-21 16:13:33"
+        if let model = layouts.first?.timelineModel {
+            timestamp = model.timestamp
+        }
+        NetworkManager.request(targetType: TimelineAPIs.list(timestamp: timestamp)) {
             [weak self] (result, error) in
             if !result.isEmpty {
                 let arr = result["list"] as! [[String: Any]]
