@@ -179,7 +179,9 @@ class SQFriendsMomentsController: UIViewController {
             [weak self]  (image) in
             
             if !image.isEmpty {
-                let edit = MomentEditViewController()
+                let edit = MomentEditViewController(complection: {
+                    self?.loadData()
+                })
                 edit.hasImage = true
                 edit.images = image
                 self?.present(SQNavigationViewController(rootViewController: edit),
