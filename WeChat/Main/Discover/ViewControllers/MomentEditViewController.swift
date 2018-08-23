@@ -51,13 +51,13 @@ class MomentEditViewController: UIViewController {
     
     private func setupSubviews() {
         self.navigationController?.navigationBar.barTintColor = UIColor.white
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.black]
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
         
         self.title = hasImage ? "" : "发表文字"
         self.view.backgroundColor = UIColor.white
         self.view.addSubview(self.textView)
         self.textView.addSubview(self.placeholderLable)
-        NotificationCenter.default.addObserver(self, selector: #selector(MomentEditViewController.textViewDidChanged(noti:)), name: NSNotification.Name.UITextViewTextDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(MomentEditViewController.textViewDidChanged(noti:)), name: UITextView.textDidChangeNotification, object: nil)
     }
     
     private func setNavItem() {

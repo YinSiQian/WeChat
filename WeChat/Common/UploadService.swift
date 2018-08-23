@@ -34,7 +34,7 @@ extension UploadAPIs: TargetType {
         case .upload(let images):
             var datas = [MultipartFormData]()
             for image in images {
-                let imageData = UIImagePNGRepresentation(image)
+                let imageData = image.pngData()
                 let muti = MultipartFormData(provider: .data(imageData!), name: "image", fileName: "file", mimeType: "image/jpg")
                 datas.append(muti)
             }

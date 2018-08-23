@@ -30,7 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return nil
     }
     
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         setupRootVC()
         
         if #available(iOS 11, *) {
@@ -44,7 +44,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func setupRootVC() {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.backgroundColor = UIColor.white
-        UserModel.sharedInstance.accessToken = ""
         if UserModel.sharedInstance.accessToken == "" {
             window?.rootViewController = SQLoginViewController()
         } else {

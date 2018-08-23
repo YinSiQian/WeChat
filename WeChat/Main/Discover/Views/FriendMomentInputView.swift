@@ -81,11 +81,11 @@ class FriendMomentInputView: UIView {
     }
     
     private func addObserver() {
-        NotificationCenter.default.addObserver(self, selector: #selector(FriendMomentInputView.keyboardWillShow(noti:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(FriendMomentInputView.keyboardWillHide(noti:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(FriendMomentInputView.keyboardFrameChanged(noti:)), name: NSNotification.Name.UIKeyboardDidChangeFrame, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(FriendMomentInputView.keyboardWillShow(noti:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(FriendMomentInputView.keyboardWillHide(noti:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(FriendMomentInputView.keyboardFrameChanged(noti:)), name: UIResponder.keyboardDidChangeFrameNotification, object: nil)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(FriendMomentInputView.textViewDidChanged(noti:)), name: NSNotification.Name.UITextViewTextDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(FriendMomentInputView.textViewDidChanged(noti:)), name: UITextView.textDidChangeNotification, object: nil)
     }
     
     @objc private func textViewDidChanged(noti: Notification) {
@@ -114,7 +114,7 @@ class FriendMomentInputView: UIView {
     }
     
     @objc private func keyboardWillShow(noti: Notification) {
-        let rect = noti.userInfo?[UIKeyboardFrameEndUserInfoKey] as! CGRect
+        let rect = noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as! CGRect
         UIView.animate(withDuration: 0.25) {
             self.minY = rect.origin.y - self.height
             self.originY = rect.origin.y - self.height
@@ -123,7 +123,7 @@ class FriendMomentInputView: UIView {
     }
     
     @objc private func keyboardWillHide(noti: NSNotification) {
-        let rect = noti.userInfo?[UIKeyboardFrameEndUserInfoKey] as! CGRect
+        let rect = noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as! CGRect
         
         UIView.animate(withDuration: 0.25, animations: {
             self.minY = rect.origin.y - self.height
@@ -137,7 +137,7 @@ class FriendMomentInputView: UIView {
     }
     
     @objc private func keyboardFrameChanged(noti: NSNotification) {
-        let rect = noti.userInfo?[UIKeyboardFrameEndUserInfoKey] as! CGRect
+        let rect = noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as! CGRect
         
         UIView.animate(withDuration: 0.25) {
             self.minY = rect.origin.y - self.height

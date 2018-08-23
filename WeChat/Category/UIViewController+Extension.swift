@@ -31,14 +31,14 @@ extension NavgationBarTheme where Self: UIViewController {
         switch theme {
         case .black:
             UIApplication.shared.setStatusBarStyle(UIStatusBarStyle.lightContent, animated: true)
-            let navbarTextAttribute = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 18), NSAttributedStringKey.foregroundColor: UIColor.white]
+            let navbarTextAttribute = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 18), NSAttributedString.Key.foregroundColor: UIColor.white]
             self.navigationController?.navigationBar.barTintColor = UIColor(red: 34.0 / 255.0, green: 34.0 / 255.0, blue: 34.0 / 255.0, alpha: 1.0)
             self.navigationController?.navigationBar.tintColor = UIColor.white
             self.navigationController?.navigationBar.titleTextAttributes = navbarTextAttribute
             
         case .white:
             UIApplication.shared.setStatusBarStyle(UIStatusBarStyle.default, animated: true)
-            let navbarTextAttribute = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 18), NSAttributedStringKey.foregroundColor: UIColor.black]
+            let navbarTextAttribute = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 18), NSAttributedString.Key.foregroundColor: UIColor.black]
             self.navigationController?.navigationBar.barTintColor = UIColor.white
             self.navigationController?.navigationBar.tintColor = UIColor.black
             self.navigationController?.navigationBar.titleTextAttributes = navbarTextAttribute

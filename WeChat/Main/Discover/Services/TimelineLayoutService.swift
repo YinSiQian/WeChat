@@ -186,9 +186,9 @@ struct TimelineLayoutService {
                 let receivedHighlightRange = (content as NSString).range(of: element.receivedName)
                 
                 let attributeText = NSMutableAttributedString(string: content)
-                attributeText.addAttribute(NSAttributedStringKey.foregroundColor, value: kNameColor, range: replyHighlightRange)
+                attributeText.addAttribute(NSAttributedString.Key.foregroundColor, value: kNameColor, range: replyHighlightRange)
                 if receivedHighlightRange.location != NSNotFound {
-                    attributeText.addAttribute(NSAttributedStringKey.foregroundColor, value: kNameColor, range: receivedHighlightRange)
+                    attributeText.addAttribute(NSAttributedString.Key.foregroundColor, value: kNameColor, range: receivedHighlightRange)
                 }
                 
                 

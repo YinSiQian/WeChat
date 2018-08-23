@@ -53,7 +53,7 @@ class SQRootViewController: UITabBarController {
             item.title = titles[index]
             item.selectedImage = images_selected[index].withRenderingMode(.alwaysOriginal)
             item.image = images_normal[index]
-            item.setTitleTextAttributes([NSAttributedStringKey.foregroundColor: UIColor(hex6:0x24CF5F, alpha: 1)], for: .selected)
+            item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor(hex6:0x24CF5F, alpha: 1)], for: .selected)
             index += 1
         }
         

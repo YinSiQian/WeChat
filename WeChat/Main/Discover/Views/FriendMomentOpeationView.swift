@@ -67,7 +67,7 @@ class FriendMomentOpeationView: UIView {
         loveBtn.addTarget(self, action: #selector(FriendMomentOpeationView.btnAction(sender:)), for: .touchUpInside)
         self.contentView.addSubview(loveBtn)
         
-        loveBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 5, 0, 0)
+        loveBtn.titleEdgeInsets = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 0)
         
     }
     

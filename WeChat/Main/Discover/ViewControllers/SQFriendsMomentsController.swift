@@ -37,12 +37,12 @@ class SQFriendsMomentsController: UIViewController {
         tableView.tableFooterView = UIView()
         tableView.keyboardDismissMode = .onDrag
         setNavItem()
-        loadData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         loadNavbarTheme(theme: .white)
+        loadData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -56,6 +56,7 @@ class SQFriendsMomentsController: UIViewController {
         let btn = UIButton(frame: CGRect(x: 0, y: 0, width: 27, height: 27))
         btn.setBackgroundImage(UIImage(named: "camera")!, for: .normal)
         btn.addTarget(self, action: #selector(SQFriendsMomentsController.openCamera), for: .touchUpInside)
+        
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(SQFriendsMomentsController.postTextMomentInfo))
         longPress.minimumPressDuration = 0.5
         btn.addGestureRecognizer(longPress)
@@ -70,7 +71,11 @@ class SQFriendsMomentsController: UIViewController {
     //MARK: -- Network handler
     
     private func loadData() {
-        NetworkManager.request(targetType: TimelineAPIs.list(timestamp: "2018-06-21 16:13:33")) {
+        var timestamp = "2018-06-21 16:13:33"
+        if let layout = layouts.first {
+            timestamp = layout.timelineModel.timestamp
+        }
+        NetworkManager.request(targetType: TimelineAPIs.list(timestamp: timestamp)) {
             [weak self] (result, error) in
             if !result.isEmpty {
                 let arr = result["list"] as! [[String: Any]]
@@ -171,7 +176,7 @@ class SQFriendsMomentsController: UIViewController {
     
     @objc private func openCamera() {
         
-        SystemPhotoService.shard.open(sourceController: self, type: UIImagePickerControllerSourceType.photoLibrary) {
+        SystemPhotoService.shard.open(sourceController: self, type: UIImagePickerController.SourceType.photoLibrary) {
             [weak self]  (image) in
             
             if !image.isEmpty {
@@ -231,7 +236,7 @@ extension SQFriendsMomentsController: UIScrollViewDelegate {
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         if self.fpsLabel.alpha == 0.0 {
-            UIView.animate(withDuration: 0.3, delay: 0, options: UIViewAnimationOptions.beginFromCurrentState, animations: {
+            UIView.animate(withDuration: 0.3, delay: 0, options: UIView.AnimationOptions.beginFromCurrentState, animations: {
                 self.fpsLabel.alpha = 1.0
             }, completion: nil)
         }
@@ -239,7 +244,7 @@ extension SQFriendsMomentsController: UIScrollViewDelegate {
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         if self.fpsLabel.alpha != 0.0 {
-            UIView.animate(withDuration: 1, delay: 2, options: UIViewAnimationOptions.beginFromCurrentState, animations: {
+            UIView.animate(withDuration: 1, delay: 2, options: UIView.AnimationOptions.beginFromCurrentState, animations: {
                 self.fpsLabel.alpha = 0.0
             }, completion: nil)
         }
@@ -248,7 +253,7 @@ extension SQFriendsMomentsController: UIScrollViewDelegate {
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if !decelerate {
             if self.fpsLabel.alpha != 0.0 {
-                UIView.animate(withDuration: 1, delay: 2, options: UIViewAnimationOptions.beginFromCurrentState, animations: {
+                UIView.animate(withDuration: 1, delay: 2, options: UIView.AnimationOptions.beginFromCurrentState, animations: {
                     self.fpsLabel.alpha = 0.0
                 }, completion: nil)
             }
@@ -257,7 +262,7 @@ extension SQFriendsMomentsController: UIScrollViewDelegate {
     
     func scrollViewDidScrollToTop(_ scrollView: UIScrollView) {
         if self.fpsLabel.alpha == 0.0 {
-            UIView.animate(withDuration: 0.3, delay: 0, options: UIViewAnimationOptions.beginFromCurrentState, animations: {
+            UIView.animate(withDuration: 0.3, delay: 0, options: UIView.AnimationOptions.beginFromCurrentState, animations: {
                 self.fpsLabel.alpha = 1.0
             }, completion: nil)
         }

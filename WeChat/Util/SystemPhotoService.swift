@@ -26,13 +26,13 @@ class SystemPhotoService: NSObject {
 
 extension SystemPhotoService {
     
-    public func open(sourceController: UIViewController!, type: UIImagePickerControllerSourceType, complectionHanlder: @escaping (_ resouce: [UIImage]) -> ()) {
+    public func open(sourceController: UIViewController!, type: UIImagePickerController.SourceType, complectionHanlder: @escaping (_ resouce: [UIImage]) -> ()) {
         self.vc = sourceController
         self.handler = complectionHanlder
         openImagePickerController(type: type)
     }
     
-    private func openImagePickerController(type: UIImagePickerControllerSourceType) {
+    private func openImagePickerController(type: UIImagePickerController.SourceType) {
         if UIImagePickerController.isSourceTypeAvailable(type) {
             let picker = TZImagePickerController(maxImagesCount: 9, columnNumber: 4, delegate: nil, pushPhotoPickerVc: true)
             picker?.didFinishPickingPhotosWithInfosHandle = {

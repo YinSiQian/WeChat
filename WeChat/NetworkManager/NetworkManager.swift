@@ -55,7 +55,7 @@ public class NetworkManager {
     public static func upload(images: [UIImage], success: @escaping (_ response : Any?) -> (), failture : @escaping (_ error : Error)->()) {
         Alamofire.upload(multipartFormData: { multipartFormData in
             for (_, value) in images.enumerated() {
-                let imageData = UIImageJPEGRepresentation(value, 1.0)
+                let imageData = value.jpegData(compressionQuality: 0.7)
                 multipartFormData.append(imageData!, withName: "image", fileName: "", mimeType: "image/jpeg")
             }
         },                          to: "http://localhost:8080/file/upload",

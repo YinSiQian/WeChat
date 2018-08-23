@@ -79,6 +79,9 @@ extension SQWebSocketService: WebSocketDelegate {
         let dict = text.convertToDict()
         let status = dict["status"] as! Int
         switch status {
+        case 5000:
+        //消息推送: 添加好友, 点赞, 朋友圈回复, 评论
+            print("接收到推送\(dict["content"] ?? 0)")
         case 6000:
             //消息发送成功
             print("消息发送成功: \(text)")

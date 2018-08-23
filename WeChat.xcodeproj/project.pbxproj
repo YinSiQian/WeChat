@@ -49,8 +49,6 @@
 		8BC09DB1211359A200DC463D /* TimelineLayoutService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC09DB0211359A200DC463D /* TimelineLayoutService.swift */; };
 		8BDCD8DE1F65848300C53260 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BDCD8DD1F65848300C53260 /* AppDelegate.swift */; };
 		8BDCD8E51F65848300C53260 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8BDCD8E41F65848300C53260 /* Assets.xcassets */; };
-		8BDCD8F31F65848300C53260 /* WeChatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BDCD8F21F65848300C53260 /* WeChatTests.swift */; };
-		8BDCD8FE1F65848300C53260 /* WeChatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BDCD8FD1F65848300C53260 /* WeChatUITests.swift */; };
 		8BDCD9251F658C0A00C53260 /* SQRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BDCD9241F658C0A00C53260 /* SQRootViewController.swift */; };
 		8BE1CD3220936AFA007E017D /* FriendService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1CD3120936AFA007E017D /* FriendService.swift */; };
 		8BF4F91120E28F1C00A6E693 /* TimelineService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF4F91020E28F1C00A6E693 /* TimelineService.swift */; };
@@ -143,11 +141,7 @@
 		8BDCD8E41F65848300C53260 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8BDCD8E91F65848300C53260 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8BDCD8EE1F65848300C53260 /* WeChatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WeChatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		8BDCD8F21F65848300C53260 /* WeChatTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeChatTests.swift; sourceTree = "<group>"; };
-		8BDCD8F41F65848300C53260 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8BDCD8F91F65848300C53260 /* WeChatUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WeChatUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		8BDCD8FD1F65848300C53260 /* WeChatUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeChatUITests.swift; sourceTree = "<group>"; };
-		8BDCD8FF1F65848300C53260 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8BDCD9241F658C0A00C53260 /* SQRootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQRootViewController.swift; sourceTree = "<group>"; };
 		8BE1CD3120936AFA007E017D /* FriendService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendService.swift; sourceTree = "<group>"; };
 		8BF4F91020E28F1C00A6E693 /* TimelineService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineService.swift; sourceTree = "<group>"; };
@@ -337,8 +331,6 @@
 			isa = PBXGroup;
 			children = (
 				8BDCD8DC1F65848300C53260 /* WeChat */,
-				8BDCD8F11F65848300C53260 /* WeChatTests */,
-				8BDCD8FC1F65848300C53260 /* WeChatUITests */,
 				8BDCD8DB1F65848300C53260 /* Products */,
 				54B7CC7E600BBE1C92EAA074 /* Pods */,
 				798518552451525DAD2961C7 /* Frameworks */,
@@ -373,24 +365,6 @@
 				8BDCD8E91F65848300C53260 /* Info.plist */,
 			);
 			path = WeChat;
-			sourceTree = "<group>";
-		};
-		8BDCD8F11F65848300C53260 /* WeChatTests */ = {
-			isa = PBXGroup;
-			children = (
-				8BDCD8F21F65848300C53260 /* WeChatTests.swift */,
-				8BDCD8F41F65848300C53260 /* Info.plist */,
-			);
-			path = WeChatTests;
-			sourceTree = "<group>";
-		};
-		8BDCD8FC1F65848300C53260 /* WeChatUITests */ = {
-			isa = PBXGroup;
-			children = (
-				8BDCD8FD1F65848300C53260 /* WeChatUITests.swift */,
-				8BDCD8FF1F65848300C53260 /* Info.plist */,
-			);
-			path = WeChatUITests;
 			sourceTree = "<group>";
 		};
 		8BDCD90D1F65884900C53260 /* Main */ = {
@@ -920,7 +894,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8BDCD8F31F65848300C53260 /* WeChatTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -928,7 +901,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8BDCD8FE1F65848300C53260 /* WeChatUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1073,7 +1045,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ysq.wechat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/WeChat/AppDelegate/swift-bridge.h";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1092,7 +1064,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ysq.wechat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/WeChat/AppDelegate/swift-bridge.h";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -1109,7 +1081,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ysq.WeChatTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WeChat.app/WeChat";
 			};
@@ -1127,7 +1099,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ysq.WeChatTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WeChat.app/WeChat";
 			};
@@ -1144,7 +1116,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ysq.WeChatUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = WeChat;
 			};
@@ -1161,7 +1133,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ysq.WeChatUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = WeChat;
 			};

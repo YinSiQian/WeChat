@@ -23,7 +23,7 @@ class SQMessageCell: UITableViewCell {
         // Initialization code
     }
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupSubviews()
     }
@@ -63,7 +63,7 @@ class SQMessageCell: UITableViewCell {
         time_layer?.font = "HiraKakuProN-W3" as CFTypeRef
         time_layer?.string = "下午10:30"
         time_layer?.fontSize = 12
-        time_layer?.alignmentMode = "right"
+        time_layer?.alignmentMode = CATextLayerAlignmentMode(rawValue: "right")
         time_layer?.foregroundColor = UIColor.gray.cgColor
         time_layer?.contentsScale = UIScreen.main.scale
         contentView.layer.addSublayer(time_layer!)
@@ -75,7 +75,7 @@ class SQMessageCell: UITableViewCell {
         content_layer?.fontSize = 14
         content_layer?.foregroundColor = UIColor.gray.cgColor
         content_layer?.contentsScale = UIScreen.main.scale
-        content_layer?.truncationMode = kCATruncationEnd
+        content_layer?.truncationMode = CATextLayerTruncationMode.end
         contentView.layer.addSublayer(content_layer!)
         
         
