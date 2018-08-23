@@ -9,9 +9,12 @@
 import UIKit
 
 class MomentEditViewController: UIViewController {
+    
+    typealias complection = () -> Void
 
+    var complectionHandler: complection!
+    
     var images: [UIImage] = []
-        
     
     var hasImage: Bool = false
     
@@ -31,6 +34,19 @@ class MomentEditViewController: UIViewController {
         textView.textColor = UIColor.black
         return textView
     }()
+    
+    init() {
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    convenience init(complection: @escaping complection) {
+        self.init()
+        self.complectionHandler = complection
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,8 +88,22 @@ class MomentEditViewController: UIViewController {
     private func setupPicsView() {
         
         if !images.isEmpty {
-            let picsView = FriendMomentEditPicsView(frame: CGRect(x: 30, y: textView.maxY + 20, width: kScreen_width - 60, height: 0), images: images)
+            let picsView = FriendMomentEditPicsView(frame: CGRect(x: 30, y: textView.maxY + 20, width: kScreen_width - 60, height: 0), images: images) {
+                
+                SystemPhotoService.shard.open(sourceController: self, maxCount: 9 - self.images.count, complectionHanlder: {
+                    [weak self] (images) in
+                    self?.images.append(contentsOf: images)
+                    self?.reloadPics()
+                })
+            }
+            picsView.tag = 110
             view.addSubview(picsView)
+        }
+    }
+    
+    private func reloadPics() {
+        if let picsView = view.viewWithTag(110) as? FriendMomentEditPicsView {
+            picsView.images = self.images
         }
     }
     
@@ -83,11 +113,8 @@ class MomentEditViewController: UIViewController {
         
         NetworkManager.request(targetType: TimelineAPIs.post(content: self.textView.text, url: self.urlInfo, location: "北京天安门")) { (result, error) in
             self.view.hideHUD()
-            if error == nil {
-                self.dismiss(animated: true, completion: nil)
-            }
             if !result.isEmpty {
-                
+                print(result)
             }
             
         }

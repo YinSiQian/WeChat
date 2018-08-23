@@ -71,9 +71,10 @@ class SQFriendsMomentsController: UIViewController {
     //MARK: -- Network handler
     
     private func loadData() {
-        var timestamp = "2018-06-21 16:13:33"
-        if let layout = layouts.first {
-            timestamp = layout.timelineModel.timestamp
+      
+        var timestamp = "2010-06-21 16:13:33"
+        if let model = layouts.first?.timelineModel {
+            timestamp = model.timestamp
         }
         NetworkManager.request(targetType: TimelineAPIs.list(timestamp: timestamp)) {
             [weak self] (result, error) in
@@ -176,11 +177,13 @@ class SQFriendsMomentsController: UIViewController {
     
     @objc private func openCamera() {
         
-        SystemPhotoService.shard.open(sourceController: self, type: UIImagePickerController.SourceType.photoLibrary) {
+        SystemPhotoService.shard.open(sourceController: self) {
             [weak self]  (image) in
             
             if !image.isEmpty {
-                let edit = MomentEditViewController()
+                let edit = MomentEditViewController(complection: {
+                    self?.loadData()
+                })
                 edit.hasImage = true
                 edit.images = image
                 self?.present(SQNavigationViewController(rootViewController: edit),
