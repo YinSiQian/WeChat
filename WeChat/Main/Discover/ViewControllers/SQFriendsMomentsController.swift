@@ -14,6 +14,8 @@ class SQFriendsMomentsController: UIViewController {
     
     private var fpsLabel: YYFPSLabel!
     
+    private var isInsert = false
+    
     private lazy var tableView: UITableView = {
       
         let tableView = UITableView(frame: self.view.bounds, style: .plain)
@@ -37,12 +39,12 @@ class SQFriendsMomentsController: UIViewController {
         tableView.tableFooterView = UIView()
         tableView.keyboardDismissMode = .onDrag
         setNavItem()
+        loadData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         loadNavbarTheme(theme: .white)
-        loadData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -159,8 +161,13 @@ class SQFriendsMomentsController: UIViewController {
         DispatchQueue.global().async {
             for element in data {
                 let layout = TimelineLayoutService(timelineModel: element)
-                self.layouts.append(layout)
+                if self.isInsert {
+                    self.layouts.insert(layout, at: 0)
+                } else {
+                    self.layouts.append(layout)
+                }
             }
+            self.isInsert = false
 
             DispatchQueue.main.async(execute: {
                 self.tableView.reloadData()
@@ -171,7 +178,10 @@ class SQFriendsMomentsController: UIViewController {
     // MARK: -- Events
     
     @objc private func postTextMomentInfo() {
-        let edit = MomentEditViewController()        
+        let edit = MomentEditViewController {
+            self.isInsert = true
+            self.loadData()
+        }
         self.present(SQNavigationViewController(rootViewController: edit), animated: true, completion: nil)
     }
     
@@ -182,6 +192,7 @@ class SQFriendsMomentsController: UIViewController {
             
             if !image.isEmpty {
                 let edit = MomentEditViewController(complection: {
+                    self?.isInsert = true
                     self?.loadData()
                 })
                 edit.hasImage = true

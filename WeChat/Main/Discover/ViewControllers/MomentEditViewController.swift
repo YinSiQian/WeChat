@@ -115,6 +115,8 @@ class MomentEditViewController: UIViewController {
             self.view.hideHUD()
             if !result.isEmpty {
                 print(result)
+                self.complectionHandler?()
+                self.dismiss(animated: true, completion: nil)
             }
             
         }

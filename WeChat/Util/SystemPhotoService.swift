@@ -44,14 +44,14 @@ extension SystemPhotoService {
             let picker = TZImagePickerController(maxImagesCount: maxImagesCount, columnNumber: 4, delegate: nil, pushPhotoPickerVc: true)
             picker?.didFinishPickingPhotosWithInfosHandle = {
                 [weak self] (photos,_,isSelectOriginalPhoto,_) in
-                self?.vc = nil
+//                self?.vc = nil
                 if photos?.isEmpty == false {
                     self?.handler(photos!)
                 }
             }
             picker?.imagePickerControllerDidCancelHandle = {
                 [weak self] in
-                self?.vc = nil
+//                self?.vc = nil
             }
             vc.present(picker!, animated: true, completion: nil)
         }
