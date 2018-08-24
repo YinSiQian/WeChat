@@ -21,9 +21,17 @@ class LocationService: NSObject {
         return manager
     }()
     
-    private var currentLocation: String?
+    private(set) var currentLocation: String?
     
-    private var finished = false
+    private(set) var currentCity: String?
+    
+    private(set) var street: String? 
+    
+    private(set) var name: String?
+    
+    private(set) var area: String?
+    
+    private(set) var province: String?
     
     private override init() {
         super.init()
@@ -51,11 +59,21 @@ extension LocationService: CLLocationManagerDelegate {
         if let currentLocation = locations.last {
             let geoCoder = CLGeocoder()
             geoCoder.reverseGeocodeLocation(currentLocation) { (places, error) in
-                guard let currentPlaces = places else {
-                    return
-                }
-                for place in currentPlaces {
-                    print(place.locality as Any)
+                if let currentPlace = places?.first {
+                    if let addressInfo = currentPlace.addressDictionary {
+                        self.street = addressInfo["Street"] as? String
+                        if let addressLines = addressInfo["FormattedAddressLines"] as? Array<String> {
+                            if !addressLines.isEmpty {
+                                self.currentLocation = addressLines.first!
+                            }
+                        }
+                        self.currentCity = addressInfo["City"] as? String
+                        self.name = addressInfo["Name"] as? String
+                        self.area = addressInfo["SubLocality"] as? String
+                        self.province = addressInfo["State"] as? String
+                        
+                        print("street \(String(describing: self.street)) \n currentLocation  \(String(describing: self.currentLocation)) \n currentCity \(String(describing: self.currentCity)) \n name  \(String(describing: self.name)) \n  area  \(String(describing: self.area))  \n  privince  \(String(describing: self.province))")
+                    }
                 }
             }
         }
