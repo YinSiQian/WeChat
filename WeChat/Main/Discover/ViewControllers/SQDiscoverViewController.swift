@@ -16,6 +16,8 @@ class SQDiscoverViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSubviews()
+        
+        LocationService.sharedInstance.startLocation()
         // Do any additional setup after loading the view.
     }
     

@@ -41,6 +41,7 @@
 		8B8F39D8210CC10600E53CBC /* SQWebSocketService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8F39D7210CC10600E53CBC /* SQWebSocketService.swift */; };
 		8B8F39DA210CCB9100E53CBC /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8F39D9210CCB9100E53CBC /* String+Extension.swift */; };
 		8B8F39DD210CCE4500E53CBC /* Dictionary+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8F39DC210CCE4500E53CBC /* Dictionary+Extension.swift */; };
+		8B98CBD921305C6200BC1D9F /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B98CBD821305C6200BC1D9F /* LocationService.swift */; };
 		8B9ED8C520BABF06009CA600 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B9ED8C420BABF06009CA600 /* NetworkManager.swift */; };
 		8BBBA65B1F79FCFA008E18A5 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBBA65A1F79FCFA008E18A5 /* UIColor+Extension.swift */; };
 		8BBBA65E1F7A9014008E18A5 /* SQMineUserInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBBA65C1F7A9014008E18A5 /* SQMineUserInfoCell.swift */; };
@@ -130,6 +131,7 @@
 		8B8F39D9210CCB9100E53CBC /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		8B8F39DB210CCC7A00E53CBC /* swift-bridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "swift-bridge.h"; sourceTree = "<group>"; };
 		8B8F39DC210CCE4500E53CBC /* Dictionary+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Extension.swift"; sourceTree = "<group>"; };
+		8B98CBD821305C6200BC1D9F /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		8B9ED8C420BABF06009CA600 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		8BBBA65A1F79FCFA008E18A5 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		8BBBA65C1F7A9014008E18A5 /* SQMineUserInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQMineUserInfoCell.swift; sourceTree = "<group>"; };
@@ -528,6 +530,7 @@
 			children = (
 				8B1238ED210DFE770048D25D /* Models */,
 				8BFA39E121155914004DAA90 /* UploadService.swift */,
+				8B98CBD821305C6200BC1D9F /* LocationService.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -874,6 +877,7 @@
 				8BDCD9251F658C0A00C53260 /* SQRootViewController.swift in Sources */,
 				8BFA39D42115542A004DAA90 /* TZVideoPlayerController.m in Sources */,
 				8BFA39DE2115542A004DAA90 /* TZImagePickerController.m in Sources */,
+				8B98CBD921305C6200BC1D9F /* LocationService.swift in Sources */,
 				0A794506211BF3530045FCC9 /* YYWeakProxy.m in Sources */,
 				8B5F5B391F700A45007C07D0 /* SQFriendsViewController.swift in Sources */,
 				8B7417B01F891AFD00A5D37E /* SQSearchResultViewController.swift in Sources */,
@@ -1038,11 +1042,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 75A4C99W3A;
+				DEVELOPMENT_TEAM = KAN8WX649Q;
 				INFOPLIST_FILE = WeChat/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ysq.wechat;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ysq.wechat1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/WeChat/AppDelegate/swift-bridge.h";
 				SWIFT_VERSION = 4.2;
@@ -1057,11 +1061,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 75A4C99W3A;
+				DEVELOPMENT_TEAM = KAN8WX649Q;
 				INFOPLIST_FILE = WeChat/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ysq.wechat;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ysq.wechat1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/WeChat/AppDelegate/swift-bridge.h";
 				SWIFT_VERSION = 4.2;
