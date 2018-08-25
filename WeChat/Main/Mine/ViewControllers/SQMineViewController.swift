@@ -15,7 +15,6 @@ class SQMineViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSubviews()
-   
     }
 
     fileprivate func setupSubviews() {
@@ -23,13 +22,7 @@ class SQMineViewController: UIViewController {
         tableView?.delegate = self
         tableView?.dataSource = self
         view.addSubview(tableView!)
-        
         tableView?.register(UINib.init(nibName: "SQMineUserInfoCell", bundle: nil), forCellReuseIdentifier: "SQMineUserInfoCell")
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
 }
@@ -69,6 +62,7 @@ extension SQMineViewController: UITableViewDelegate, UITableViewDataSource {
         }
         let names = [[""], ["钱包"], ["收藏", "相册", "卡包"], ["设置"]]
         let images = [[], [#imageLiteral(resourceName: "home_money")], [#imageLiteral(resourceName: "home_favorite"), #imageLiteral(resourceName: "home_photo"), #imageLiteral(resourceName: "home_card")], [#imageLiteral(resourceName: "home_setting")]]
+        cell?.textLabel?.font = UIFont(name: "Helvetica Bold", size: 14)
         cell?.textLabel?.text = names[indexPath.section][indexPath.row]
         cell?.imageView?.image = images[indexPath.section][indexPath.row]
         return cell!
@@ -76,6 +70,10 @@ extension SQMineViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        if indexPath.section == 3 {
+            let setting = MineSettingViewController()
+            navigationController?.pushViewController(setting, animated: true)
+        }
     }
     
     

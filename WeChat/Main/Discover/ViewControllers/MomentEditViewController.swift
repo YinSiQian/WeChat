@@ -110,18 +110,13 @@ class MomentEditViewController: UIViewController {
     // MARK: -- Network Exchange
     
     private func postMoment() {
-        var location = ""
-        if let address = LocationService.sharedInstance.name {
-            location = address
-        }
-        NetworkManager.request(targetType: TimelineAPIs.post(content: self.textView.text, url: self.urlInfo, location: location)) { (result, error) in
+        NetworkManager.request(targetType: TimelineAPIs.post(content: self.textView.text, url: self.urlInfo, location: LocationService.sharedInstance.name)) { (result, error) in
             self.view.hideHUD()
             if !result.isEmpty {
                 print(result)
                 self.complectionHandler?()
                 self.dismiss(animated: true, completion: nil)
             }
-            
         }
     }
     

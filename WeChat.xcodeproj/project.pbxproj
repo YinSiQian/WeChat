@@ -52,6 +52,8 @@
 		8BDCD8E51F65848300C53260 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8BDCD8E41F65848300C53260 /* Assets.xcassets */; };
 		8BDCD9251F658C0A00C53260 /* SQRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BDCD9241F658C0A00C53260 /* SQRootViewController.swift */; };
 		8BE1CD3220936AFA007E017D /* FriendService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1CD3120936AFA007E017D /* FriendService.swift */; };
+		8BE8DFCB21317B0500C4E9CE /* MineSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE8DFCA21317B0500C4E9CE /* MineSettingViewController.swift */; };
+		8BE8DFCD21318D1200C4E9CE /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE8DFCC21318D1200C4E9CE /* UserService.swift */; };
 		8BF4F91120E28F1C00A6E693 /* TimelineService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF4F91020E28F1C00A6E693 /* TimelineService.swift */; };
 		8BF5313C2119F4B100DDDD29 /* FriendMomentOpeationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF5313B2119F4B100DDDD29 /* FriendMomentOpeationView.swift */; };
 		8BFA39B12115336C004DAA90 /* SystemPhotoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BFA39B02115336C004DAA90 /* SystemPhotoService.swift */; };
@@ -146,6 +148,8 @@
 		8BDCD8F91F65848300C53260 /* WeChatUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WeChatUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BDCD9241F658C0A00C53260 /* SQRootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQRootViewController.swift; sourceTree = "<group>"; };
 		8BE1CD3120936AFA007E017D /* FriendService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendService.swift; sourceTree = "<group>"; };
+		8BE8DFCA21317B0500C4E9CE /* MineSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MineSettingViewController.swift; sourceTree = "<group>"; };
+		8BE8DFCC21318D1200C4E9CE /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		8BF4F91020E28F1C00A6E693 /* TimelineService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineService.swift; sourceTree = "<group>"; };
 		8BF5313B2119F4B100DDDD29 /* FriendMomentOpeationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendMomentOpeationView.swift; sourceTree = "<group>"; };
 		8BFA39B02115336C004DAA90 /* SystemPhotoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemPhotoService.swift; sourceTree = "<group>"; };
@@ -468,6 +472,7 @@
 		8BDCD91A1F65884900C53260 /* Mine */ = {
 			isa = PBXGroup;
 			children = (
+				8BE8DFCE21318D1600C4E9CE /* Services */,
 				8BDCD91B1F65884900C53260 /* Models */,
 				8BDCD91C1F65884900C53260 /* ViewControllers */,
 				8BDCD91D1F65884900C53260 /* Views */,
@@ -486,6 +491,7 @@
 			isa = PBXGroup;
 			children = (
 				8B5F5B3C1F700A5E007C07D0 /* SQMineViewController.swift */,
+				8BE8DFCA21317B0500C4E9CE /* MineSettingViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -547,6 +553,14 @@
 			isa = PBXGroup;
 			children = (
 				8BE1CD3120936AFA007E017D /* FriendService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		8BE8DFCE21318D1600C4E9CE /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				8BE8DFCC21318D1200C4E9CE /* UserService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -851,6 +865,7 @@
 				8BFA39DA2115542A004DAA90 /* TZProgressView.m in Sources */,
 				8B5F5B3F1F700A8C007C07D0 /* SQNavigationViewController.swift in Sources */,
 				8B8F39D8210CC10600E53CBC /* SQWebSocketService.swift in Sources */,
+				8BE8DFCD21318D1200C4E9CE /* UserService.swift in Sources */,
 				8BFA39DD2115542A004DAA90 /* TZPhotoPreviewCell.m in Sources */,
 				0A6563992112FAA100B3DB24 /* FriendCell.swift in Sources */,
 				0A6563902112EA2C00B3DB24 /* Mappable.swift in Sources */,
@@ -883,6 +898,7 @@
 				8B7417B01F891AFD00A5D37E /* SQSearchResultViewController.swift in Sources */,
 				8B1238EC210DF6470048D25D /* LoginAPI.swift in Sources */,
 				8BDCD8DE1F65848300C53260 /* AppDelegate.swift in Sources */,
+				8BE8DFCB21317B0500C4E9CE /* MineSettingViewController.swift in Sources */,
 				8BFA39D22115542A004DAA90 /* TZImageCropManager.m in Sources */,
 				8BFA39DF2115542A004DAA90 /* TZLocationManager.m in Sources */,
 				8B9ED8C520BABF06009CA600 /* NetworkManager.swift in Sources */,

@@ -12,13 +12,10 @@ class SQDiscoverViewController: UIViewController {
 
     var tableView: UITableView?
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSubviews()
-        
         LocationService.sharedInstance.startLocation()
-        // Do any additional setup after loading the view.
     }
     
     fileprivate func setupSubviews() {
@@ -31,11 +28,6 @@ class SQDiscoverViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         loadNavbarTheme()
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
 }
@@ -53,7 +45,6 @@ extension SQDiscoverViewController: UITableViewDelegate, UITableViewDataSource {
         cell?.textLabel?.font = UIFont(name: "Helvetica Bold", size: 14)
         cell?.textLabel?.text = names[indexPath.section][indexPath.row]
         cell?.imageView?.image = images[indexPath.section][indexPath.row]
-        
         return cell!
     }
     

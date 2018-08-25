@@ -24,6 +24,12 @@ protocol NavgationBarTheme {
     func loadNavbarTheme(theme: ColorTheme)
 }
 
+protocol DefaultTableView {
+        
+    var sq_tableView: UITableView {get}
+    
+}
+
 extension NavgationBarTheme where Self: UIViewController {
     
     func loadNavbarTheme(theme: ColorTheme = ColorTheme.black) {
@@ -96,9 +102,19 @@ extension UIViewController {
     
 }
 
-extension UIViewController: NetworkErrorHandler {
-
+extension DefaultTableView where Self: UIViewController {
+    
+    func setupTableView(style: UITableView.Style = .plain) -> UITableView {
+        let tableView = UITableView(frame: self.view.bounds)
+        tableView.backgroundColor = UIColor.white
+        tableView.delegate = (self as! UITableViewDelegate)
+        tableView.dataSource = (self as! UITableViewDataSource)
+        return tableView
+    }
+    
 }
+
+extension UIViewController: NetworkErrorHandler {}
 
 extension UIViewController: NavgationBarTheme {}
 
