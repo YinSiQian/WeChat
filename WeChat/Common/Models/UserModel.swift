@@ -14,7 +14,7 @@ struct UserModel {
     
     var username: String = ""
     var password: String = ""
-    var phoneNumber: String = ""
+    var usermobile: String = ""
     var accessToken: String = ""
     var id: Int = 0
     var icon: String = ""
@@ -44,7 +44,7 @@ extension UserModel {
         self.password = data["password"] as! String
         self.accessToken = data["accessToken"] as! String
         self.id = data["id"] as! Int
-        self.phoneNumber = data["usermobile"] as! String
+        self.usermobile = data["usermobile"] as! String
         self.icon = data["icon"] as! String
         self.firstLetter = data["firstLetter"] as! String
         self.signature = data["signature"] as! String
@@ -52,5 +52,17 @@ extension UserModel {
         self.wxId = data["wxId"] as! String
         self.expired = data["expired"] as! String
         self.address = data["address"] as! String
+        
     }
+    
+    public func syncUserInfo() {
+        UserModel.sharedInstance.accessToken = ""
+        let mirror = Mirror(reflecting: UserModel.sharedInstance)
+        var data: Dictionary = [String : Any]()
+        for (key, value) in mirror.children {
+            data.updateValue(value, forKey: key!)
+        }
+        UserDefaults.standard.set(data, forKey: "userModel")
+    }
+    
 }

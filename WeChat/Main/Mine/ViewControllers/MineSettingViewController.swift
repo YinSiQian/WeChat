@@ -21,10 +21,11 @@ class MineSettingViewController: UIViewController {
     
     private func logout() {
         
-        view.show(message: "正在退出")
+        view.showIndicator(message: "正在退出...")
         NetworkManager.request(targetType: UserAPI.exit) { (result, error) in
             if !result.isEmpty {
-                UserModel.sharedInstance.accessToken = ""
+                UserModel.sharedInstance.syncUserInfo()
+                SQWebSocketService.sharedInstance.disconnection()
                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2, execute: {
                     self.view.hideHUD()
                     AppDelegate.currentAppdelegate().window?.rootViewController = SQLoginViewController()

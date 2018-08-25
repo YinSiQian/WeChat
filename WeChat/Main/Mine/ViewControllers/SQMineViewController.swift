@@ -16,6 +16,11 @@ class SQMineViewController: UIViewController {
         super.viewDidLoad()
         setupSubviews()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        loadUserInfo()
+    }
 
     fileprivate func setupSubviews() {
         tableView = UITableView(frame: view.bounds, style: .grouped)
@@ -23,6 +28,16 @@ class SQMineViewController: UIViewController {
         tableView?.dataSource = self
         view.addSubview(tableView!)
         tableView?.register(UINib.init(nibName: "SQMineUserInfoCell", bundle: nil), forCellReuseIdentifier: "SQMineUserInfoCell")
+    }
+    
+    private func loadUserInfo() {
+        
+        NetworkManager.request(targetType: UserAPI.userInfo(id: UserModel.sharedInstance.id)) {
+            (result, error) in
+            if !result.isEmpty {
+                
+            }
+        }
     }
 
 }
