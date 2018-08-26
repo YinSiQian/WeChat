@@ -24,6 +24,7 @@ class MineSettingViewController: UIViewController {
         view.showIndicator(message: "正在退出...")
         NetworkManager.request(targetType: UserAPI.exit) { (result, error) in
             if !result.isEmpty {
+                UserModel.sharedInstance.removeAccessToken()
                 UserModel.sharedInstance.syncUserInfo()
                 SQWebSocketService.sharedInstance.disconnection()
                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2, execute: {

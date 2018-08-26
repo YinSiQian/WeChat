@@ -43,7 +43,7 @@ class SQLoginViewController: UIViewController {
             if !response.isEmpty {
                 self.view.hideHUD()
                 self.view.show(message: "登录成功!")
-                UserModel.sharedInstance.initialData(data: response["data"] as! [String : Any])
+                UserModel.sharedInstance.initial(data: response["data"] as! [String : Any])
                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2, execute: {
                     AppDelegate.currentAppdelegate().window?.rootViewController = SQRootViewController()
                 })

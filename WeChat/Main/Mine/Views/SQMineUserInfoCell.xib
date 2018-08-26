@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.13.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment version="2304" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.9"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -39,7 +39,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="home_QRCode" translatesAutoresizingMaskIntoConstraints="NO" id="ulA-bX-cX4">
-                        <rect key="frame" x="285" y="17.5" width="35" height="35"/>
+                        <rect key="frame" x="285" y="18.5" width="35" height="35"/>
                     </imageView>
                 </subviews>
                 <constraints>
@@ -55,7 +55,12 @@
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
-            <point key="canvasLocation" x="34" y="98"/>
+            <connections>
+                <outlet property="avatar" destination="CZd-9H-PKH" id="v40-j5-jM4"/>
+                <outlet property="name" destination="0t6-xG-jUg" id="3Kp-Py-70a"/>
+                <outlet property="wxId" destination="416-B0-8x8" id="fhV-RM-RUg"/>
+            </connections>
+            <point key="canvasLocation" x="-118" y="4"/>
         </tableViewCell>
     </objects>
     <resources>

@@ -35,7 +35,10 @@ class SQMineViewController: UIViewController {
         NetworkManager.request(targetType: UserAPI.userInfo(id: UserModel.sharedInstance.id)) {
             (result, error) in
             if !result.isEmpty {
-                
+                let data = result["user"];
+                UserModel.sharedInstance.initial(data: data as! [String : Any])
+                UserModel.sharedInstance.syncUserInfo()
+                self.tableView?.reloadData()
             }
         }
     }
@@ -68,6 +71,7 @@ extension SQMineViewController: UITableViewDelegate, UITableViewDataSource {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "SQMineUserInfoCell", for: indexPath) as! SQMineUserInfoCell
             cell.accessoryType = .disclosureIndicator
+            cell.updateInfo()
             return cell
         }
         var cell = tableView.dequeueReusableCell(withIdentifier: "cell")

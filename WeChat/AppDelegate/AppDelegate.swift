@@ -18,16 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     var root: UIViewController? {
-        if let rootVC = currentAppDelegate.window?.rootViewController {
-            if rootVC is UITabBarController {
-                return rootVC as! UITabBarController
-            }
-            if rootVC is UINavigationController {
-                return rootVC as! UINavigationController
-            }
-            return rootVC
-        }
-        return nil
+        return currentAppDelegate.window?.rootViewController
     }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {

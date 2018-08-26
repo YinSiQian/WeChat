@@ -4,3 +4,4 @@ WeChat.xcworkspace/xcuserdata/obj.xcuserdatad/UserInterfaceState.xcuserstate
 WeChat.xcodeproj/xcuserdata/obj.xcuserdatad/xcschemes/xcschememanagement.plist
 Pods/Pods.xcodeproj/xcuserdata/obj.xcuserdatad/xcschemes/xcschememanagement.plist
 .DS_Store
+*.xcbkptlist

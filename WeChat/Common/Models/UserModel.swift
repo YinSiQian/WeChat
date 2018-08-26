@@ -28,7 +28,7 @@ struct UserModel {
     private init() {
         let data = UserDefaults.standard.object(forKey: "userModel") as? [String: Any]
         if data != nil {
-            initialData(data: data!)
+            initial(data: data!)
         }
     }
     
@@ -36,9 +36,7 @@ struct UserModel {
 
 extension UserModel {
     
-    public mutating func initialData(data: [String: Any]) {
-        
-        UserDefaults.standard.set(data, forKey: "userModel");
+    public mutating func initial(data: [String: Any]) {
         
         self.username = data["username"] as! String
         self.password = data["password"] as! String
@@ -55,8 +53,11 @@ extension UserModel {
         
     }
     
-    public func syncUserInfo() {
+    public func removeAccessToken() {
         UserModel.sharedInstance.accessToken = ""
+    }
+    
+    public func syncUserInfo() {
         let mirror = Mirror(reflecting: UserModel.sharedInstance)
         var data: Dictionary = [String : Any]()
         for (key, value) in mirror.children {
