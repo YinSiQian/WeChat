@@ -26,7 +26,7 @@ class SQMineUserInfoCell: UITableViewCell {
         
         avatar.kf.setImage(with: UserModel.sharedInstance.icon.url())
         name.text = UserModel.sharedInstance.username
-        wxId.text = UserModel.sharedInstance.wxId
+        wxId.text = "微信号: " + UserModel.sharedInstance.wxId
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

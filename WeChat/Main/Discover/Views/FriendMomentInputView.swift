@@ -114,6 +114,7 @@ class FriendMomentInputView: UIView {
     }
     
     @objc private func keyboardWillShow(noti: Notification) {
+        isHidden = false
         let rect = noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as! CGRect
         UIView.animate(withDuration: 0.25) {
             self.minY = rect.origin.y - self.height
