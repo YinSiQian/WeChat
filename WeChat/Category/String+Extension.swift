@@ -43,7 +43,7 @@ extension String {
         return URL(string: "")
     }
     
-    public func convertToDict() -> [String: Any]{
+    public func convertToDict() -> [String: Any] {
         let data = self.data(using: .utf8)
         let json = try! JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.allowFragments) as? [String: Any]
         return json ?? [:]
