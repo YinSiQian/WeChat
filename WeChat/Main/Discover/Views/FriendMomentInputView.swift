@@ -29,6 +29,10 @@ class FriendMomentInputView: UIView {
         }
     }
     
+    var isMsgInput: Bool = false
+    
+    var isActive: Bool = false
+    
     private var index: Int = 0
     
     private var placeholderLable: UILabel!
@@ -115,6 +119,7 @@ class FriendMomentInputView: UIView {
     
     @objc private func keyboardWillShow(noti: Notification) {
         isHidden = false
+        isActive = true
         let rect = noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as! CGRect
         UIView.animate(withDuration: 0.25) {
             self.minY = rect.origin.y - self.height
@@ -125,12 +130,14 @@ class FriendMomentInputView: UIView {
     
     @objc private func keyboardWillHide(noti: NSNotification) {
         let rect = noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as! CGRect
-        
+        isActive = false
         UIView.animate(withDuration: 0.25, animations: {
-            self.minY = rect.origin.y - self.height
-            self.originY = rect.origin.y - self.height
+            self.minY = rect.origin.y - self.height - 34
+            self.originY = rect.origin.y - self.height - 34
         }) { (_) in
-            self.isHidden = true
+            if !self.isMsgInput {
+                self.isHidden = true
+            }
         }
         
         currentTextViewHeight = self.textView.height
@@ -141,8 +148,11 @@ class FriendMomentInputView: UIView {
         let rect = noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as! CGRect
         
         UIView.animate(withDuration: 0.25) {
-            self.minY = rect.origin.y - self.height
-            self.originY = rect.origin.y - self.height
+            if self.isActive {
+                self.minY = rect.origin.y - self.height
+                self.originY = rect.origin.y - self.height
+            }
+            
         }
     }
     
@@ -157,6 +167,10 @@ class FriendMomentInputView: UIView {
     public func hide() {
         isHidden = true
         self.textView.resignFirstResponder()
+    }
+    
+    public func moveToBottom() {
+        textView.resignFirstResponder();
     }
     
     public func show() -> FriendMomentInputView {

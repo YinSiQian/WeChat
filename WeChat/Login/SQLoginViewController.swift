@@ -44,6 +44,7 @@ class SQLoginViewController: UIViewController {
                 self.view.hideHUD()
                 self.view.show(message: "登录成功!")
                 UserModel.sharedInstance.initial(data: response["data"] as! [String : Any])
+                UserModel.sharedInstance.syncUserInfo()
                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2, execute: {
                     AppDelegate.currentAppdelegate().window?.rootViewController = SQRootViewController()
                 })

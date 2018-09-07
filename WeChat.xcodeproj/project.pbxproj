@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A1A2255214218D900DC9440 /* IMDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1A2254214218D900DC9440 /* IMDataManager.swift */; };
+		0A1A22592142192200DC9440 /* IMMessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1A22582142192200DC9440 /* IMMessageModel.swift */; };
+		0A1A225D2142196000DC9440 /* IMMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1A225C2142196000DC9440 /* IMMessageCell.swift */; };
+		0A1A226021421CAD00DC9440 /* IMMessageEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1A225F21421CAD00DC9440 /* IMMessageEnums.swift */; };
+		0A1A22622142270D00DC9440 /* IMMessageLayoutService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1A22612142270D00DC9440 /* IMMessageLayoutService.swift */; };
+		0A1A226421422BD200DC9440 /* IMChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1A226321422BD200DC9440 /* IMChatViewController.swift */; };
 		0A65638C2112E4FC00B3DB24 /* FriendModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A65638B2112E4FC00B3DB24 /* FriendModel.swift */; };
 		0A6563902112EA2C00B3DB24 /* Mappable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A65638F2112EA2C00B3DB24 /* Mappable.swift */; };
 		0A6563992112FAA100B3DB24 /* FriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6563972112FAA100B3DB24 /* FriendCell.swift */; };
@@ -93,6 +99,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0A1A2254214218D900DC9440 /* IMDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMDataManager.swift; sourceTree = "<group>"; };
+		0A1A22582142192200DC9440 /* IMMessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMMessageModel.swift; sourceTree = "<group>"; };
+		0A1A225C2142196000DC9440 /* IMMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMMessageCell.swift; sourceTree = "<group>"; };
+		0A1A225F21421CAD00DC9440 /* IMMessageEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMMessageEnums.swift; sourceTree = "<group>"; };
+		0A1A22612142270D00DC9440 /* IMMessageLayoutService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMMessageLayoutService.swift; sourceTree = "<group>"; };
+		0A1A226321422BD200DC9440 /* IMChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMChatViewController.swift; sourceTree = "<group>"; };
 		0A65638B2112E4FC00B3DB24 /* FriendModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendModel.swift; sourceTree = "<group>"; };
 		0A65638F2112EA2C00B3DB24 /* Mappable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mappable.swift; sourceTree = "<group>"; };
 		0A6563972112FAA100B3DB24 /* FriendCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendCell.swift; sourceTree = "<group>"; };
@@ -216,6 +228,40 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0A1A2257214218F700DC9440 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				0A1A226321422BD200DC9440 /* IMChatViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		0A1A225A2142193100DC9440 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				0A1A22582142192200DC9440 /* IMMessageModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		0A1A225B2142194600DC9440 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0A1A225C2142196000DC9440 /* IMMessageCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		0A1A225E21421C8500DC9440 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				0A1A2254214218D900DC9440 /* IMDataManager.swift */,
+				0A1A225F21421CAD00DC9440 /* IMMessageEnums.swift */,
+				0A1A22612142270D00DC9440 /* IMMessageLayoutService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		0A65638A2112E4EB00B3DB24 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -303,6 +349,10 @@
 		8B8F39D6210CC0E700E53CBC /* IM */ = {
 			isa = PBXGroup;
 			children = (
+				0A1A225E21421C8500DC9440 /* Services */,
+				0A1A225B2142194600DC9440 /* Views */,
+				0A1A225A2142193100DC9440 /* Models */,
+				0A1A2257214218F700DC9440 /* ViewControllers */,
 				8B8F39D7210CC10600E53CBC /* SQWebSocketService.swift */,
 			);
 			path = IM;
@@ -859,6 +909,7 @@
 				8B8F39DD210CCE4500E53CBC /* Dictionary+Extension.swift in Sources */,
 				8B7417AD1F89187400A5D37E /* SQFriendsMomentsController.swift in Sources */,
 				8BFA39E02115542A004DAA90 /* TZGifPhotoPreviewController.m in Sources */,
+				0A1A226421422BD200DC9440 /* IMChatViewController.swift in Sources */,
 				8BFA39D72115542A004DAA90 /* UIView+Layout.m in Sources */,
 				8B7417B21F891B2B00A5D37E /* Macros.swift in Sources */,
 				8BFA39D62115542A004DAA90 /* NSBundle+TZImagePicker.m in Sources */,
@@ -876,6 +927,7 @@
 				8B1238E6210DEBE90048D25D /* SQLoginViewController.swift in Sources */,
 				8BFA39E221155914004DAA90 /* UploadService.swift in Sources */,
 				8B5F5B3D1F700A5E007C07D0 /* SQMineViewController.swift in Sources */,
+				0A1A22592142192200DC9440 /* IMMessageModel.swift in Sources */,
 				8B077D6A21207718005A763A /* FriendMomentEditPicsView.swift in Sources */,
 				0A65639D21130A4900B3DB24 /* MomentModel.swift in Sources */,
 				8BBBA65E1F7A9014008E18A5 /* SQMineUserInfoCell.swift in Sources */,
@@ -883,20 +935,24 @@
 				8B5F5B3B1F700A54007C07D0 /* SQDiscoverViewController.swift in Sources */,
 				8BC09DAF2113501400DC463D /* FriendMomentCell.swift in Sources */,
 				8BFA39D52115542A004DAA90 /* TZAssetModel.m in Sources */,
+				0A1A225D2142196000DC9440 /* IMMessageCell.swift in Sources */,
 				0AA8FD0C21140A0F0039C630 /* UIView+Extension.swift in Sources */,
 				8B1238EF210DFE9F0048D25D /* UserModel.swift in Sources */,
 				8BC09DB1211359A200DC463D /* TimelineLayoutService.swift in Sources */,
 				8B7417B41F89249D00A5D37E /* SQMessageCell.swift in Sources */,
 				8BF4F91120E28F1C00A6E693 /* TimelineService.swift in Sources */,
 				8B8F39DA210CCB9100E53CBC /* String+Extension.swift in Sources */,
+				0A1A226021421CAD00DC9440 /* IMMessageEnums.swift in Sources */,
 				8BDCD9251F658C0A00C53260 /* SQRootViewController.swift in Sources */,
 				8BFA39D42115542A004DAA90 /* TZVideoPlayerController.m in Sources */,
 				8BFA39DE2115542A004DAA90 /* TZImagePickerController.m in Sources */,
+				0A1A22622142270D00DC9440 /* IMMessageLayoutService.swift in Sources */,
 				8B98CBD921305C6200BC1D9F /* LocationService.swift in Sources */,
 				0A794506211BF3530045FCC9 /* YYWeakProxy.m in Sources */,
 				8B5F5B391F700A45007C07D0 /* SQFriendsViewController.swift in Sources */,
 				8B7417B01F891AFD00A5D37E /* SQSearchResultViewController.swift in Sources */,
 				8B1238EC210DF6470048D25D /* LoginAPI.swift in Sources */,
+				0A1A2255214218D900DC9440 /* IMDataManager.swift in Sources */,
 				8BDCD8DE1F65848300C53260 /* AppDelegate.swift in Sources */,
 				8BE8DFCB21317B0500C4E9CE /* MineSettingViewController.swift in Sources */,
 				8BFA39D22115542A004DAA90 /* TZImageCropManager.m in Sources */,

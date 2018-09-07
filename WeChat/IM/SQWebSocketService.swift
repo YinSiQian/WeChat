@@ -9,6 +9,15 @@
 import Foundation
 import Starscream
 
+protocol SQWebSocketServiceDelegate: class {
+    
+    func webSocketService(received msg: String)
+    
+    func webSocketServiceDidDisconnect(socket: WebSocketClient, error: Error?)
+    
+    func webSocketServiceDidConnect(socket: WebSocketClient)
+}
+
 public class SQWebSocketService {
     
     public typealias connectionSuccessHandler = () -> Void
@@ -20,6 +29,8 @@ public class SQWebSocketService {
     public var handler: connectionSuccessHandler!
     
     public var errorHandler: connectionErrorHandler!
+    
+    weak var delegate: SQWebSocketServiceDelegate?
     
     public var isConnection: Bool {
         return webSocket.isConnected
