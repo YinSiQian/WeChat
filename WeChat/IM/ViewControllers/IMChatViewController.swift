@@ -2,7 +2,7 @@
 //  IMChatViewController.swift
 //  WeChat
 //
-//  Created by ABJ on 2018/9/7.
+//  Created by ysq on 2018/9/7.
 //  Copyright © 2018年 ysq. All rights reserved.
 //
 
@@ -25,24 +25,25 @@ class IMChatViewController: UIViewController {
         return inputView
     }()
     
-    private lazy var dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        return formatter
-    }()
+    private var msgModels = [IMMessageLayoutService]()
     
     public var chat_id: Int = 0
+    
+    public var name: String = "" {
+        didSet {
+            title = name
+        }
+    }
+    
+    public var avatar: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
         view.addSubview(tableView)
         view.addSubview(msgInputView)
-        
-        msgInputView.complectionHandler = {
-            [weak self] (text, _) in
-            self?.sendMsg(info: text)
-        }
+        userSendMsg()
+        receivedMsg()
     }
     
     override func viewSafeAreaInsetsDidChange() {
@@ -67,22 +68,31 @@ class IMChatViewController: UIViewController {
         }
     }
     
-    private func sendMsg(info: String) {
-        let date = Date()
-        let dateString = dateFormatter.string(from: date)
-        let msg_seq = dateString + "userId" + UserModel.sharedInstance.id.StringValue
+    // MARK: -- 消息接收与发送处理
+    
+    private func receivedMsg() {
         
-        //发送 消息体结构 status = 6001 表示xx发送  msg 消息唯一码
-        let msg: [String: Any] = ["received_id": chat_id,
-                                  "content": info,
-                                  "is_group": 1,
-                                  "group_id": 1,
-                                  "msg_seq": msg_seq.md5,
-                                  "msg_type": 1,
-                                  "status": 6001]
-        SQWebSocketService.sharedInstance.sendMsg(msg: msg.convertToString()!)
     }
     
+    private func userSendMsg() {
+        msgInputView.complectionHandler = {
+            [weak self] (text, _) in
+            let msgModel = IMDataManager.sharedInstance.sendTextMsg(content: text, chat_id: (self?.chat_id)!)
+            self?.handMsgData(model: msgModel)
+        }
+    }
+    
+    private func handMsgData(model: IMMessageModel) {
+        model.received_name = name
+        model.received_avatar = avatar
+        DispatchQueue.global().async {
+            let layout = IMMessageLayoutService(model: model)
+            self.msgModels.append(layout)
+            DispatchQueue.main.async(execute: {
+                self.tableView.insertRows(at: [IndexPath(row: self.msgModels.count - 1, section: 0)], with: .automatic)
+            })
+        }
+    }
 
 }
 
@@ -93,7 +103,9 @@ extension IMChatViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return IMMessageCell.cell(with: tableView)
+        let cell = IMMessageCell.cell(with: tableView)
+        cell.msgServiceModel = msgModels[indexPath.row]
+        return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

@@ -2,7 +2,7 @@
 //  IMMessageLayoutService.swift
 //  WeChat
 //
-//  Created by ABJ on 2018/9/7.
+//  Created by ysq on 2018/9/7.
 //  Copyright © 2018年 ysq. All rights reserved.
 //
 
@@ -10,7 +10,7 @@ import UIKit
 
 class IMMessageLayoutService: NSObject {
 
-    public var msg_model: IMMessageModel! {
+    public var msg_model: IMMessageModel {
         didSet {
             layout()
         }
@@ -21,6 +21,13 @@ class IMMessageLayoutService: NSObject {
     public var contentWidht: CGFloat = 0;
     
     public var photoHeight: CGFloat = 0
+    
+    init(model: IMMessageModel) {
+        self.msg_model = model
+        super.init()
+        layout()
+    }
+    
     
     private func layout() {
         

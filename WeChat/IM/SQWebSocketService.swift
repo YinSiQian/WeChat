@@ -78,41 +78,18 @@ extension SQWebSocketService: WebSocketDelegate {
     public func websocketDidConnect(socket: WebSocketClient) {
         print("connected to server")
         handler?()
+        delegate?.webSocketServiceDidConnect(socket: socket)
     }
     
     public func websocketDidDisconnect(socket: WebSocketClient, error: Error?) {
         print("it is disconnect")
         print(error as Any)
         errorHandler?(error)
+        delegate?.webSocketServiceDidDisconnect(socket: socket, error: error)
     }
     
     public func websocketDidReceiveMessage(socket: WebSocketClient, text: String) {
-        let dict = text.convertToDict()
-        let status = dict["status"] as! Int
-        switch status {
-        case 5000:
-        //消息推送: 添加好友, 点赞, 朋友圈回复, 评论
-            print("接收到推送\(dict["content"] ?? 0)")
-        case 6000:
-            //消息发送成功
-            print("消息发送成功: \(text)")
-        case 6002:
-            //服务器收到生产者的消息 服务器ACK
-            print("server ack: \(text)")
-        case 6003:
-           //服务器收到消费者的ack
-            print("server ack to consumers: \(text)")
-        case 6004:
-            //服务器转发消息给消费者
-            print("server send msg to consumers: \(text)")
-            let msg_seq = dict["msg_seq"] as! String
-            let msg: [String: Any] = ["status": 6003, "msg_seq": msg_seq]
-            webSocket.write(string: msg.convertToString()!)
-        default:
-            print("default")
-        }
-        let alter = UIAlertView.init(title: "提示", message: text, delegate: nil, cancelButtonTitle: "sure")
-        alter.show()
+        delegate?.webSocketService(received: text)
     }
     
     public func websocketDidReceiveData(socket: WebSocketClient, data: Data) {

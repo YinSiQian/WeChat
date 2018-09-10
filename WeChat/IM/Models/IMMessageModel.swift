@@ -2,7 +2,7 @@
 //  IMMessageModel.swift
 //  WeChat
 //
-//  Created by ABJ on 2018/9/7.
+//  Created by ysq on 2018/9/7.
 //  Copyright © 2018年 ysq. All rights reserved.
 //
 
@@ -24,7 +24,9 @@ class IMMessageModel: NSObject {
     
     public var received_avatar: String = ""
     
-    public var group_id: Int = 0
+    public var group_id: Int = 1
+    
+    public var is_group: Int = 1
     
     public var msg_content: String = ""
     

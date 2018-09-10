@@ -13,6 +13,7 @@
 		0A1A226021421CAD00DC9440 /* IMMessageEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1A225F21421CAD00DC9440 /* IMMessageEnums.swift */; };
 		0A1A22622142270D00DC9440 /* IMMessageLayoutService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1A22612142270D00DC9440 /* IMMessageLayoutService.swift */; };
 		0A1A226421422BD200DC9440 /* IMChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1A226321422BD200DC9440 /* IMChatViewController.swift */; };
+		0A6320822146619B009636A4 /* IMMessageQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6320812146619B009636A4 /* IMMessageQueue.swift */; };
 		0A65638C2112E4FC00B3DB24 /* FriendModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A65638B2112E4FC00B3DB24 /* FriendModel.swift */; };
 		0A6563902112EA2C00B3DB24 /* Mappable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A65638F2112EA2C00B3DB24 /* Mappable.swift */; };
 		0A6563992112FAA100B3DB24 /* FriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6563972112FAA100B3DB24 /* FriendCell.swift */; };
@@ -105,6 +106,7 @@
 		0A1A225F21421CAD00DC9440 /* IMMessageEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMMessageEnums.swift; sourceTree = "<group>"; };
 		0A1A22612142270D00DC9440 /* IMMessageLayoutService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMMessageLayoutService.swift; sourceTree = "<group>"; };
 		0A1A226321422BD200DC9440 /* IMChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMChatViewController.swift; sourceTree = "<group>"; };
+		0A6320812146619B009636A4 /* IMMessageQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMMessageQueue.swift; sourceTree = "<group>"; };
 		0A65638B2112E4FC00B3DB24 /* FriendModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendModel.swift; sourceTree = "<group>"; };
 		0A65638F2112EA2C00B3DB24 /* Mappable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mappable.swift; sourceTree = "<group>"; };
 		0A6563972112FAA100B3DB24 /* FriendCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendCell.swift; sourceTree = "<group>"; };
@@ -258,6 +260,7 @@
 				0A1A2254214218D900DC9440 /* IMDataManager.swift */,
 				0A1A225F21421CAD00DC9440 /* IMMessageEnums.swift */,
 				0A1A22612142270D00DC9440 /* IMMessageLayoutService.swift */,
+				0A6320812146619B009636A4 /* IMMessageQueue.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -953,6 +956,7 @@
 				8B7417B01F891AFD00A5D37E /* SQSearchResultViewController.swift in Sources */,
 				8B1238EC210DF6470048D25D /* LoginAPI.swift in Sources */,
 				0A1A2255214218D900DC9440 /* IMDataManager.swift in Sources */,
+				0A6320822146619B009636A4 /* IMMessageQueue.swift in Sources */,
 				8BDCD8DE1F65848300C53260 /* AppDelegate.swift in Sources */,
 				8BE8DFCB21317B0500C4E9CE /* MineSettingViewController.swift in Sources */,
 				8BFA39D22115542A004DAA90 /* TZImageCropManager.m in Sources */,
