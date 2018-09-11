@@ -50,12 +50,13 @@ class IMChatViewController: UIViewController {
         if #available(iOS 11.0, *) {
             super.viewSafeAreaInsetsDidChange()
             var rect = tableView.frame
-            rect.size.height -= msgInputView.height + 34
+            rect.size.height -= msgInputView.height + view.safeAreaInsets.bottom
             tableView.frame = rect
             
             var inputRect = msgInputView.frame
             inputRect.origin.y = rect.height + rect.minY
             msgInputView.frame = inputRect
+            msgInputView.currentLocationForY = inputRect.origin.y
         } else {
             
             // Fallback on earlier versions
@@ -92,7 +93,12 @@ class IMChatViewController: UIViewController {
             let layout = IMMessageLayoutService(model: model)
             self.msgModels.append(layout)
             DispatchQueue.main.async(execute: {
-                self.tableView.insertRows(at: [IndexPath(row: self.msgModels.count - 1, section: 0)], with: .automatic)
+                if UserModel.sharedInstance.id == model.sender_id {
+                    self.tableView.insertRows(at: [IndexPath(row: self.msgModels.count - 1, section: 0)], with: .right)
+                } else {
+                    self.tableView.insertRows(at: [IndexPath(row: self.msgModels.count - 1, section: 0)], with: .left)
+                }
+                
                 self.tableView.scrollToRow(at: IndexPath(row: self.msgModels.count - 1
                     , section: 0), at: .none, animated: true)
             })
