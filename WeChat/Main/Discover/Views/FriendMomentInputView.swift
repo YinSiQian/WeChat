@@ -191,13 +191,17 @@ extension FriendMomentInputView: UITextViewDelegate {
         if text == "\n" {
             complectionHandler?(textView.text, index)
             textView.text = ""
-            if isMsgInput && self.height > 40.0 {
-                UIView.animate(withDuration: 0.2) {
-                    self.textView.frame = CGRect(x: 20, y: 5, width: self.width - 40, height: 30)
-                    self.frame = CGRect(x: 0, y: kScreen_height - 40, width: kScreen_width, height: 40)
-                }
-            }
+//            if isMsgInput && self.height > 40.0 {
+//                UIView.animate(withDuration: 0.2) {
+//                    self.textView.frame = CGRect(x: 20, y: 5, width: self.width - 40, height: 30)
+//                    self.frame = CGRect(x: 0, y: kScreen_height - 40, width: kScreen_width, height: 40)
+//                }
+//            }
             textView.resignFirstResponder()
+
+            if !isMsgInput {
+                textView.resignFirstResponder()
+            }
         }
         return true
     }

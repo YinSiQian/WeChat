@@ -55,6 +55,6 @@ class IMMessageLayoutService: NSObject {
             break
             
         }
-        height += contentHeight
+        height += contentHeight + 2.0 * kMsgAvatarLeftPadding
     }
 }
