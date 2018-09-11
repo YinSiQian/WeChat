@@ -14,6 +14,7 @@ class SQRootViewController: UITabBarController {
         super.viewDidLoad()
         UIApplication.shared.statusBarStyle = .lightContent
         setupViewcontrollers()
+        SQWebSocketService.sharedInstance.delegate = IMDataManager.sharedInstance
         // Do any additional setup after loading the view.
     }
     

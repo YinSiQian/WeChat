@@ -14,13 +14,12 @@ class IMChatViewController: UIViewController {
         let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: kScreen_width, height: view.height), style: .plain)
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.backgroundColor = UIColor.red
         tableView.separatorStyle = .none
         return tableView
     }()
     
     private lazy var msgInputView: FriendMomentInputView = {
-        let inputView = FriendMomentInputView(frame: CGRect(x: 0, y: kScreen_height - 40, width: kScreen_width, height: 40), placeholder: "评论")
+        let inputView = FriendMomentInputView(frame: CGRect(x: 0, y: kScreen_height - 40, width: kScreen_width, height: 40), placeholder: "")
         inputView.isMsgInput = true
         return inputView
     }()
@@ -71,7 +70,10 @@ class IMChatViewController: UIViewController {
     // MARK: -- 消息接收与发送处理
     
     private func receivedMsg() {
-        
+        IMDataManager.sharedInstance.receivedHandler = {
+            [weak self] (model) in
+            self?.handMsgData(model: model)
+        }
     }
     
     private func userSendMsg() {
@@ -99,7 +101,11 @@ class IMChatViewController: UIViewController {
 extension IMChatViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return msgModels.count
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return msgModels[indexPath.row].height
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

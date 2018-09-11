@@ -12,6 +12,10 @@ import Starscream
 
 class IMDataManager: NSObject {
     
+    typealias receivedMsgHandler = (_ msgModel: IMMessageModel) -> ()
+    
+    public var receivedHandler: receivedMsgHandler?
+    
     static let sharedInstance = IMDataManager()
     
     private lazy var dateFormatter: DateFormatter = {
@@ -44,7 +48,7 @@ class IMDataManager: NSObject {
                                   "is_group": 1,
                                   "group_id": 1,
                                   "msg_seq": msg_seq.md5,
-                                  "msg_type": msgType,
+                                  "msg_type": 1,
                                   "status": 6001]
         SQWebSocketService.sharedInstance.sendMsg(msg: msg.convertToString()!)
         
@@ -56,6 +60,9 @@ class IMDataManager: NSObject {
         model.sender_avatar = UserModel.sharedInstance.icon
         model.msg_seq = msg_seq.md5
         model.msg_type = msgType
+        
+        
+        
         return model
     }
     
@@ -90,6 +97,18 @@ extension IMDataManager: SQWebSocketServiceDelegate {
             let msg_seq = dict["msg_seq"] as! String
             let msg: [String: Any] = ["status": 6003, "msg_seq": msg_seq]
             SQWebSocketService.sharedInstance.sendMsg(msg: msg.convertToString()!)
+            
+            let model = IMMessageModel()
+            model.msg_content = dict["content"] as? String ?? ""
+            model.msg_id = dict["msg_id"] as? Int ?? 0
+            model.sender_id = dict["sender_id"] as? Int ?? 0
+            model.received_id = dict["received_id"] as? Int ?? 0
+            model.sender_name = "测试名称"
+            model.sender_avatar = UserModel.sharedInstance.icon
+            model.msg_seq = msg_seq
+            model.msg_type = IMMessageType(rawValue: dict["msg_type"] as? Int ?? IMMessageType.text.rawValue)!
+            receivedHandler?(model)
+            
         default:
             print("default")
         }

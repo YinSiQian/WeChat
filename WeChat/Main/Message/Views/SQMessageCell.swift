@@ -18,9 +18,11 @@ class SQMessageCell: UITableViewCell {
     
     private var time_layer: CATextLayer?
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    public var data: [String: Any] = [:] {
+        didSet {
+            name_layer?.string = data["name"]
+            content_layer?.string = "hello 我是\(String(describing: data["name"]))"
+        }
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -80,6 +82,8 @@ class SQMessageCell: UITableViewCell {
         
         
     }
+    
+    
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)

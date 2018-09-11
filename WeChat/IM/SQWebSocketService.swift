@@ -67,7 +67,9 @@ extension SQWebSocketService {
     
     public func sendMsg(msg: String) {
         if webSocket.isConnected {
-            webSocket.write(string: msg)
+            webSocket.write(string: msg) {
+                print("send success")
+            }
         }
     }
     
@@ -94,6 +96,7 @@ extension SQWebSocketService: WebSocketDelegate {
     
     public func websocketDidReceiveData(socket: WebSocketClient, data: Data) {
         
+        (data as NSData).length
     }
     
     

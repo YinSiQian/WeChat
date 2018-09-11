@@ -16,9 +16,13 @@ class IMMessageLayoutService: NSObject {
         }
     }
     
+    public var height: CGFloat = 0
+    
+    public var nameWidth: CGFloat = 0
+    
     public var contentHeight: CGFloat = 0
     
-    public var contentWidht: CGFloat = 0;
+    public var contentWidth: CGFloat = 0;
     
     public var photoHeight: CGFloat = 0
     
@@ -31,11 +35,17 @@ class IMMessageLayoutService: NSObject {
     
     private func layout() {
         
+        height = 0
+        
+        height += kMsgTopMarginPadding + kMsgNameHeight + kMsgNameAndAvatarPadding + kMsgTopMarginPadding
+        
+        nameWidth = msg_model.sender_name.calculate(font: UIFont.systemFont(ofSize: 14), size: CGSize(width: kScreen_width - kMsgAvatarWidthAndHeight - kMsgCellPadding * 2.0, height: kMsgNameHeight)).width
+        
         switch msg_model.msg_type {
         case .text:
             let size = msg_model.msg_content.calculate(font: UIFont.systemFont(ofSize: 16), size: CGSize(width: kMsgContentMaxWidth, height: CGFloat(MAXFLOAT)))
             contentHeight = size.height
-            contentWidht = size.width
+            contentWidth = size.width
             break
         case .voice:
             break
@@ -44,6 +54,7 @@ class IMMessageLayoutService: NSObject {
         case .image:
             break
             
-        } 
+        }
+        height += contentHeight
     }
 }

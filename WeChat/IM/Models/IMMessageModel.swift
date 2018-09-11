@@ -38,4 +38,14 @@ class IMMessageModel: NSObject {
     
     public var msg_type: IMMessageType = IMMessageType.text
     
+    override init() {
+        super.init()
+    }
+    
+    init(dict: [String: Any]) {
+        super.init()
+        msg_id = dict[""] as! Int
+        
+    }
+    
 }
