@@ -94,7 +94,10 @@ class IMChatViewController: UIViewController {
             if let index = self?.indexFor(msgModel: model) {
                 self?.msgModels[index].msg_model.delivered = model.delivered
                 self?.msgModels[index].msg_model.msg_status = model.msg_status
-                self?.msgModels[index].changed = 1
+                let cell = self?.tableView.cellForRow(at: IndexPath(row: index, section: 0)) as? IMMessageCell
+                if let msgCell = cell {
+                    msgCell.setIndicator(status: model.msg_status)
+                }
             }
         }
     }

@@ -52,7 +52,7 @@ class IMDataManager: NSObject {
                                   "status": 6001]
         SQWebSocketService.sharedInstance.sendMsg(msg: msg.convertToString()!)
         
-        var model = IMMessageModel()
+        let model = IMMessageModel()
         model.msg_content = content
         model.sender_id = UserModel.sharedInstance.id
         model.received_id = chat_id

@@ -29,8 +29,6 @@ class IMMessageLayoutService: NSObject {
     public var contentWidth: CGFloat = 0;
     
     public var photoHeight: CGFloat = 0
-    
-    public var changed: Int = 0
         
     init(model: IMMessageModel) {
         self.msg_model = model

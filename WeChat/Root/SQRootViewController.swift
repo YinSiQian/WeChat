@@ -12,9 +12,9 @@ class SQRootViewController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        UIApplication.shared.statusBarStyle = .lightContent
         setupViewcontrollers()
         SQWebSocketService.sharedInstance.delegate = IMDataManager.sharedInstance
-        // Do any additional setup after loading the view.
     }
     
     fileprivate func setupViewcontrollers() {
