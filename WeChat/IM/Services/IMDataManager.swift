@@ -48,8 +48,9 @@ class IMDataManager: NSObject {
                                   "is_group": 1,
                                   "group_id": 1,
                                   "msg_seq": msg_seq.md5,
-                                  "msg_type": 1,
+                                  "msg_type": msgType.rawValue,
                                   "status": 6001]
+        
         SQWebSocketService.sharedInstance.sendMsg(msg: msg.convertToString()!)
         
         let model = IMMessageModel()
@@ -62,7 +63,6 @@ class IMDataManager: NSObject {
         model.msg_type = msgType
    
         IMMessageQueue.shared.push(element: model)
-        
         return model
     }
     
@@ -87,10 +87,10 @@ extension IMDataManager: SQWebSocketServiceDelegate {
             print("消息发送成功: \(msg)")
             let seq = dict["msg_seq"] as? String ?? ""
             let msg_index = IMMessageQueue.shared.indexForMessage(seq: seq)
-            if msg_index != -1 {
-                IMMessageQueue.shared.elements[msg_index].msg_status = .received
-                IMMessageQueue.shared.elements[msg_index].delivered = 1
-                sendStatusChanged?(IMMessageQueue.shared.elements[msg_index])
+            if let index = msg_index {
+                IMMessageQueue.shared.elements[index].msg_status = .received
+                IMMessageQueue.shared.elements[index].delivered = 1
+                sendStatusChanged?(IMMessageQueue.shared.elements[index])
             }
         case 6002:
             //服务器收到生产者的消息 服务器ACK
@@ -98,8 +98,8 @@ extension IMDataManager: SQWebSocketServiceDelegate {
             let seq = dict["msg_seq"] as? String ?? ""
             let id = dict["msg_id"] as? Int ?? 0
             let msg_index = IMMessageQueue.shared.indexForMessage(seq: seq)
-            if msg_index != -1 {
-                IMMessageQueue.shared.elements[msg_index].msg_id = id
+            if let index = msg_index {
+                IMMessageQueue.shared.elements[index].msg_id = id
             }
         case 6003:
             //服务器收到消费者的ack

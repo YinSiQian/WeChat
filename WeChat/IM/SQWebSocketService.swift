@@ -20,9 +20,11 @@ protocol SQWebSocketServiceDelegate: class {
 
 public class SQWebSocketService {
     
-    public typealias connectionSuccessHandler = () -> Void
+    public typealias connectionSuccessHandler = () -> ()
     
-    public typealias connectionErrorHandler = (_ error: Error?) -> Void
+    public typealias connectionErrorHandler = (_ error: Error?) -> ()
+    
+    public typealias conncetionStatusChanged = (_ status: IMSocketConnectionStatus) -> ()
     
     static let sharedInstance = SQWebSocketService()
     
@@ -30,7 +32,11 @@ public class SQWebSocketService {
     
     public var errorHandler: connectionErrorHandler!
     
+    public var statusChangedHandle: conncetionStatusChanged!
+    
     weak var delegate: SQWebSocketServiceDelegate?
+    
+    private var numberOfReconnect: Int = 0
     
     public var isConnection: Bool {
         return webSocket.isConnected
@@ -77,12 +83,33 @@ extension SQWebSocketService {
         }
     }
     
+    /// 断线后重连 // 每两秒尝试一次
+    private func tryToReconnection() {
+        if numberOfReconnect > 10 {
+            numberOfReconnect = 0
+            statusChangedHandle?(.connectFailure)
+        } else {
+            statusChangedHandle?(.connecting)
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
+                if self.webSocket.isConnected {
+                    return
+                } else {
+                    self.numberOfReconnect += 1
+                    self.webSocket.connect()
+                    self.tryToReconnection()
+                }
+            }
+        }
+    }
+    
 }
 
 extension SQWebSocketService: WebSocketDelegate {
     
     public func websocketDidConnect(socket: WebSocketClient) {
         print("connected to server")
+        statusChangedHandle?(.connectSuccess)
+        numberOfReconnect = 0
         handler?()
         delegate?.webSocketServiceDidConnect(socket: socket)
     }
@@ -92,6 +119,9 @@ extension SQWebSocketService: WebSocketDelegate {
         print(error as Any)
         errorHandler?(error)
         delegate?.webSocketServiceDidDisconnect(socket: socket, error: error)
+        if numberOfReconnect == 0 {
+            tryToReconnection()
+        }
     }
     
     public func websocketDidReceiveMessage(socket: WebSocketClient, text: String) {

@@ -46,13 +46,13 @@ extension IMMessageQueue: LinkList {
         let _ = elements.dropFirst()
     }
     
-    public func indexForMessage(seq: String) -> Int {
+    public func indexForMessage(seq: String) -> Int? {
         for (index, element) in elements.enumerated() {
             if element.msg_seq == seq {
                 return index
             }
         }
-        return -1
+        return nil
     }
     
     var count: Int {

@@ -11,7 +11,7 @@ import UIKit
 class IMChatViewController: UIViewController {
     
     private lazy var tableView: UITableView = {
-        let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: kScreen_width, height: view.height), style: .plain)
+        let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: kScreen_width, height: view.height - 40), style: .plain)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
@@ -39,13 +39,11 @@ class IMChatViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor(red:0.94, green:0.95, blue:0.95, alpha:1.00)
-        view.addSubview(tableView)
-        view.addSubview(msgInputView)
+        setupSubviews()
         userSendMsg()
         receivedMsg()
         msgStatusChanged()
-        
+        connectionStatusChanged()
     }
     
     override func viewSafeAreaInsetsDidChange() {
@@ -65,9 +63,25 @@ class IMChatViewController: UIViewController {
         }
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if msgInputView.isActive {
-            msgInputView.moveToBottom()
+    private func setupSubviews() {
+        view.backgroundColor = UIColor(red:0.94, green:0.95, blue:0.95, alpha:1.00)
+        view.addSubview(tableView)
+        view.addSubview(msgInputView)
+    }
+    
+    // MARK: -- Socket Status Changed
+    
+    private func connectionStatusChanged() {
+        SQWebSocketService.sharedInstance.statusChangedHandle = {
+            [weak self] status in
+            switch status {
+            case .connecting:
+                break
+            case .connectSuccess:
+                break
+            case .connectFailure:
+                break
+            }
         }
     }
     
@@ -128,6 +142,12 @@ class IMChatViewController: UIViewController {
             }
         }
         return nil
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if msgInputView.isActive {
+            msgInputView.moveToBottom()
+        }
     }
 }
 

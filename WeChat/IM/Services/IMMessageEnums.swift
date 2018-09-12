@@ -20,3 +20,9 @@ public enum IMMessageType: Int {
     case image
     case video
 }
+
+public enum IMSocketConnectionStatus: Int {
+    case connecting
+    case connectSuccess
+    case connectFailure
+}

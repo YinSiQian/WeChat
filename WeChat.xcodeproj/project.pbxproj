@@ -33,6 +33,7 @@
 		8B1238EC210DF6470048D25D /* LoginAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1238EB210DF6470048D25D /* LoginAPI.swift */; };
 		8B1238EF210DFE9F0048D25D /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1238EE210DFE9F0048D25D /* UserModel.swift */; };
 		8B1238F1210E0DE10048D25D /* Number+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1238F0210E0DE10048D25D /* Number+Extension.swift */; };
+		8B35E565214965490033A10D /* SQCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B35E564214965490033A10D /* SQCache.swift */; };
 		8B3C2731210F577C0028953F /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3C2730210F577C0028953F /* UIViewController+Extension.swift */; };
 		8B3C2733210F63460028953F /* Extension+TargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3C2732210F63460028953F /* Extension+TargetType.swift */; };
 		8B4818CB21171A8600C290D8 /* UINavigationController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4818CA21171A8600C290D8 /* UINavigationController+Extension.swift */; };
@@ -131,6 +132,7 @@
 		8B1238EE210DFE9F0048D25D /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		8B1238F0210E0DE10048D25D /* Number+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Number+Extension.swift"; sourceTree = "<group>"; };
 		8B25E383BD640089DEF78B89 /* Pods_WeChatUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WeChatUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8B35E564214965490033A10D /* SQCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQCache.swift; sourceTree = "<group>"; };
 		8B3C2730210F577C0028953F /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		8B3C2732210F63460028953F /* Extension+TargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+TargetType.swift"; sourceTree = "<group>"; };
 		8B4818CA21171A8600C290D8 /* UINavigationController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extension.swift"; sourceTree = "<group>"; };
@@ -276,6 +278,7 @@
 		0A65638E2112EA0300B3DB24 /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				8B35E563214965280033A10D /* Cache */,
 				0A65638F2112EA2C00B3DB24 /* Mappable.swift */,
 				8BFA39B02115336C004DAA90 /* SystemPhotoService.swift */,
 			);
@@ -347,6 +350,14 @@
 				8B1238EE210DFE9F0048D25D /* UserModel.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		8B35E563214965280033A10D /* Cache */ = {
+			isa = PBXGroup;
+			children = (
+				8B35E564214965490033A10D /* SQCache.swift */,
+			);
+			path = Cache;
 			sourceTree = "<group>";
 		};
 		8B8F39D6210CC0E700E53CBC /* IM */ = {
@@ -912,6 +923,7 @@
 				8B8F39DD210CCE4500E53CBC /* Dictionary+Extension.swift in Sources */,
 				8B7417AD1F89187400A5D37E /* SQFriendsMomentsController.swift in Sources */,
 				8BFA39E02115542A004DAA90 /* TZGifPhotoPreviewController.m in Sources */,
+				8B35E565214965490033A10D /* SQCache.swift in Sources */,
 				0A1A226421422BD200DC9440 /* IMChatViewController.swift in Sources */,
 				8BFA39D72115542A004DAA90 /* UIView+Layout.m in Sources */,
 				8B7417B21F891B2B00A5D37E /* Macros.swift in Sources */,

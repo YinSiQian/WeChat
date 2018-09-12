@@ -12,7 +12,6 @@ class IMMessageLayoutService: NSObject {
 
     public var msg_model: IMMessageModel {
         didSet {
-            print("changed---1")
             if  msg_model.delivered == 1 {
                 return
             }
