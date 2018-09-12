@@ -38,14 +38,54 @@ class IMMessageModel: NSObject {
     
     public var msg_type: IMMessageType = IMMessageType.text
     
-    override init() {
-        super.init()
-    }
+    public var msg_status: IMMessageSendStatusType = IMMessageSendStatusType.sending
     
-    init(dict: [String: Any]) {
-        super.init()
-        msg_id = dict[""] as! Int
-        
-    }
+//    public mutating func setMsgId(id: Int) {
+//        msg_id = id
+//    }
+//
+//    public mutating func setSenderId(id: Int) {
+//        sender_id = id
+//    }
+//
+//    public mutating func setSenderName(name: String) {
+//        sender_name = name
+//    }
+//
+//    public mutating func setSenderAvatar(url: String) {
+//        sender_avatar = url
+//    }
+//
+//    public mutating func setReceiverName(name: String) {
+//        received_name = name
+//    }
+//
+//    public mutating func setReceiverId(id: Int) {
+//        received_id = id
+//    }
+//
+//    public mutating func setReceiverAvatar(url: String) {
+//        received_avatar = url
+//    }
+//
+//    public mutating func setMsgContent(content: String) {
+//        msg_content = content
+//    }
+//
+//    public mutating func setMsgSeq(seq: String) {
+//        msg_seq = seq
+//    }
+//
+//    public mutating func setSendTime(time: String) {
+//        send_time = time
+//    }
+//
+//    public mutating func setDelivered(delivered: Int) {
+//        self.delivered = delivered
+//    }
+//
+//    public mutating func setMsgType(type: IMMessageType) {
+//        msg_type = type
+//    }
     
 }

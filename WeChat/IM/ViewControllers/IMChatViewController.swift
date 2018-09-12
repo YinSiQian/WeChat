@@ -44,6 +44,8 @@ class IMChatViewController: UIViewController {
         view.addSubview(msgInputView)
         userSendMsg()
         receivedMsg()
+        msgStatusChanged()
+        
     }
     
     override func viewSafeAreaInsetsDidChange() {
@@ -86,6 +88,17 @@ class IMChatViewController: UIViewController {
         }
     }
     
+    private func msgStatusChanged() {
+        IMDataManager.sharedInstance.sendStatusChanged = {
+            [weak self] (model: IMMessageModel) in
+            if let index = self?.indexFor(msgModel: model) {
+                self?.msgModels[index].msg_model.delivered = model.delivered
+                self?.msgModels[index].msg_model.msg_status = model.msg_status
+                self?.msgModels[index].changed = 1
+            }
+        }
+    }
+    
     private func handMsgData(model: IMMessageModel) {
         model.received_name = name
         model.received_avatar = avatar
@@ -104,7 +117,15 @@ class IMChatViewController: UIViewController {
             })
         }
     }
-
+    
+    private func indexFor(msgModel: IMMessageModel) -> Int? {
+        for (index, element) in msgModels.enumerated() {
+            if element.msg_model.msg_seq == msgModel.msg_seq {
+                return index
+            }
+        }
+        return nil
+    }
 }
 
 extension IMChatViewController: UITableViewDelegate, UITableViewDataSource {
@@ -119,6 +140,9 @@ extension IMChatViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = IMMessageCell.cell(with: tableView)
+        let layout = msgModels[indexPath.row]
+        
+        print("address layout--->\(String(format: "%p", layout)) \n in collection layou address --->\(String(format: "%p", msgModels[indexPath.row]))")
         cell.msgServiceModel = msgModels[indexPath.row]
         return cell
     }

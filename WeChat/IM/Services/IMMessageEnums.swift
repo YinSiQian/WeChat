@@ -8,9 +8,10 @@
 
 import Foundation
 
-public enum IMMessageSendType: Int {
-    case send = 1
+public enum IMMessageSendStatusType: Int {
+    case sending = 1
     case received
+    case failure
 }
 
 public enum IMMessageType: Int {

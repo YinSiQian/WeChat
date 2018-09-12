@@ -16,6 +16,8 @@ class IMDataManager: NSObject {
     
     public var receivedHandler: receivedMsgHandler?
     
+    public var sendStatusChanged: receivedMsgHandler?
+    
     static let sharedInstance = IMDataManager()
     
     private lazy var dateFormatter: DateFormatter = {
@@ -25,8 +27,6 @@ class IMDataManager: NSObject {
     }()
     
     private override init() {}
-    
-    private var messageQueue: IMMessageQueue = IMMessageQueue()
     
     public func sendTextMsg(content: String, chat_id: Int) -> IMMessageModel {
         return sendMsg(content: content, chat_id: chat_id, msgType: .text)
@@ -52,7 +52,7 @@ class IMDataManager: NSObject {
                                   "status": 6001]
         SQWebSocketService.sharedInstance.sendMsg(msg: msg.convertToString()!)
         
-        let model = IMMessageModel()
+        var model = IMMessageModel()
         model.msg_content = content
         model.sender_id = UserModel.sharedInstance.id
         model.received_id = chat_id
@@ -60,8 +60,8 @@ class IMDataManager: NSObject {
         model.sender_avatar = UserModel.sharedInstance.icon
         model.msg_seq = msg_seq.md5
         model.msg_type = msgType
-        
-        
+   
+        IMMessageQueue.shared.push(element: model)
         
         return model
     }
@@ -85,9 +85,22 @@ extension IMDataManager: SQWebSocketServiceDelegate {
         case 6000:
             //消息发送成功
             print("消息发送成功: \(msg)")
+            let seq = dict["msg_seq"] as? String ?? ""
+            let msg_index = IMMessageQueue.shared.indexForMessage(seq: seq)
+            if msg_index != -1 {
+                IMMessageQueue.shared.elements[msg_index].msg_status = .received
+                IMMessageQueue.shared.elements[msg_index].delivered = 1
+                sendStatusChanged?(IMMessageQueue.shared.elements[msg_index])
+            }
         case 6002:
             //服务器收到生产者的消息 服务器ACK
             print("server ack: \(msg)")
+            let seq = dict["msg_seq"] as? String ?? ""
+            let id = dict["msg_id"] as? Int ?? 0
+            let msg_index = IMMessageQueue.shared.indexForMessage(seq: seq)
+            if msg_index != -1 {
+                IMMessageQueue.shared.elements[msg_index].msg_id = id
+            }
         case 6003:
             //服务器收到消费者的ack
             print("server ack to consumers: \(msg)")

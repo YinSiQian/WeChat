@@ -12,6 +12,10 @@ class IMMessageLayoutService: NSObject {
 
     public var msg_model: IMMessageModel {
         didSet {
+            print("changed---1")
+            if  msg_model.delivered == 1 {
+                return
+            }
             layout()
         }
     }
@@ -26,6 +30,8 @@ class IMMessageLayoutService: NSObject {
     
     public var photoHeight: CGFloat = 0
     
+    public var changed: Int = 0
+        
     init(model: IMMessageModel) {
         self.msg_model = model
         super.init()

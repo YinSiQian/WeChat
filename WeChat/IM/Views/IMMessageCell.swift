@@ -33,6 +33,9 @@ class IMMessageCell: UITableViewCell {
     
     public var msgServiceModel: IMMessageLayoutService? {
         didSet {
+            print("address layout--->\(String(format: "%p", msgServiceModel!))")
+            print("changed---2")
+//            msgServiceModel?.addObserver(self, forKeyPath: "msg_model.delivered", options: .new, context: nil)
             layout()
         }
     }
@@ -84,11 +87,14 @@ class IMMessageCell: UITableViewCell {
         content.numberOfLines = 0
         messageBackImage.addSubview(content)
         
-//        indicator = UIActivityIndicatorView(style: .gray)
-//        contentView.addSubview(indicator)
+        indicator = UIActivityIndicatorView(style: .gray)
+        indicator.color = UIColor.red
+        indicator.isHidden = false
+        contentView.addSubview(indicator)
     }
     
     private func layout() {
+//        let model = msgServiceModel
         guard let model = msgServiceModel else {
             return
         }
@@ -103,21 +109,33 @@ class IMMessageCell: UITableViewCell {
             username.frame = CGRect(x: avatar.minX - kMsgNameAndAvatarPadding - model.nameWidth, y: kMsgTopMarginPadding, width: model.nameWidth, height: kMsgNameHeight)
             messageBackImage.frame = CGRect(x: avatar.minX - kMsgNameAndAvatarPadding - model.contentWidth - 2 * kMsgAvatarLeftPadding, y: username.maxY + kMsgCellPadding, width: model.contentWidth + 2 * kMsgAvatarLeftPadding, height: model.contentHeight + 2 * kMsgAvatarLeftPadding)
             messageBackImage.image = #imageLiteral(resourceName: "aaSenderMsgNodeBkg_62x49_")
+            indicator.frame = CGRect(x: messageBackImage.minX  - 30, y: (messageBackImage.height - 30) / 2 + messageBackImage.minY, width: 30, height: 30)
             
         } else {
             avatar.frame = CGRect(x: kMsgAvatarLeftPadding, y: kMsgTopMarginPadding, width: kMsgAvatarWidthAndHeight, height: kMsgAvatarWidthAndHeight)
             username.frame = CGRect(x: avatar.maxX + kMsgNameAndAvatarPadding, y: kMsgTopMarginPadding, width: kMsgContentMaxWidth, height: kMsgNameHeight)
             messageBackImage.frame = CGRect(x: avatar.maxX + kMsgNameAndAvatarPadding, y: username.maxY + kMsgCellPadding, width: model.contentWidth + 2 * kMsgAvatarLeftPadding, height: model.contentHeight + 2 * kMsgAvatarLeftPadding)
-           messageBackImage.image = #imageLiteral(resourceName: "ReceiverTextNodeBkg_62x49_")
+            messageBackImage.image = #imageLiteral(resourceName: "ReceiverTextNodeBkg_62x49_")
+//            indicator.frame = CGRect(x: messageBackImage.maxX, y: (messageBackImage.height - 30) / 2 + messageBackImage.minY, width: 30, height: 30)
+            
+        }
+        if model.msg_model.delivered == 1 {
+            indicator.stopAnimating()
+        } else {
+            indicator.startAnimating()
         }
         content.height = model.contentHeight
         content.width = model.contentWidth
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    deinit {
+        msgServiceModel?.removeObserver(self, forKeyPath: "msgServiceModel.msg_model.msg_status")
     }
 
 }
