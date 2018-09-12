@@ -52,10 +52,14 @@ public class SQWebSocketService {
 
 extension SQWebSocketService {
     
-    public func connectionServer(complectionHanlder: @escaping () -> Void,
-                                 errorHanlder: @escaping (_ error: Error?) -> Void) {
-        handler = complectionHanlder
-        errorHandler = errorHanlder
+    public func connectionServer(complectionHanlder: (() -> ())? = nil,
+                                 errorHanlder: ((_ error: Error?) -> ())? = nil) {
+        if let complection = complectionHanlder {
+            handler = complection
+        }
+        if let errorHandle = errorHanlder {
+            errorHandler = errorHandle
+        }
         webSocket.connect()
     }
     
