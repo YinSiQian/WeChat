@@ -48,6 +48,8 @@ class IMMessageCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        backgroundColor = UIColor.clear
+        contentView.backgroundColor = UIColor.clear
         selectionStyle = .none
         setupSubviews()
     }
@@ -68,16 +70,19 @@ class IMMessageCell: UITableViewCell {
         username.font = UIFont.systemFont(ofSize: 14)
         contentView.addSubview(username)
         
-        content = UILabel(frame: CGRect(x: avatar.maxX + kMsgNameAndAvatarPadding, y: username.maxY + kMsgCellPadding, width: kMsgContentMaxWidth, height: kMsgNameHeight))
-        content.textColor = UIColor.black
-        content.font = UIFont.systemFont(ofSize: 16)
-        content.numberOfLines = 0
-        contentView.addSubview(content)
-        
         photo = UIImageView(frame: CGRect(x: avatar.maxX + kMsgNameAndAvatarPadding, y: username.maxY + kMsgCellPadding, width: kMsgContentMaxWidth, height: kMsgNameHeight))
         photo.isUserInteractionEnabled = true
         photo.isHidden = true
         contentView.addSubview(photo)
+        
+        messageBackImage = UIImageView(frame: CGRect(x: avatar.maxX + kMsgNameAndAvatarPadding, y: username.maxY + kMsgCellPadding, width: kMsgContentMaxWidth, height: kMsgNameHeight))
+        contentView.addSubview(messageBackImage)
+        
+        content = UILabel(frame: CGRect(x: kMsgAvatarLeftPadding, y: kMsgAvatarLeftPadding - 3, width: kMsgContentMaxWidth - 2.0 * kMsgCellPadding, height: kMsgNameHeight))
+        content.textColor = UIColor.black
+        content.font = UIFont.systemFont(ofSize: 16)
+        content.numberOfLines = 0
+        messageBackImage.addSubview(content)
         
 //        indicator = UIActivityIndicatorView(style: .gray)
 //        contentView.addSubview(indicator)
@@ -96,13 +101,17 @@ class IMMessageCell: UITableViewCell {
             //自己发送的
             avatar.frame = CGRect(x: kScreen_width - kMsgAvatarLeftPadding - kAvatarWidth, y: kMsgTopMarginPadding, width: kMsgAvatarWidthAndHeight, height: kMsgAvatarWidthAndHeight)
             username.frame = CGRect(x: avatar.minX - kMsgNameAndAvatarPadding - model.nameWidth, y: kMsgTopMarginPadding, width: model.nameWidth, height: kMsgNameHeight)
-            content.frame = CGRect(x: avatar.minX - kMsgNameAndAvatarPadding - model.contentWidth, y: username.maxY + kMsgCellPadding, width: model.contentWidth, height: model.contentHeight)
+            messageBackImage.frame = CGRect(x: avatar.minX - kMsgNameAndAvatarPadding - model.contentWidth - 2 * kMsgAvatarLeftPadding, y: username.maxY + kMsgCellPadding, width: model.contentWidth + 2 * kMsgAvatarLeftPadding, height: model.contentHeight + 2 * kMsgAvatarLeftPadding)
+            messageBackImage.image = #imageLiteral(resourceName: "aaSenderMsgNodeBkg_62x49_")
             
         } else {
             avatar.frame = CGRect(x: kMsgAvatarLeftPadding, y: kMsgTopMarginPadding, width: kMsgAvatarWidthAndHeight, height: kMsgAvatarWidthAndHeight)
             username.frame = CGRect(x: avatar.maxX + kMsgNameAndAvatarPadding, y: kMsgTopMarginPadding, width: kMsgContentMaxWidth, height: kMsgNameHeight)
-            content.frame = CGRect(x: avatar.maxX + kMsgNameAndAvatarPadding, y: username.maxY + kMsgCellPadding, width: model.contentWidth, height: model.contentHeight)
+            messageBackImage.frame = CGRect(x: avatar.maxX + kMsgNameAndAvatarPadding, y: username.maxY + kMsgCellPadding, width: model.contentWidth + 2 * kMsgAvatarLeftPadding, height: model.contentHeight + 2 * kMsgAvatarLeftPadding)
+           messageBackImage.image = #imageLiteral(resourceName: "ReceiverTextNodeBkg_62x49_")
         }
+        content.height = model.contentHeight
+        content.width = model.contentWidth
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

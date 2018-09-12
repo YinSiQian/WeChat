@@ -41,10 +41,13 @@ class FriendMomentInputView: UIView {
     
     var originY: CGFloat = 0
     
+    var currentLocationForY: CGFloat = 0
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = #colorLiteral(red: 0.9208731393, green: 0.9492385787, blue: 0.8798525198, alpha: 1)
         originY = self.minY
+        currentLocationForY = self.minY
         setupSubviews()
         addObserver()
     }
@@ -191,13 +194,14 @@ extension FriendMomentInputView: UITextViewDelegate {
         if text == "\n" {
             complectionHandler?(textView.text, index)
             textView.text = ""
-            if isMsgInput && self.height > 40.0 {
+            if isMsgInput && self.textView.height > 40.0 {
                 UIView.animate(withDuration: 0.2) {
+                    self.minY += textView.height - 30
                     self.textView.frame = CGRect(x: 20, y: 5, width: self.width - 40, height: 30)
-                    self.frame = CGRect(x: 0, y: kScreen_height - 40, width: kScreen_width, height: 40)
+                    self.height = 40
                 }
             }
-            textView.resignFirstResponder()
+            return false
         }
         return true
     }

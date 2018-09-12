@@ -101,7 +101,7 @@ extension IMDataManager: SQWebSocketServiceDelegate {
             let model = IMMessageModel()
             model.msg_content = dict["content"] as? String ?? ""
             model.msg_id = dict["msg_id"] as? Int ?? 0
-            model.sender_id = dict["sender_id"] as? Int ?? 0
+            model.sender_id = dict["send_id"] as? Int ?? 0
             model.received_id = dict["received_id"] as? Int ?? 0
             model.sender_name = "测试名称"
             model.sender_avatar = UserModel.sharedInstance.icon

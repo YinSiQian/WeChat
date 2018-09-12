@@ -15,6 +15,7 @@ class IMChatViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
+        tableView.backgroundColor = UIColor(red:0.94, green:0.95, blue:0.95, alpha:1.00)
         return tableView
     }()
     
@@ -38,7 +39,7 @@ class IMChatViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.white
+        view.backgroundColor = UIColor(red:0.94, green:0.95, blue:0.95, alpha:1.00)
         view.addSubview(tableView)
         view.addSubview(msgInputView)
         userSendMsg()
@@ -49,12 +50,13 @@ class IMChatViewController: UIViewController {
         if #available(iOS 11.0, *) {
             super.viewSafeAreaInsetsDidChange()
             var rect = tableView.frame
-            rect.size.height -= msgInputView.height + 34
+            rect.size.height -= msgInputView.height + view.safeAreaInsets.bottom
             tableView.frame = rect
             
             var inputRect = msgInputView.frame
             inputRect.origin.y = rect.height + rect.minY
             msgInputView.frame = inputRect
+            msgInputView.currentLocationForY = inputRect.origin.y
         } else {
             
             // Fallback on earlier versions
@@ -91,7 +93,14 @@ class IMChatViewController: UIViewController {
             let layout = IMMessageLayoutService(model: model)
             self.msgModels.append(layout)
             DispatchQueue.main.async(execute: {
-                self.tableView.insertRows(at: [IndexPath(row: self.msgModels.count - 1, section: 0)], with: .automatic)
+                if UserModel.sharedInstance.id == model.sender_id {
+                    self.tableView.insertRows(at: [IndexPath(row: self.msgModels.count - 1, section: 0)], with: .right)
+                } else {
+                    self.tableView.insertRows(at: [IndexPath(row: self.msgModels.count - 1, section: 0)], with: .left)
+                }
+                
+                self.tableView.scrollToRow(at: IndexPath(row: self.msgModels.count - 1
+                    , section: 0), at: .none, animated: true)
             })
         }
     }

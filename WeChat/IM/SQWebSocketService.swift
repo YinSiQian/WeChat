@@ -100,7 +100,6 @@ extension SQWebSocketService: WebSocketDelegate {
     
     public func websocketDidReceiveData(socket: WebSocketClient, data: Data) {
         
-        (data as NSData).length
     }
     
     
