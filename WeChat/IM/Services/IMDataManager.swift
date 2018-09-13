@@ -38,7 +38,7 @@ class IMDataManager: NSObject {
     
     private func sendMsg(content: String, chat_id: Int, msgType: IMMessageType) -> IMMessageModel {
         
-        // MARK: 发送过快时间按秒计算未变化 造成seq相同..服务器会认为是同一消息.
+        // Note: 发送过快时间按秒计算未变化 造成seq相同..服务器会认为是同一消息.
         let date = Date()
         let dateString = dateFormatter.string(from: date)
         let msg_seq = dateString + "userId" + UserModel.sharedInstance.id.StringValue

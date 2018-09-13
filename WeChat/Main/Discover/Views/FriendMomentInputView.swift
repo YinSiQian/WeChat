@@ -45,7 +45,7 @@ class FriendMomentInputView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = #colorLiteral(red: 0.9208731393, green: 0.9492385787, blue: 0.8798525198, alpha: 1)
+        self.backgroundColor = #colorLiteral(red: 0.984174192, green: 0.9887431264, blue: 0.9636532664, alpha: 1)
         originY = self.minY
         currentLocationForY = self.minY
         setupSubviews()

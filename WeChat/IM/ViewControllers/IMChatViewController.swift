@@ -50,7 +50,7 @@ class IMChatViewController: UIViewController {
         if #available(iOS 11.0, *) {
             super.viewSafeAreaInsetsDidChange()
             var rect = tableView.frame
-            rect.size.height -= msgInputView.height + view.safeAreaInsets.bottom
+            rect.size.height -= view.safeAreaInsets.bottom
             tableView.frame = rect
             
             var inputRect = msgInputView.frame

@@ -10,20 +10,21 @@ import UIKit
 
 class SQMessageViewController: UIViewController {
 
-    var tableView: UITableView?
+    private lazy var tableView: UITableView = {
+        let table = UITableView(frame: self.view.bounds, style: .plain)
+        table.delegate = self
+        table.dataSource = self
+        table.tableFooterView = UIView()
+        return table
+    }()
     
     var datas: [[String: Any]] = [["name": "张无忌", "content": "hello world", "id": 1],
                                   ["name": "令狐冲", "content": "hello world", "id": 2]]
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.title = UserModel.sharedInstance.username
-        
-        tableView = UITableView(frame: view.bounds, style: .plain)
-        tableView?.delegate = self
-        tableView?.dataSource = self
-        view.addSubview(tableView!)
+        view.addSubview(tableView)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -31,8 +32,7 @@ class SQMessageViewController: UIViewController {
         connectServer()
     }
     
-    
-     private func connectServer() {
+    private func connectServer() {
         if !SQWebSocketService.sharedInstance.isConnection {
             SQWebSocketService.sharedInstance.connectionServer(complectionHanlder: {
                 //            [weak self] in
@@ -42,7 +42,6 @@ class SQMessageViewController: UIViewController {
                 
             }
         }
-
     }
     
 }
