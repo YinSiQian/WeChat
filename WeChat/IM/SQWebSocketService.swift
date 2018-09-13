@@ -86,8 +86,10 @@ extension SQWebSocketService {
     /// 断线后重连 // 每两秒尝试一次
     private func tryToReconnection() {
         if numberOfReconnect > 10 {
-            numberOfReconnect = 0
             statusChangedHandle?(.connectFailure)
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 5) {
+                self.numberOfReconnect = 0;
+            }
         } else {
             statusChangedHandle?(.connecting)
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
@@ -116,7 +118,7 @@ extension SQWebSocketService: WebSocketDelegate {
     
     public func websocketDidDisconnect(socket: WebSocketClient, error: Error?) {
         print("it is disconnect")
-        print(error as Any)
+//        print(error as Any)
         errorHandler?(error)
         delegate?.webSocketServiceDidDisconnect(socket: socket, error: error)
         if numberOfReconnect == 0 {

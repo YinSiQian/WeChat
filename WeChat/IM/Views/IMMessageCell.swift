@@ -31,6 +31,8 @@ class IMMessageCell: UITableViewCell {
     
     private var indicator: UIActivityIndicatorView!
     
+    private var failureView: UIView!
+    
     public var msgServiceModel: IMMessageLayoutService? {
         didSet {
             layout()
@@ -88,6 +90,10 @@ class IMMessageCell: UITableViewCell {
         indicator.color = UIColor.red
         indicator.isHidden = false
         contentView.addSubview(indicator)
+        
+        failureView = UIView()
+        failureView.backgroundColor = UIColor.red
+        contentView.addSubview(failureView)
     }
     
     private func layout() {
@@ -99,6 +105,8 @@ class IMMessageCell: UITableViewCell {
         content.text = model.msg_model.msg_content
         print("sender_id ---\(model.msg_model.sender_id)  local sender id \(UserModel.sharedInstance.id)" )
         
+        failureView.isHidden = true
+
         if model.msg_model.sender_id == UserModel.sharedInstance.id {
             //自己发送的
             avatar.frame = CGRect(x: kScreen_width - kMsgAvatarLeftPadding - kAvatarWidth, y: kMsgTopMarginPadding, width: kMsgAvatarWidthAndHeight, height: kMsgAvatarWidthAndHeight)
@@ -106,15 +114,19 @@ class IMMessageCell: UITableViewCell {
             messageBackImage.frame = CGRect(x: avatar.minX - kMsgNameAndAvatarPadding - model.contentWidth - 2 * kMsgAvatarLeftPadding, y: username.maxY + kMsgCellPadding, width: model.contentWidth + 2 * kMsgAvatarLeftPadding, height: model.contentHeight + 2 * kMsgAvatarLeftPadding)
             messageBackImage.image = #imageLiteral(resourceName: "aaSenderMsgNodeBkg_62x49_")
             indicator.frame = CGRect(x: messageBackImage.minX  - 30, y: (messageBackImage.height - 30) / 2 + messageBackImage.minY, width: 30, height: 30)
+            failureView.frame = CGRect(x: messageBackImage.minX  - 20, y: (messageBackImage.height - 10) / 2 + messageBackImage.minY, width: 10, height: 10)
+            failureView.layer.cornerRadius = 5
+            setIndicator(status: model.msg_model.msg_status)
             
         } else {
             avatar.frame = CGRect(x: kMsgAvatarLeftPadding, y: kMsgTopMarginPadding, width: kMsgAvatarWidthAndHeight, height: kMsgAvatarWidthAndHeight)
             username.frame = CGRect(x: avatar.maxX + kMsgNameAndAvatarPadding, y: kMsgTopMarginPadding, width: kMsgContentMaxWidth, height: kMsgNameHeight)
             messageBackImage.frame = CGRect(x: avatar.maxX + kMsgNameAndAvatarPadding, y: username.maxY + kMsgCellPadding, width: model.contentWidth + 2 * kMsgAvatarLeftPadding, height: model.contentHeight + 2 * kMsgAvatarLeftPadding)
             messageBackImage.image = #imageLiteral(resourceName: "ReceiverTextNodeBkg_62x49_")
+            indicator.isHidden = true
+            
             
         }
-        setIndicator(status: model.msg_model.msg_status)
         content.height = model.contentHeight
         content.width = model.contentWidth
     }
@@ -123,10 +135,13 @@ class IMMessageCell: UITableViewCell {
         switch status {
         case .sending:
             indicator.startAnimating()
-            break
-        case .received, .failure:
+        case .received:
+            print("received")
             indicator.stopAnimating()
-            
+        case .failure:
+            print("failure")
+            indicator.stopAnimating()
+            failureView.isHidden = false
         }
     }
     

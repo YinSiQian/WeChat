@@ -38,6 +38,7 @@ class IMDataManager: NSObject {
     
     private func sendMsg(content: String, chat_id: Int, msgType: IMMessageType) -> IMMessageModel {
         
+        //TODO: 先存bug 发送过快时间按秒计算未变化 造成 seq相同..服务器会认为是同一消息.
         let date = Date()
         let dateString = dateFormatter.string(from: date)
         let msg_seq = dateString + "userId" + UserModel.sharedInstance.id.StringValue
@@ -63,6 +64,22 @@ class IMDataManager: NSObject {
         model.msg_type = msgType
    
         IMMessageQueue.shared.push(element: model)
+        IMMessageQueue.shared.timeoutHandle = {
+            (drop, index) in
+            print("drop --->\(drop)")
+            if drop {
+                if let currentIndex = index {
+                    IMMessageQueue.shared.elements[currentIndex].msg_status = .failure
+                    IMMessageQueue.shared.elements[currentIndex].delivered = 0
+                    self.sendStatusChanged?(IMMessageQueue.shared.elements[currentIndex])
+                    IMMessageQueue.shared.removed(at: currentIndex)
+                }
+              
+            } else {
+                SQWebSocketService.sharedInstance.sendMsg(msg: msg.convertToString()!)
+            }
+        }
+        
         return model
     }
     
@@ -91,6 +108,7 @@ extension IMDataManager: SQWebSocketServiceDelegate {
                 IMMessageQueue.shared.elements[index].msg_status = .received
                 IMMessageQueue.shared.elements[index].delivered = 1
                 sendStatusChanged?(IMMessageQueue.shared.elements[index])
+                IMMessageQueue.shared.removed(at: index)
             }
         case 6002:
             //服务器收到生产者的消息 服务器ACK
