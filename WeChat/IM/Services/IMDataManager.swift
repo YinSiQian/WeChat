@@ -22,7 +22,7 @@ class IMDataManager: NSObject {
     
     private lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss SSS"
         return formatter
     }()
     
@@ -38,7 +38,7 @@ class IMDataManager: NSObject {
     
     private func sendMsg(content: String, chat_id: Int, msgType: IMMessageType) -> IMMessageModel {
         
-        //TODO: 先存bug 发送过快时间按秒计算未变化 造成 seq相同..服务器会认为是同一消息.
+        // MARK: 发送过快时间按秒计算未变化 造成seq相同..服务器会认为是同一消息.
         let date = Date()
         let dateString = dateFormatter.string(from: date)
         let msg_seq = dateString + "userId" + UserModel.sharedInstance.id.StringValue
@@ -74,12 +74,10 @@ class IMDataManager: NSObject {
                     self.sendStatusChanged?(IMMessageQueue.shared.elements[currentIndex])
                     IMMessageQueue.shared.removed(at: currentIndex)
                 }
-              
             } else {
                 SQWebSocketService.sharedInstance.sendMsg(msg: msg.convertToString()!)
             }
         }
-        
         return model
     }
     

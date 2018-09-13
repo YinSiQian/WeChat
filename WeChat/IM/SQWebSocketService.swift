@@ -118,7 +118,6 @@ extension SQWebSocketService: WebSocketDelegate {
     
     public func websocketDidDisconnect(socket: WebSocketClient, error: Error?) {
         print("it is disconnect")
-//        print(error as Any)
         errorHandler?(error)
         delegate?.webSocketServiceDidDisconnect(socket: socket, error: error)
         if numberOfReconnect == 0 {

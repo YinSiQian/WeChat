@@ -43,7 +43,6 @@ class OperationModel: NSObject {
     /// 每五秒钟 进行一次消息重发
     @objc private func calculateIsTimeount() {
         DispatchQueue.global().async {
-//            print("thread--->\(Thread.current)")
             if self.isCancel {
                 self.timer?.invalidate()
                 self.timer = nil
@@ -132,9 +131,6 @@ extension IMMessageQueue: LinkList {
         let seq = elements[index].msg_seq
         let opModel = OperationModel()
         opModel.timeoutComplection = { (queue) in
-//            print("times---\(opModel.retryTimes)")
-//            print("is drop---\(opModel.retryTimes == 3)")
-//            print("handle---\(String(describing: queue.timeoutHandle))")
             let currentIndex = queue.indexForMessage(seq: seq)
             queue.timeoutHandle?(opModel.retryTimes == 3, currentIndex)
             if opModel.retryTimes < 3 {
