@@ -140,7 +140,4 @@ extension IMMessageQueue: LinkList {
         opModel.start()
         ops.append(opModel)
     }
-    
-    
-    
 }
