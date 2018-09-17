@@ -21,8 +21,8 @@ class SQNavigationViewController: UINavigationController {
     override func pushViewController(_ viewController: UIViewController, animated: Bool) {
         if viewControllers.count > 0 {
             viewController.hidesBottomBarWhenPushed = true
-            let barButton = UIBarButtonItem(image: #imageLiteral(resourceName: "back_icon"), style: .plain, target: self, action: #selector(pop))
-            viewController.navigationItem.leftBarButtonItem = barButton
+//            let barButton = UIBarButtonItem(image: #imageLiteral(resourceName: "back_icon"), style: .plain, target: self, action: #selector(pop))
+//            viewController.navigationItem.leftBarButtonItem = barButton
         }
         super.pushViewController(viewController, animated: true)
     }
