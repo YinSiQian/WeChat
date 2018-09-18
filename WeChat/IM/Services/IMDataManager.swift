@@ -61,7 +61,7 @@ class IMDataManager: NSObject {
         model.sender_name = UserModel.sharedInstance.username
         model.sender_avatar = UserModel.sharedInstance.icon
         model.msg_seq = msg_seq.md5
-        model.msg_type = msgType
+        model.msg_type = msgType.rawValue
    
         IMMessageQueue.shared.push(element: model)
         IMMessageQueue.shared.timeoutHandle = {
@@ -69,9 +69,11 @@ class IMDataManager: NSObject {
             print("drop --->\(drop)")
             if drop {
                 if let currentIndex = index {
-                    IMMessageQueue.shared.elements[currentIndex].msg_status = .failure
+                    IMMessageQueue.shared.elements[currentIndex].msg_status = IMMessageSendStatusType.failure.rawValue
                     IMMessageQueue.shared.elements[currentIndex].delivered = 0
                     self.sendStatusChanged?(IMMessageQueue.shared.elements[currentIndex])
+                    //失败 也缓存一下
+                    SQCache.saveMessageInfo(with: IMMessageQueue.shared.elements[currentIndex])
                     IMMessageQueue.shared.removed(at: currentIndex)
                 }
             } else {
@@ -103,9 +105,11 @@ extension IMDataManager: SQWebSocketServiceDelegate {
             let seq = dict["msg_seq"] as? String ?? ""
             let msg_index = IMMessageQueue.shared.indexForMessage(seq: seq)
             if let index = msg_index {
-                IMMessageQueue.shared.elements[index].msg_status = .received
+                IMMessageQueue.shared.elements[index].msg_status = IMMessageSendStatusType.received.rawValue
                 IMMessageQueue.shared.elements[index].delivered = 1
                 sendStatusChanged?(IMMessageQueue.shared.elements[index])
+                //缓存
+                SQCache.saveMessageInfo(with: IMMessageQueue.shared.elements[index])
                 IMMessageQueue.shared.removed(at: index)
             }
         case 6002:
@@ -135,9 +139,13 @@ extension IMDataManager: SQWebSocketServiceDelegate {
             model.sender_name = "测试名称"
             model.sender_avatar = UserModel.sharedInstance.icon
             model.msg_seq = msg_seq
-            model.msg_type = IMMessageType(rawValue: dict["msg_type"] as? Int ?? IMMessageType.text.rawValue)!
+            model.msg_type = IMMessageType(rawValue: dict["msg_type"] as? Int ?? 1)!.rawValue
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
+                SQCache.saveMessageInfo(with: model)
+            }
+
             receivedHandler?(model)
-            
+
         default:
             print("default")
         }

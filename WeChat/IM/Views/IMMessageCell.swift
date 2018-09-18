@@ -103,7 +103,6 @@ class IMMessageCell: UITableViewCell {
         avatar.kf.setImage(with: model.msg_model.received_avatar.url(), placeholder: nil, options: [], progressBlock: nil, completionHandler: nil)
         username.text = model.msg_model.sender_name
         content.text = model.msg_model.msg_content
-        print("sender_id ---\(model.msg_model.sender_id)  local sender id \(UserModel.sharedInstance.id)" )
         
         failureView.isHidden = true
 
@@ -131,15 +130,14 @@ class IMMessageCell: UITableViewCell {
         content.width = model.contentWidth
     }
     
-    public func setIndicator(status: IMMessageSendStatusType) {
-        switch status {
+    public func setIndicator(status: IMMessageSendStatusType.RawValue) {
+        let _status = IMMessageSendStatusType(rawValue: status)!
+        switch _status {
         case .sending:
             indicator.startAnimating()
         case .received:
-            print("received")
             indicator.stopAnimating()
         case .failure:
-            print("failure")
             indicator.stopAnimating()
             failureView.isHidden = false
         }

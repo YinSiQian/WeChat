@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class IMChatViewController: UIViewController {
     
@@ -27,6 +28,8 @@ class IMChatViewController: UIViewController {
     
     private var msgModels = [IMMessageLayoutService]()
     
+    private var page: Int = 0
+    
     public var chat_id: Int = 0
     
     public var name: String = "" {
@@ -44,6 +47,7 @@ class IMChatViewController: UIViewController {
         receivedMsg()
         msgStatusChanged()
         connectionStatusChanged()
+        loadData()
     }
     
     override func viewSafeAreaInsetsDidChange() {
@@ -67,6 +71,22 @@ class IMChatViewController: UIViewController {
         view.backgroundColor = UIColor(red:0.94, green:0.95, blue:0.95, alpha:1.00)
         view.addSubview(tableView)
         view.addSubview(msgInputView)
+    }
+    
+    // MARK: -- Load Data
+    
+    private func loadData() {
+        
+        let models = SQCache.messageInfo(with: self.chat_id, page: self.page);
+        for model in models {
+            let layout = IMMessageLayoutService(model: model)
+            self.msgModels.append(layout)
+        }
+        self.tableView.reloadData()
+        if msgModels.count > 0 {
+            self.tableView.scrollToRow(at: IndexPath(row: self.msgModels.count - 1
+                , section: 0), at: .none, animated: false)
+        }
     }
     
     // MARK: -- Socket Status Changed
@@ -144,11 +164,12 @@ class IMChatViewController: UIViewController {
         return nil
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         if msgInputView.isActive {
             msgInputView.moveToBottom()
         }
     }
+    
 }
 
 extension IMChatViewController: UITableViewDelegate, UITableViewDataSource {
@@ -165,7 +186,7 @@ extension IMChatViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = IMMessageCell.cell(with: tableView)
         let layout = msgModels[indexPath.row]
         
-        print("address layout--->\(String(format: "%p", layout)) \n in collection layou address --->\(String(format: "%p", msgModels[indexPath.row]))")
+//        print("address layout--->\(String(format: "%p", layout)) \n in collection layou address --->\(String(format: "%p", msgModels[indexPath.row]))")
         cell.msgServiceModel = msgModels[indexPath.row]
         return cell
     }

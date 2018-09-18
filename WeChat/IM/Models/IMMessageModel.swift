@@ -7,85 +7,42 @@
 //
 
 import UIKit
+import RealmSwift
 
-class IMMessageModel: NSObject {
+class IMMessageModel: Object {
 
-    public var msg_id: Int = 0
+    @objc dynamic public var msg_id: Int = 0
     
-    public var sender_id: Int = 0
+    @objc dynamic public var sender_id: Int = 0
     
-    public var sender_name: String = ""
+    @objc dynamic public var sender_name: String = ""
     
-    public var sender_avatar: String = ""
+    @objc dynamic public var sender_avatar: String = ""
     
-    public var received_name: String = ""
+    @objc dynamic public var received_name: String = ""
     
-    public var received_id: Int = 0
+    @objc dynamic public var received_id: Int = 0
     
-    public var received_avatar: String = ""
+    @objc dynamic public var received_avatar: String = ""
     
-    public var group_id: Int = 1
+    @objc dynamic public var group_id: Int = 1
     
-    public var is_group: Int = 1
+    @objc dynamic public var is_group: Int = 1
     
-    public var msg_content: String = ""
+    @objc dynamic public var msg_content: String = ""
     
-    public var msg_seq: String = ""
+    @objc dynamic public var msg_seq: String = ""
     
-    public var send_time: String = ""
+    @objc dynamic public var send_time: String = ""
     
-    public var delivered: Int = 0
+    @objc dynamic public var delivered: Int = 0
     
-    public var msg_type: IMMessageType = IMMessageType.text
+    @objc dynamic public var msg_type: Int = IMMessageType.text.rawValue
     
-    public var msg_status: IMMessageSendStatusType = IMMessageSendStatusType.sending
+    @objc dynamic public var msg_status: Int = IMMessageSendStatusType.sending.rawValue
     
-//    public mutating func setMsgId(id: Int) {
-//        msg_id = id
-//    }
-//
-//    public mutating func setSenderId(id: Int) {
-//        sender_id = id
-//    }
-//
-//    public mutating func setSenderName(name: String) {
-//        sender_name = name
-//    }
-//
-//    public mutating func setSenderAvatar(url: String) {
-//        sender_avatar = url
-//    }
-//
-//    public mutating func setReceiverName(name: String) {
-//        received_name = name
-//    }
-//
-//    public mutating func setReceiverId(id: Int) {
-//        received_id = id
-//    }
-//
-//    public mutating func setReceiverAvatar(url: String) {
-//        received_avatar = url
-//    }
-//
-//    public mutating func setMsgContent(content: String) {
-//        msg_content = content
-//    }
-//
-//    public mutating func setMsgSeq(seq: String) {
-//        msg_seq = seq
-//    }
-//
-//    public mutating func setSendTime(time: String) {
-//        send_time = time
-//    }
-//
-//    public mutating func setDelivered(delivered: Int) {
-//        self.delivered = delivered
-//    }
-//
-//    public mutating func setMsgType(type: IMMessageType) {
-//        msg_type = type
-//    }
+    override static func primaryKey() -> String? {
+        return "msg_id"
+    }
     
 }

@@ -44,7 +44,9 @@ class IMMessageLayoutService: NSObject {
         
         nameWidth = msg_model.sender_name.calculate(font: UIFont.systemFont(ofSize: 14), size: CGSize(width: kScreen_width - kMsgAvatarWidthAndHeight - kMsgCellPadding * 2.0, height: kMsgNameHeight)).width
         
-        switch msg_model.msg_type {
+        let msgType = IMMessageType(rawValue: msg_model.msg_type)!
+        
+        switch msgType {
         case .text:
             let size = msg_model.msg_content.calculate(font: UIFont.systemFont(ofSize: 16), size: CGSize(width: kMsgContentMaxWidth, height: CGFloat(MAXFLOAT)))
             contentHeight = size.height
