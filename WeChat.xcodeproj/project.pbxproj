@@ -844,7 +844,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-WeChat/Pods-WeChat-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-WeChat/Pods-WeChat-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
@@ -869,7 +869,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WeChat/Pods-WeChat-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-WeChat/Pods-WeChat-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		539B3C5807F4608D433A492D /* [CP] Check Pods Manifest.lock */ = {

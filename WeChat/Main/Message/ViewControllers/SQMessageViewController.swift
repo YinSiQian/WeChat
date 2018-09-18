@@ -19,7 +19,8 @@ class SQMessageViewController: UIViewController {
     }()
     
     var datas: [[String: Any]] = [["name": "张无忌", "content": "hello world", "id": 1],
-                                  ["name": "令狐冲", "content": "hello world", "id": 2]]
+                                  ["name": "令狐冲", "content": "hello world", "id": 2],
+                                  ["name": "风云", "content": "hello world", "id": 7]]
     
     override func viewDidLoad() {
         super.viewDidLoad()
