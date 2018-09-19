@@ -16,7 +16,7 @@ class IMChatViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
-        tableView.backgroundColor = UIColor(red:0.94, green:0.95, blue:0.95, alpha:1.00)
+        tableView.backgroundColor = UIColor.orange
         return tableView
     }()
     
@@ -27,6 +27,14 @@ class IMChatViewController: UIViewController {
     }()
     
     private var msgModels = [IMMessageLayoutService]()
+    
+    private var tbHeightNeedAdjust = false
+    
+    private var isAlsoNeedAdjstMinY = false
+    
+    private var contentDetla: CGFloat = 0
+    
+    private var originY: CGFloat = 0
     
     private var page: Int = 0
     
@@ -43,6 +51,7 @@ class IMChatViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSubviews()
+        addNotification()
         userSendMsg()
         msgStatusChanged()
         connectionStatusChanged()
@@ -66,12 +75,18 @@ class IMChatViewController: UIViewController {
         }
     }
     
+    private func addNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(IMChatViewController.keyboardWillShow(noti:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(IMChatViewController.keyboardWillHide(noti:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(IMChatViewController.keyboardFrameChanged(noti:)), name: UIResponder.keyboardDidChangeFrameNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.receivedMsg(notification:)), name: NSNotification.Name(kIMReceivedMessageNotification), object: nil)
+    }
+    
     private func setupSubviews() {
         view.backgroundColor = UIColor(red:0.94, green:0.95, blue:0.95, alpha:1.00)
         view.addSubview(tableView)
         view.addSubview(msgInputView)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(self.receivedMsg(notification:)), name: NSNotification.Name(kIMReceivedMessageNotification), object: nil)
     }
     
     // MARK: -- Load Data
@@ -173,6 +188,66 @@ class IMChatViewController: UIViewController {
         }
     }
     
+    @objc private func keyboardWillShow(noti: Notification) {
+        print(#function)
+        contentDetla = 0
+        let contentOffsetSizeHeight = tableView.contentSize.height
+        let rect = noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as! CGRect
+        let offsetDetla = tableView.height - rect.height - contentOffsetSizeHeight
+        if offsetDetla > 0 {
+            //内容少 应调整tableView的高度
+            tbHeightNeedAdjust = true
+            contentDetla = rect.height + msgInputView.height
+        } else if offsetDetla > -rect.height {
+            //内容小于键盘高度
+            isAlsoNeedAdjstMinY = true
+            tbHeightNeedAdjust = true
+            contentDetla = -offsetDetla
+        } else {
+            //内容大于键盘高度
+            contentDetla = rect.height
+        }
+        UIView.animate(withDuration: 0.25) {
+            if self.tbHeightNeedAdjust {
+                self.tableView.height -= rect.height
+                if self.isAlsoNeedAdjstMinY {
+                    self.tableView.minY -= self.contentDetla + self.msgInputView.height
+                }
+            } else {
+                self.tableView.minY -= self.contentDetla
+            }
+        }
+    }
+    
+    @objc private func keyboardWillHide(noti: Notification) {
+        let rect = noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as! CGRect
+        print(#function)
+        UIView.animate(withDuration: 0.25, animations: {
+            if self.tbHeightNeedAdjust {
+                self.tableView.height += rect.height
+                if self.isAlsoNeedAdjstMinY {
+                    self.tableView.minY += self.contentDetla + self.msgInputView.height
+                }
+            } else {
+                self.tableView.minY += self.contentDetla
+            }
+        }) { (_) in
+            self.tbHeightNeedAdjust = false
+            self.isAlsoNeedAdjstMinY = false
+        }
+    }
+    
+    @objc private func keyboardFrameChanged(noti: Notification) {
+        let rect = noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as! CGRect
+        print(#function)
+        let detla = rect.height - tableView.minY
+        UIView.animate(withDuration: 0.25) {
+            self.tableView.minY += detla
+        }
+        print("rect--->\(rect)")
+    }
+    
+    
     deinit {
         print("chat view controller is dealloc")
     }
@@ -191,9 +266,6 @@ extension IMChatViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = IMMessageCell.cell(with: tableView)
-        let layout = msgModels[indexPath.row]
-        
-//        print("address layout--->\(String(format: "%p", layout)) \n in collection layou address --->\(String(format: "%p", msgModels[indexPath.row]))")
         cell.msgServiceModel = msgModels[indexPath.row]
         return cell
     }

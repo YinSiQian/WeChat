@@ -34,6 +34,9 @@ class SQCache: NSObject {
             let realm = try Realm()
             let results = realm.objects(IMMessageModel.self).filter("(sender_id = \(chatId) AND received_id = \(UserModel.sharedInstance.id)) OR (sender_id = \(UserModel.sharedInstance.id) AND received_id = \(chatId)) AND group_id = 1").sorted(byKeyPath: "msg_id", ascending: true)
             if results.count <= rows {
+                for (_, element) in results.enumerated() {
+                    models.append(element)
+                }
                 return models
             } else {
                 let currentCount = page * rows
