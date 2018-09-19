@@ -26,6 +26,7 @@ class SQMessageViewController: UIViewController {
         super.viewDidLoad()
         self.title = UserModel.sharedInstance.username
         view.addSubview(tableView)
+        receivedMsg()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -43,6 +44,14 @@ class SQMessageViewController: UIViewController {
                 
             }
         }
+    }
+    
+    private func receivedMsg() {
+        IMDataManager.sharedInstance.receivedHandler = {
+            [weak self] (model) in
+            print("received msg in message controller")
+        }
+        
     }
     
 }

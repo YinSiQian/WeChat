@@ -9,6 +9,8 @@
 import UIKit
 import Starscream
 
+let kIMReceivedMessageNotification = "kIMReceivedMessageNotification"
+let kIMReceivedMessageKey = "kIMReceivedMessageKey"
 
 class IMDataManager: NSObject {
     
@@ -140,9 +142,11 @@ extension IMDataManager: SQWebSocketServiceDelegate {
             model.sender_avatar = UserModel.sharedInstance.icon
             model.msg_seq = msg_seq
             model.msg_type = IMMessageType(rawValue: dict["msg_type"] as? Int ?? 1)!.rawValue
+            model.delivered = 1
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
                 SQCache.saveMessageInfo(with: model)
             }
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: kIMReceivedMessageNotification), object: nil, userInfo: [kIMReceivedMessageKey: model])
 
             receivedHandler?(model)
 

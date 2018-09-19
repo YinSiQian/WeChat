@@ -44,7 +44,6 @@ class IMChatViewController: UIViewController {
         super.viewDidLoad()
         setupSubviews()
         userSendMsg()
-        receivedMsg()
         msgStatusChanged()
         connectionStatusChanged()
         loadData()
@@ -71,6 +70,8 @@ class IMChatViewController: UIViewController {
         view.backgroundColor = UIColor(red:0.94, green:0.95, blue:0.95, alpha:1.00)
         view.addSubview(tableView)
         view.addSubview(msgInputView)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.receivedMsg(notification:)), name: NSNotification.Name(kIMReceivedMessageNotification), object: nil)
     }
     
     // MARK: -- Load Data
@@ -107,10 +108,12 @@ class IMChatViewController: UIViewController {
     
     // MARK: -- 消息接收与发送处理
     
-    private func receivedMsg() {
-        IMDataManager.sharedInstance.receivedHandler = {
-            [weak self] (model) in
-            self?.handMsgData(model: model)
+    @objc private func receivedMsg(notification: Notification) {
+        
+        if let userInfo = notification.userInfo {
+            if let model = userInfo[kIMReceivedMessageKey] as? IMMessageModel {
+                self.handMsgData(model: model)
+            }
         }
     }
     
@@ -168,6 +171,10 @@ class IMChatViewController: UIViewController {
         if msgInputView.isActive {
             msgInputView.moveToBottom()
         }
+    }
+    
+    deinit {
+        print("chat view controller is dealloc")
     }
     
 }

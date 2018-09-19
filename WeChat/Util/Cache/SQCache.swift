@@ -41,7 +41,7 @@ class SQCache: NSObject {
                     return []
                 } else {
                     offset = results.count - (page + 1) * rows - 1
-                    endOffset = offset + rows
+                    endOffset = offset + rows + 1
                     for index in offset..<endOffset {
                         models.append(results[index])
                     }

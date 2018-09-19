@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SQNavigationViewController: UINavigationController {
+class SQNavigationViewController: UINavigationController, UIGestureRecognizerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -16,13 +16,15 @@ class SQNavigationViewController: UINavigationController {
         UINavigationBar.appearance().barTintColor = UIColor(red: 34.0 / 255.0, green: 34.0 / 255.0, blue: 34.0 / 255.0, alpha: 1.0)
 
         UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        interactivePopGestureRecognizer?.isEnabled = true
+        interactivePopGestureRecognizer?.delegate = self
     }
 
     override func pushViewController(_ viewController: UIViewController, animated: Bool) {
         if viewControllers.count > 0 {
             viewController.hidesBottomBarWhenPushed = true
-//            let barButton = UIBarButtonItem(image: #imageLiteral(resourceName: "back_icon"), style: .plain, target: self, action: #selector(pop))
-//            viewController.navigationItem.leftBarButtonItem = barButton
+            let barButton = UIBarButtonItem(image: #imageLiteral(resourceName: "back_icon"), style: .plain, target: self, action: #selector(pop))
+            viewController.navigationItem.leftBarButtonItem = barButton
         }
         super.pushViewController(viewController, animated: true)
     }

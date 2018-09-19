@@ -134,9 +134,13 @@ class FriendMomentInputView: UIView {
     @objc private func keyboardWillHide(noti: NSNotification) {
         let rect = noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as! CGRect
         isActive = false
+        var safeAreaBottom: CGFloat = 0
+        if UIDevice.current.isBangScreen {
+            safeAreaBottom = 34
+        }
         UIView.animate(withDuration: 0.25, animations: {
-            self.minY = rect.origin.y - self.height - 34
-            self.originY = rect.origin.y - self.height - 34
+            self.minY = rect.origin.y - self.height - safeAreaBottom
+            self.originY = rect.origin.y - self.height - safeAreaBottom
         }) { (_) in
             if !self.isMsgInput {
                 self.isHidden = true
