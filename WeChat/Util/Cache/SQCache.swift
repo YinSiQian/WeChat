@@ -32,25 +32,22 @@ class SQCache: NSObject {
         var models: [IMMessageModel] = []
         do {
             let realm = try Realm()
-            let results = realm.objects(IMMessageModel.self).filter("(sender_id = \(chatId) AND received_id = \(UserModel.sharedInstance.id)) OR (sender_id = \(UserModel.sharedInstance.id) AND received_id = \(chatId)) AND group_id = 1").sorted(byKeyPath: "msg_id", ascending: true)
-            if results.count <= rows {
-                for (_, element) in results.enumerated() {
-                    models.append(element)
-                }
-                return models
-            } else {
-                let currentCount = page * rows
-                if currentCount >= results.count {
-                    return []
-                } else {
-                    offset = results.count - (page + 1) * rows - 1
-                    endOffset = offset + rows + 1
-                    for index in offset..<endOffset {
-                        models.append(results[index])
-                    }
-                    return models
-                }
+            let results = realm.objects(IMMessageModel.self).filter("(sender_id = \(chatId) AND received_id = \(UserModel.sharedInstance.id)) OR (sender_id = \(UserModel.sharedInstance.id) AND received_id = \(chatId)) AND group_id = 1").sorted(byKeyPath: "msg_id", ascending: false)
+
+            offset = page * rows
+            if offset > results.count {
+                return []
             }
+            endOffset = offset + rows
+            if endOffset > results.count {
+                endOffset = results.count
+            }
+
+            for index in offset..<endOffset {
+                models.append(results[index])
+            }
+            return models.reversed()
+
         } catch let error as NSError {
             print("realm query error \(error.localizedDescription)")
         }

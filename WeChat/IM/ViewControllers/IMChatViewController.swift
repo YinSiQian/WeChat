@@ -33,6 +33,8 @@ class IMChatViewController: UIViewController {
     private var isAlsoNeedAdjstMinY = false
     
     private var inputViewLastHeight: CGFloat = 43
+    
+    private var isBeginLoadData = false
         
     private var page: Int = 0
     
@@ -85,6 +87,12 @@ class IMChatViewController: UIViewController {
         view.backgroundColor = UIColor(red:0.94, green:0.95, blue:0.95, alpha:1.00)
         view.addSubview(tableView)
         view.addSubview(msgInputView)
+        
+        let refreshControl = UIRefreshControl(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+        refreshControl.attributedTitle = NSAttributedString(string: "正在加载中...")
+        refreshControl.tintColor = UIColor.white
+        refreshControl.addTarget(self, action: #selector(IMChatViewController.loadHistoryData), for: .valueChanged)
+        tableView.addSubview(refreshControl)
     }
     
     // MARK: -- Load Data
@@ -92,17 +100,45 @@ class IMChatViewController: UIViewController {
     private func loadData() {
         
         let models = SQCache.messageInfo(with: self.chat_id, page: self.page);
-        for model in models {
-            let layout = IMMessageLayoutService(model: model)
-            self.msgModels.append(layout)
+        var cpModels = [IMMessageModel]()
+        if isBeginLoadData {
+            cpModels = models.reversed()
+        } else {
+            cpModels = models
         }
-        self.tableView.reloadData()
-        if !msgModels.isEmpty {
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.01) {
-                self.tableView.scrollToRow(at: IndexPath(row: self.msgModels.count - 1
-                    , section: 0), at: .none, animated: false)
+        let detla = cpModels.count
+        for model in cpModels {
+            let layout = IMMessageLayoutService(model: model)
+            if isBeginLoadData {
+                self.msgModels.insert(layout, at: 0)
+            } else {
+                self.msgModels.append(layout)
             }
-           
+        }
+        tableView.refreshControl?.endRefreshing()
+        self.tableView.reloadData()
+        isBeginLoadData = false
+        
+        if !msgModels.isEmpty {
+            if page == 0 {
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.01) {
+                    self.tableView.scrollToRow(at: IndexPath(row: self.msgModels.count - 1
+                        , section: 0), at: .none, animated: false)
+                }
+            } else {
+                tableView.scrollToRow(at: IndexPath(row: detla, section: 0), at: .none, animated: false)
+            }
+            if !models.isEmpty {
+                page += 1
+            }
+        }
+    }
+    
+    @objc private func loadHistoryData() {
+        if !isBeginLoadData {
+            tableView.refreshControl?.beginRefreshing()
+            isBeginLoadData = true
+            loadData()
         }
     }
     

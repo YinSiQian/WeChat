@@ -23,6 +23,7 @@
 		0A794506211BF3530045FCC9 /* YYWeakProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A794504211BF3530045FCC9 /* YYWeakProxy.m */; };
 		0AA8FD0C21140A0F0039C630 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA8FD0B21140A0F0039C630 /* UIView+Extension.swift */; };
 		0AC270722152324C00FDC397 /* UIDevice+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC270712152324C00FDC397 /* UIDevice+Extension.swift */; };
+		0AD171672153A0D700D578DB /* SQRefreshControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD171662153A0D700D578DB /* SQRefreshControl.swift */; };
 		0AD2081D211D77F40060E32F /* FriendMomentInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD2081C211D77F40060E32F /* FriendMomentInputView.swift */; };
 		0AEEF07D2119883A00378E69 /* MomentEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AEEF07C2119883A00378E69 /* MomentEditViewController.swift */; };
 		0D67BB0BCADAC71027EF78F5 /* Pods_WeChatTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B0542E27FB541926BA8969A /* Pods_WeChatTests.framework */; };
@@ -120,6 +121,7 @@
 		0A794505211BF3530045FCC9 /* YYWeakProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYWeakProxy.h; sourceTree = "<group>"; };
 		0AA8FD0B21140A0F0039C630 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		0AC270712152324C00FDC397 /* UIDevice+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Extension.swift"; sourceTree = "<group>"; };
+		0AD171662153A0D700D578DB /* SQRefreshControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQRefreshControl.swift; sourceTree = "<group>"; };
 		0AD2081C211D77F40060E32F /* FriendMomentInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendMomentInputView.swift; sourceTree = "<group>"; };
 		0AEEF07C2119883A00378E69 /* MomentEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentEditViewController.swift; sourceTree = "<group>"; };
 		314EE026DBE1BC6C19D1E965 /* Pods-WeChatTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeChatTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-WeChatTests/Pods-WeChatTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -604,6 +606,7 @@
 				8B1238ED210DFE770048D25D /* Models */,
 				8BFA39E121155914004DAA90 /* UploadService.swift */,
 				8B98CBD821305C6200BC1D9F /* LocationService.swift */,
+				0AD171662153A0D700D578DB /* SQRefreshControl.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -935,6 +938,7 @@
 				8BFA39D62115542A004DAA90 /* NSBundle+TZImagePicker.m in Sources */,
 				8BFA39DA2115542A004DAA90 /* TZProgressView.m in Sources */,
 				8B5F5B3F1F700A8C007C07D0 /* SQNavigationViewController.swift in Sources */,
+				0AD171672153A0D700D578DB /* SQRefreshControl.swift in Sources */,
 				8B8F39D8210CC10600E53CBC /* SQWebSocketService.swift in Sources */,
 				8BE8DFCD21318D1200C4E9CE /* UserService.swift in Sources */,
 				8BFA39DD2115542A004DAA90 /* TZPhotoPreviewCell.m in Sources */,
