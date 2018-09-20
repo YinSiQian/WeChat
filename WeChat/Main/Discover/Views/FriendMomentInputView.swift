@@ -12,6 +12,10 @@ class FriendMomentInputView: UIView {
     
     typealias complection = (_ text: String, _ index: Int) -> Void
     
+    typealias inputViewFrameChanged = (_ height: CGFloat) -> ()
+    
+    var frameChangedHanlde: inputViewFrameChanged!
+    
     var complectionHandler: complection!
     
     var placeholder: String? {
@@ -90,6 +94,7 @@ class FriendMomentInputView: UIView {
     private func addObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(FriendMomentInputView.keyboardWillShow(noti:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(FriendMomentInputView.keyboardWillHide(noti:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(FriendMomentInputView.keyboardDidShow(noti:)), name: UIResponder.keyboardDidShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(FriendMomentInputView.keyboardFrameChanged(noti:)), name: UIResponder.keyboardDidChangeFrameNotification, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(FriendMomentInputView.textViewDidChanged(noti:)), name: UITextView.textDidChangeNotification, object: nil)
@@ -117,18 +122,21 @@ class FriendMomentInputView: UIView {
         UIView.animate(withDuration: 0.2) {
             object.frame = CGRect(x: rect.origin.x, y: rect.origin.y, width: rect.size.width, height: size.height)
         }
-        
+        frameChangedHanlde?(self.frame.height)
     }
     
     @objc private func keyboardWillShow(noti: Notification) {
         isHidden = false
-        isActive = true
         let rect = noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as! CGRect
         UIView.animate(withDuration: 0.25) {
             self.minY = rect.origin.y - self.height
             self.originY = rect.origin.y - self.height
         }
         
+    }
+    
+    @objc private func keyboardDidShow(noti: NSNotification) {
+        isActive = true
     }
     
     @objc private func keyboardWillHide(noti: NSNotification) {
@@ -205,6 +213,7 @@ extension FriendMomentInputView: UITextViewDelegate {
                     self.height = 40
                 }
             }
+            frameChangedHanlde?(43)
             return false
         }
         return true

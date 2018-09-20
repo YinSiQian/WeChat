@@ -32,10 +32,8 @@ class IMChatViewController: UIViewController {
     
     private var isAlsoNeedAdjstMinY = false
     
-    private var contentDetla: CGFloat = 0
-    
-    private var originY: CGFloat = 0
-    
+    private var inputViewLastHeight: CGFloat = 43
+        
     private var page: Int = 0
     
     public var chat_id: Int = 0
@@ -55,6 +53,7 @@ class IMChatViewController: UIViewController {
         userSendMsg()
         msgStatusChanged()
         connectionStatusChanged()
+        inputFrameChangedHandle()
         loadData()
     }
     
@@ -78,7 +77,6 @@ class IMChatViewController: UIViewController {
     private func addNotification() {
         NotificationCenter.default.addObserver(self, selector: #selector(IMChatViewController.keyboardWillShow(noti:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(IMChatViewController.keyboardWillHide(noti:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(IMChatViewController.keyboardFrameChanged(noti:)), name: UIResponder.keyboardDidChangeFrameNotification, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.receivedMsg(notification:)), name: NSNotification.Name(kIMReceivedMessageNotification), object: nil)
     }
@@ -99,9 +97,12 @@ class IMChatViewController: UIViewController {
             self.msgModels.append(layout)
         }
         self.tableView.reloadData()
-        if msgModels.count > 0 {
-            self.tableView.scrollToRow(at: IndexPath(row: self.msgModels.count - 1
-                , section: 0), at: .none, animated: false)
+        if !msgModels.isEmpty {
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.01) {
+                self.tableView.scrollToRow(at: IndexPath(row: self.msgModels.count - 1
+                    , section: 0), at: .none, animated: false)
+            }
+           
         }
     }
     
@@ -184,67 +185,88 @@ class IMChatViewController: UIViewController {
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         if msgInputView.isActive {
+            if inputViewLastHeight > 43 {
+                tbHeightNeedAdjust = true
+            }
             msgInputView.moveToBottom()
+        }
+    }
+    
+    // MARK: -- Frame Adjust
+    
+    private func inputFrameChangedHandle() {
+        
+        msgInputView.frameChangedHanlde = {
+            [weak self] changedHeight in
+            let detla = changedHeight - (self?.inputViewLastHeight)!
+            if detla <= 0 {
+                UIView.animate(withDuration: 0.2, animations: {
+                    self?.tableView.minY += -detla
+                })
+            } else {
+                UIView.animate(withDuration: 0.2, animations: {
+                    self?.tableView.minY -= detla
+                })
+            }
+            self?.inputViewLastHeight = changedHeight
         }
     }
     
     @objc private func keyboardWillShow(noti: Notification) {
         print(#function)
-        contentDetla = 0
+        // TODO: 优化: 先无动画滚动到一定高度,然后再动画滚动到最新的消息.
+        if !self.msgModels.isEmpty {
+            tableView.scrollToRow(at: IndexPath(row: self.msgModels.count - 1, section: 0), at: .none, animated: false)
+        }
+        var contentDetla: CGFloat = 0
         let contentOffsetSizeHeight = tableView.contentSize.height
         let rect = noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as! CGRect
-        let offsetDetla = tableView.height - rect.height - contentOffsetSizeHeight
-        if offsetDetla > 0 {
+        let offsetDetla = contentOffsetSizeHeight - rect.height
+
+        if offsetDetla < 0 {
             //内容少 应调整tableView的高度
             tbHeightNeedAdjust = true
             contentDetla = rect.height + msgInputView.height
-        } else if offsetDetla > -rect.height {
+        } else if offsetDetla < rect.height {
             //内容小于键盘高度
             isAlsoNeedAdjstMinY = true
             tbHeightNeedAdjust = true
-            contentDetla = -offsetDetla
+            contentDetla = offsetDetla
         } else {
             //内容大于键盘高度
             contentDetla = rect.height
         }
         UIView.animate(withDuration: 0.25) {
+            
             if self.tbHeightNeedAdjust {
-                self.tableView.height -= rect.height
+                self.tableView.height = self.view.height - rect.height - self.msgInputView.height
                 if self.isAlsoNeedAdjstMinY {
-                    self.tableView.minY -= self.contentDetla + self.msgInputView.height
+                    self.tableView.height += contentDetla
+                    self.tableView.minY -= contentDetla
                 }
             } else {
-                self.tableView.minY -= self.contentDetla
+                self.tableView.minY = self.msgInputView.minY - self.tableView.height
             }
         }
     }
     
     @objc private func keyboardWillHide(noti: Notification) {
-        let rect = noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as! CGRect
         print(#function)
+        
+        let height = self.view.height - self.msgInputView.height - self.view.safeAreaInsets.bottom
         UIView.animate(withDuration: 0.25, animations: {
-            if self.tbHeightNeedAdjust {
-                self.tableView.height += rect.height
-                if self.isAlsoNeedAdjstMinY {
-                    self.tableView.minY += self.contentDetla + self.msgInputView.height
-                }
-            } else {
-                self.tableView.minY += self.contentDetla
+            if self.tableView.height != height {
+                self.tableView.height = height
             }
+            
+            self.tableView.minY = 0
         }) { (_) in
             self.tbHeightNeedAdjust = false
             self.isAlsoNeedAdjstMinY = false
+            if !self.msgModels.isEmpty {
+                self.tableView.scrollToRow(at: IndexPath(row: self.msgModels.count - 1, section: 0), at: .none, animated: true)
+            }
         }
-    }
-    
-    @objc private func keyboardFrameChanged(noti: Notification) {
-        let rect = noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as! CGRect
-        print(#function)
-        let detla = rect.height - tableView.minY
-        UIView.animate(withDuration: 0.25) {
-            self.tableView.minY += detla
-        }
-        print("rect--->\(rect)")
     }
     
     
@@ -272,6 +294,9 @@ extension IMChatViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if msgInputView.isActive {
+            if inputViewLastHeight > 43 {
+                tbHeightNeedAdjust = true
+            }
             msgInputView.moveToBottom()
         }
     }

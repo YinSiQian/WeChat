@@ -63,7 +63,7 @@ class IMMessageCell: UITableViewCell {
     private func setupSubviews() {
         avatar = UIImageView(frame: CGRect(x: kMsgAvatarLeftPadding, y: kMsgTopMarginPadding, width: kMsgAvatarWidthAndHeight, height: kMsgAvatarWidthAndHeight))
         avatar.isUserInteractionEnabled = true
-        avatar.backgroundColor = UIColor.orange
+        avatar.backgroundColor = UIColor.red
         avatar.contentMode = .scaleAspectFit
         contentView.addSubview(avatar)
         
