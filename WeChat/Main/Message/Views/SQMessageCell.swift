@@ -25,6 +25,13 @@ class SQMessageCell: UITableViewCell {
         }
     }
     
+    public var model: MessageListModel? {
+        didSet {
+            name_layer?.string = model?.name
+            content_layer?.string = model?.content
+        }
+    }
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupSubviews()

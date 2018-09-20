@@ -92,7 +92,7 @@ class IMChatViewController: UIViewController {
         refreshControl.attributedTitle = NSAttributedString(string: "正在加载中...")
         refreshControl.tintColor = UIColor.white
         refreshControl.addTarget(self, action: #selector(IMChatViewController.loadHistoryData), for: .valueChanged)
-        tableView.addSubview(refreshControl)
+        tableView.refreshControl = refreshControl
     }
     
     // MARK: -- Load Data
@@ -164,6 +164,7 @@ class IMChatViewController: UIViewController {
         
         if let userInfo = notification.userInfo {
             if let model = userInfo[kIMReceivedMessageKey] as? IMMessageModel {
+                model.sender_name = name
                 self.handMsgData(model: model)
             }
         }

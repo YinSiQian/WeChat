@@ -138,7 +138,6 @@ extension IMDataManager: SQWebSocketServiceDelegate {
             model.msg_id = dict["msg_id"] as? Int ?? 0
             model.sender_id = dict["send_id"] as? Int ?? 0
             model.received_id = dict["received_id"] as? Int ?? 0
-            model.sender_name = "测试名称"
             model.sender_avatar = UserModel.sharedInstance.icon
             model.msg_seq = msg_seq
             model.msg_type = IMMessageType(rawValue: dict["msg_type"] as? Int ?? 1)!.rawValue

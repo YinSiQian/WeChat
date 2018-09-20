@@ -44,6 +44,7 @@
 		8B5F5B3B1F700A54007C07D0 /* SQDiscoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5F5B3A1F700A54007C07D0 /* SQDiscoverViewController.swift */; };
 		8B5F5B3D1F700A5E007C07D0 /* SQMineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5F5B3C1F700A5E007C07D0 /* SQMineViewController.swift */; };
 		8B5F5B3F1F700A8C007C07D0 /* SQNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5F5B3E1F700A8C007C07D0 /* SQNavigationViewController.swift */; };
+		8B6EF80B2153F03800296655 /* MessageListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6EF80A2153F03800296655 /* MessageListModel.swift */; };
 		8B7417AD1F89187400A5D37E /* SQFriendsMomentsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B7417AC1F89187400A5D37E /* SQFriendsMomentsController.swift */; };
 		8B7417B01F891AFD00A5D37E /* SQSearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B7417AF1F891AFD00A5D37E /* SQSearchResultViewController.swift */; };
 		8B7417B21F891B2B00A5D37E /* Macros.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B7417B11F891B2B00A5D37E /* Macros.swift */; };
@@ -145,6 +146,7 @@
 		8B5F5B3A1F700A54007C07D0 /* SQDiscoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQDiscoverViewController.swift; sourceTree = "<group>"; };
 		8B5F5B3C1F700A5E007C07D0 /* SQMineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQMineViewController.swift; sourceTree = "<group>"; };
 		8B5F5B3E1F700A8C007C07D0 /* SQNavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQNavigationViewController.swift; sourceTree = "<group>"; };
+		8B6EF80A2153F03800296655 /* MessageListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageListModel.swift; sourceTree = "<group>"; };
 		8B7417AC1F89187400A5D37E /* SQFriendsMomentsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQFriendsMomentsController.swift; sourceTree = "<group>"; };
 		8B7417AF1F891AFD00A5D37E /* SQSearchResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQSearchResultViewController.swift; sourceTree = "<group>"; };
 		8B7417B11F891B2B00A5D37E /* Macros.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Macros.swift; sourceTree = "<group>"; };
@@ -518,6 +520,7 @@
 		8BDCD9171F65884900C53260 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				8B6EF80A2153F03800296655 /* MessageListModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -983,6 +986,7 @@
 				8BE8DFCB21317B0500C4E9CE /* MineSettingViewController.swift in Sources */,
 				8BFA39D22115542A004DAA90 /* TZImageCropManager.m in Sources */,
 				8BFA39DF2115542A004DAA90 /* TZLocationManager.m in Sources */,
+				8B6EF80B2153F03800296655 /* MessageListModel.swift in Sources */,
 				8B9ED8C520BABF06009CA600 /* NetworkManager.swift in Sources */,
 				8BBBA65B1F79FCFA008E18A5 /* UIColor+Extension.swift in Sources */,
 				8BFA39B12115336C004DAA90 /* SystemPhotoService.swift in Sources */,

@@ -18,9 +18,7 @@ class SQMessageViewController: UIViewController {
         return table
     }()
     
-    var datas: [[String: Any]] = [["name": "张无忌", "content": "hello world", "id": 1],
-                                  ["name": "令狐冲", "content": "hello world", "id": 2],
-                                  ["name": "风云", "content": "hello world", "id": 7]]
+    private var listData: [MessageListModel] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,8 +48,46 @@ class SQMessageViewController: UIViewController {
         IMDataManager.sharedInstance.receivedHandler = {
             [weak self] (model) in
             print("received msg in message controller")
+            self?.handleMsg(data: model)
         }
+    }
+    
+    private func handleMsg(data: IMMessageModel) {
+        let listModel = MessageListModel()
+        listModel.msg_id = data.msg_id
+        listModel.avatar = data.sender_avatar
+        listModel.chatId = data.sender_id
+        listModel.content = data.msg_content
+        listModel.name = data.sender_name
+        listModel.time = data.send_time
         
+        DispatchQueue.global().async {
+            if let index = self.searchForData(id: listModel.msg_id) {
+                self.listData.swapAt(0, index)
+            } else {
+                self.listData.insert(listModel, at: 0)
+            }
+            self.listDataSort()
+            DispatchQueue.main.async(execute: {
+                
+                self.tableView.reloadData()
+            })
+        }
+    }
+    
+    private func listDataSort() {
+        for (index, element) in listData.enumerated() {
+            element.sort = index + 1
+        }
+    }
+    
+    private func searchForData(id: Int) -> Int? {
+        for (index, element) in listData.enumerated() {
+            if element.msg_id == id {
+                return index
+            }
+        }
+        return nil
     }
     
 }
@@ -63,7 +99,7 @@ extension SQMessageViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return datas.count
+        return listData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -71,16 +107,15 @@ extension SQMessageViewController: UITableViewDelegate, UITableViewDataSource {
         if cell == nil {
             cell = SQMessageCell(style: .default, reuseIdentifier: "sqMessageCell")
         }
-        cell?.data = datas[indexPath.row]
+        cell?.model = listData[indexPath.row]
         return cell!
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let data = datas[indexPath.row]
         let chat = IMChatViewController()
-        chat.chat_id = data["id"] as! Int
-        chat.name = data["name"] as! String
+        chat.chat_id = listData[indexPath.row].chatId
+        chat.name = listData[indexPath.row].name
         navigationController?.pushViewController(chat, animated: true)
     }
     
