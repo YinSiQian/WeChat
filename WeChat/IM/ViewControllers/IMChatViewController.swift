@@ -164,7 +164,6 @@ class IMChatViewController: UIViewController {
         
         if let userInfo = notification.userInfo {
             if let model = userInfo[kIMReceivedMessageKey] as? IMMessageModel {
-                model.sender_name = name
                 self.handMsgData(model: model)
             }
         }
@@ -193,8 +192,7 @@ class IMChatViewController: UIViewController {
     }
     
     private func handMsgData(model: IMMessageModel) {
-        model.received_name = name
-        model.received_avatar = avatar
+       
         DispatchQueue.global().async {
             let layout = IMMessageLayoutService(model: model)
             self.msgModels.append(layout)

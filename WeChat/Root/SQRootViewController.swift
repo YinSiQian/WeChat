@@ -8,6 +8,7 @@
 
 import UIKit
 import RealmSwift
+import Reachability
 
 class SQRootViewController: UITabBarController {
 
@@ -17,6 +18,7 @@ class SQRootViewController: UITabBarController {
         setupViewcontrollers()
         SQWebSocketService.sharedInstance.delegate = IMDataManager.sharedInstance
         setupRealmForUser()
+        NetworkStatusManager.shared.startCheckNetworkStatusChanged()
     }
     
     private func setupRealmForUser() {

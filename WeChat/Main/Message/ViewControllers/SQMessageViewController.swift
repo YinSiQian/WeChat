@@ -22,7 +22,6 @@ class SQMessageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = UserModel.sharedInstance.username
         view.addSubview(tableView)
         receivedMsg()
     }
@@ -62,14 +61,15 @@ class SQMessageViewController: UIViewController {
         listModel.time = data.send_time
         
         DispatchQueue.global().async {
-            if let index = self.searchForData(id: listModel.msg_id) {
-                self.listData.swapAt(0, index)
-            } else {
-                self.listData.insert(listModel, at: 0)
+            if let index = self.searchForData(id: listModel.chatId) {
+                let oldMsg = self.listData[index]
+                SQCache.delete(model: oldMsg)
+                self.listData.remove(at: index)
             }
+            self.listData.insert(listModel, at: 0)
             self.listDataSort()
             DispatchQueue.main.async(execute: {
-                
+                SQCache.saveMsgListInfo(with: listModel)
                 self.tableView.reloadData()
             })
         }
@@ -83,7 +83,7 @@ class SQMessageViewController: UIViewController {
     
     private func searchForData(id: Int) -> Int? {
         for (index, element) in listData.enumerated() {
-            if element.msg_id == id {
+            if element.chatId == id {
                 return index
             }
         }

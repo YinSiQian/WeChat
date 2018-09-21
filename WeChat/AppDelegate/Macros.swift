@@ -16,3 +16,5 @@ let kScreen_height = UIScreen.main.bounds.size.height
 let baseUrl = URL(string: "http://120.79.10.111:8080/api")!
 
 let testHostUrl = URL(string: "http://localhost:8080/")!
+
+let kNetworkStatusChanged = Notification.Name(rawValue: "kNetworkStatusChanged")

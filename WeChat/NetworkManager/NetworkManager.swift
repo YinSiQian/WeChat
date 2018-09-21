@@ -15,7 +15,10 @@ public class NetworkManager {
     typealias complectionHandler = (_ response: [String: Any], _ error: NSError?) ->()
     
     public static func request<T: TargetType>(targetType: T, compection: @escaping (_ response: [String: Any], _ error: NSError?) ->()) -> Void {
-        
+        if !NetworkStatusManager.shared.isConnectNetwork && !UIDevice.current.isSimulator {
+            UIApplication.shared.keyWindow?.show(message: "请检查网络连接状态")
+            return
+        }
         let provide = MoyaProvider<T>(plugins: [NetworkActivityPlugin(networkActivityClosure: { (changeType, targetType) in
             print("changeType--->\(changeType), targetType--->\(targetType)")
             switch changeType {

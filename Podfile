@@ -9,6 +9,7 @@ target 'WeChat' do
   pod 'Starscream', '~> 3.0.2'
   pod 'Kingfisher', '~> 4.8.1'
   pod 'RealmSwift', '~> 3.9.0'
+  pod 'ReachabilitySwift', '~> 4.2.1'
   
   # OC
   pod 'YYText', '~> 1.0.7'

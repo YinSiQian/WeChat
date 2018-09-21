@@ -67,6 +67,59 @@ class SQCache: NSObject {
         }
     }
     
+    public static func saveMsgListInfo(with model: MessageListModel) {
+        print("save list info")
+        
+        do {
+            let realm = try Realm()
+            try realm.write {
+                realm.add(model)
+            }
+        } catch let error as NSError {
+            print("realm insert error \(error.localizedDescription)")
+        }
+    }
+    
+    public static func allMsgList() -> [MessageListModel] {
+        
+        do {
+            let realm = try Realm()
+            let results = realm.objects(MessageListModel.self).sorted(byKeyPath: "sort")
+            var models = [MessageListModel]()
+            for element in results {
+                models.append(element)
+            }
+            return models
+            
+        } catch let error as NSError {
+            print("realm insert error \(error.localizedDescription)")
+        }
+        return []
+    }
+    
+    public static func delete(model: MessageListModel) {
+        do {
+            let realm = try Realm()
+            try realm.write {
+               realm.delete(model)
+            }
+        } catch let error as NSError {
+            print("realm insert error \(error.localizedDescription)")
+        }
+    }
+    
+    public static func update(content: String, time: String ,model: MessageListModel) {
+        do {
+            let realm = try Realm()
+            try realm.write {
+                model.content = content
+                model.time = time
+            }
+        } catch let error as NSError {
+            print("realm insert error \(error.localizedDescription)")
+        }
+    }
+    
 }
 
 extension SQCache {

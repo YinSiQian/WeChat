@@ -52,6 +52,7 @@ class IMDataManager: NSObject {
                                   "group_id": 1,
                                   "msg_seq": msg_seq.md5,
                                   "msg_type": msgType.rawValue,
+                                  "sender_name": UserModel.sharedInstance.username,
                                   "status": 6001]
         
         SQWebSocketService.sharedInstance.sendMsg(msg: msg.convertToString()!)
@@ -138,10 +139,12 @@ extension IMDataManager: SQWebSocketServiceDelegate {
             model.msg_id = dict["msg_id"] as? Int ?? 0
             model.sender_id = dict["send_id"] as? Int ?? 0
             model.received_id = dict["received_id"] as? Int ?? 0
-            model.sender_avatar = UserModel.sharedInstance.icon
+            model.received_avatar = UserModel.sharedInstance.icon
+            model.received_name = UserModel.sharedInstance.username
             model.msg_seq = msg_seq
             model.msg_type = IMMessageType(rawValue: dict["msg_type"] as? Int ?? 1)!.rawValue
             model.delivered = 1
+            model.sender_name = dict["sender_name"] as? String ?? ""
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
                 SQCache.saveMessageInfo(with: model)
             }

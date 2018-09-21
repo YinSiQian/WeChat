@@ -7,12 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A11BEC221549B6F00846ADA /* UserInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A11BEC121549B6F00846ADA /* UserInfoViewController.swift */; };
 		0A1A2255214218D900DC9440 /* IMDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1A2254214218D900DC9440 /* IMDataManager.swift */; };
 		0A1A22592142192200DC9440 /* IMMessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1A22582142192200DC9440 /* IMMessageModel.swift */; };
 		0A1A225D2142196000DC9440 /* IMMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1A225C2142196000DC9440 /* IMMessageCell.swift */; };
 		0A1A226021421CAD00DC9440 /* IMMessageEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1A225F21421CAD00DC9440 /* IMMessageEnums.swift */; };
 		0A1A22622142270D00DC9440 /* IMMessageLayoutService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1A22612142270D00DC9440 /* IMMessageLayoutService.swift */; };
 		0A1A226421422BD200DC9440 /* IMChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1A226321422BD200DC9440 /* IMChatViewController.swift */; };
+		0A588A8C2154875000E7702D /* NetworkStatusManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A588A8B2154875000E7702D /* NetworkStatusManager.swift */; };
 		0A6320822146619B009636A4 /* IMMessageQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6320812146619B009636A4 /* IMMessageQueue.swift */; };
 		0A65638C2112E4FC00B3DB24 /* FriendModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A65638B2112E4FC00B3DB24 /* FriendModel.swift */; };
 		0A6563902112EA2C00B3DB24 /* Mappable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A65638F2112EA2C00B3DB24 /* Mappable.swift */; };
@@ -104,12 +106,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0A11BEC121549B6F00846ADA /* UserInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoViewController.swift; sourceTree = "<group>"; };
 		0A1A2254214218D900DC9440 /* IMDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMDataManager.swift; sourceTree = "<group>"; };
 		0A1A22582142192200DC9440 /* IMMessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMMessageModel.swift; sourceTree = "<group>"; };
 		0A1A225C2142196000DC9440 /* IMMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMMessageCell.swift; sourceTree = "<group>"; };
 		0A1A225F21421CAD00DC9440 /* IMMessageEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMMessageEnums.swift; sourceTree = "<group>"; };
 		0A1A22612142270D00DC9440 /* IMMessageLayoutService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMMessageLayoutService.swift; sourceTree = "<group>"; };
 		0A1A226321422BD200DC9440 /* IMChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMChatViewController.swift; sourceTree = "<group>"; };
+		0A588A8B2154875000E7702D /* NetworkStatusManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkStatusManager.swift; sourceTree = "<group>"; };
 		0A6320812146619B009636A4 /* IMMessageQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMMessageQueue.swift; sourceTree = "<group>"; };
 		0A65638B2112E4FC00B3DB24 /* FriendModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendModel.swift; sourceTree = "<group>"; };
 		0A65638F2112EA2C00B3DB24 /* Mappable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mappable.swift; sourceTree = "<group>"; };
@@ -503,6 +507,7 @@
 			children = (
 				8B5F5B381F700A45007C07D0 /* SQFriendsViewController.swift */,
 				8B7417AF1F891AFD00A5D37E /* SQSearchResultViewController.swift */,
+				0A11BEC121549B6F00846ADA /* UserInfoViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -610,6 +615,7 @@
 				8BFA39E121155914004DAA90 /* UploadService.swift */,
 				8B98CBD821305C6200BC1D9F /* LocationService.swift */,
 				0AD171662153A0D700D578DB /* SQRefreshControl.swift */,
+				0A588A8B2154875000E7702D /* NetworkStatusManager.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -858,6 +864,7 @@
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/Moya/Moya.framework",
+				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
@@ -870,6 +877,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MBProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Moya.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
@@ -932,6 +940,7 @@
 				8B3C2733210F63460028953F /* Extension+TargetType.swift in Sources */,
 				8BFA39D82115542A004DAA90 /* TZPhotoPreviewController.m in Sources */,
 				8B8F39DD210CCE4500E53CBC /* Dictionary+Extension.swift in Sources */,
+				0A588A8C2154875000E7702D /* NetworkStatusManager.swift in Sources */,
 				8B7417AD1F89187400A5D37E /* SQFriendsMomentsController.swift in Sources */,
 				8BFA39E02115542A004DAA90 /* TZGifPhotoPreviewController.m in Sources */,
 				8B35E565214965490033A10D /* SQCache.swift in Sources */,
@@ -975,6 +984,7 @@
 				8BFA39D42115542A004DAA90 /* TZVideoPlayerController.m in Sources */,
 				8BFA39DE2115542A004DAA90 /* TZImagePickerController.m in Sources */,
 				0A1A22622142270D00DC9440 /* IMMessageLayoutService.swift in Sources */,
+				0A11BEC221549B6F00846ADA /* UserInfoViewController.swift in Sources */,
 				8B98CBD921305C6200BC1D9F /* LocationService.swift in Sources */,
 				0A794506211BF3530045FCC9 /* YYWeakProxy.m in Sources */,
 				8B5F5B391F700A45007C07D0 /* SQFriendsViewController.swift in Sources */,
