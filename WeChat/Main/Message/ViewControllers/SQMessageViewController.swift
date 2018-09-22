@@ -23,6 +23,7 @@ class SQMessageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(tableView)
+        loadData()
         receivedMsg()
     }
     
@@ -41,6 +42,13 @@ class SQMessageViewController: UIViewController {
                 
             }
         }
+    }
+    
+    // MARK: -- 数据处理
+    
+    private func loadData() {
+        listData = SQCache.allMsgList()
+        self.tableView.reloadData()
     }
     
     private func receivedMsg() {
@@ -63,7 +71,9 @@ class SQMessageViewController: UIViewController {
         DispatchQueue.global().async {
             if let index = self.searchForData(id: listModel.chatId) {
                 let oldMsg = self.listData[index]
-                SQCache.delete(model: oldMsg)
+                DispatchQueue.main.async(execute: {
+                    SQCache.delete(model: oldMsg)
+                })
                 self.listData.remove(at: index)
             }
             self.listData.insert(listModel, at: 0)
