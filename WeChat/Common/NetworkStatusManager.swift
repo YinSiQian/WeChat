@@ -21,6 +21,9 @@ class NetworkStatusManager {
     
     private let reachability = Reachability()!
     
+    var connectionStatus: Reachability.Connection {
+        return reachability.connection
+    }
     
     private init() {}
     

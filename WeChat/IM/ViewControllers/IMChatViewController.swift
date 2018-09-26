@@ -141,9 +141,6 @@ class IMChatViewController: UIViewController {
         }
     }
     
-    // MARK: -- Socket Status Changed
-    
-    
     // MARK: -- 消息接收与发送处理
     
     @objc private func receivedMsg(notification: Notification) {
