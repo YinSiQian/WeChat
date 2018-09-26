@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class SQMessageViewController: UIViewController {
 
@@ -68,26 +69,24 @@ class SQMessageViewController: UIViewController {
         listModel.name = data.sender_name
         listModel.time = data.send_time
         
-        DispatchQueue.global().async {
-            if let index = self.searchForData(id: listModel.chatId) {
+        if let index = self.searchForData(id: listModel.chatId) {
                 let oldMsg = self.listData[index]
-                DispatchQueue.main.async(execute: {
-                    SQCache.delete(model: oldMsg)
-                })
+                SQCache.delete(model: oldMsg)
                 self.listData.remove(at: index)
-            }
-            self.listData.insert(listModel, at: 0)
-            self.listDataSort()
-            DispatchQueue.main.async(execute: {
-                SQCache.saveMsgListInfo(with: listModel)
-                self.tableView.reloadData()
-            })
         }
+        self.listData.insert(listModel, at: 0)
+        self.listDataSort()
+        SQCache.saveMsgListInfo(with: listModel)
+        self.tableView.reloadData()
+
     }
     
     private func listDataSort() {
         for (index, element) in listData.enumerated() {
-            element.sort = index + 1
+            let realm = try! Realm()
+            try! realm.write {
+                element.sort = index + 1
+            }
         }
     }
     
