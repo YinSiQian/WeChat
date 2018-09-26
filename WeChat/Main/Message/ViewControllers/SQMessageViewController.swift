@@ -11,6 +11,12 @@ import RealmSwift
 
 class SQMessageViewController: UIViewController {
 
+    private lazy var statusView: NetworkConnectStatusView = {
+        let view = NetworkConnectStatusView(frame: CGRect(x: 0, y: 0, width: 140, height: 40))
+        view.backgroundColor = UIColor.clear
+        return view
+    }()
+    
     private lazy var tableView: UITableView = {
         let table = UITableView(frame: self.view.bounds, style: .plain)
         table.delegate = self
@@ -23,14 +29,21 @@ class SQMessageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(tableView)
+        setupSubviews()
         loadData()
         receivedMsg()
+        networkStatusChanged()
+        connectionStatusChanged()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         connectServer()
+    }
+    
+    private func setupSubviews() {
+        navigationItem.titleView = statusView
+        view.addSubview(tableView)
     }
     
     private func connectServer() {
@@ -42,6 +55,27 @@ class SQMessageViewController: UIViewController {
 //                [weak self] (error) in
                 
             }
+        }
+    }
+    
+    private func networkStatusChanged() {
+        NetworkStatusManager.shared.networkStatusChangedHandle = {
+            [weak self] status in
+            switch status {
+            case .none:
+                self?.view.show(message: "网络连接失败,请检查网络连接情况")
+            case .wifi:
+                self?.view.show(message: "已连接到WIFI网络")
+            case .cellular:
+                self?.view.show(message: "已连接到4G网络")
+            }
+        }
+    }
+    
+    private func connectionStatusChanged() {
+        SQWebSocketService.sharedInstance.statusChangedHandle = {
+            [weak self] status in
+            self?.statusView.updateStatus(connectStatus: status)
         }
     }
     

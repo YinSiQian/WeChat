@@ -11,10 +11,16 @@ import Reachability
 
 class NetworkStatusManager {
     
+    typealias networkStatusChanged = (_ status: Reachability.Connection) -> ()
+    
+    public var networkStatusChangedHandle: networkStatusChanged? = nil
+    
     static let shared = NetworkStatusManager()
     
-    private(set) var isConnectNetwork: Bool = true
-        
+    private(set) var isConnectNetwork: Bool = false
+    
+    private let reachability = Reachability()!
+    
     
     private init() {}
     
@@ -24,18 +30,19 @@ extension NetworkStatusManager {
     
     public func startCheckNetworkStatusChanged() {
         
-        let reachability = Reachability()!
         reachability.whenReachable = { [weak self] reachability in
             if reachability.connection == .wifi {
                 print("Reachable via WiFi")
             } else {
                 print("Reachable via Cellular")
             }
+            self?.networkStatusChangedHandle?(reachability.connection)
             self?.isConnectNetwork = true
         }
         reachability.whenUnreachable = { [weak self]  _ in
             print("Not reachable")
             self?.isConnectNetwork = false
+            self?.networkStatusChangedHandle?(.none)
         }
         
         do {

@@ -15,7 +15,7 @@ public class NetworkManager {
     typealias complectionHandler = (_ response: [String: Any], _ error: NSError?) ->()
     
     public static func request<T: TargetType>(targetType: T, compection: @escaping (_ response: [String: Any], _ error: NSError?) ->()) -> Void {
-        if !NetworkStatusManager.shared.isConnectNetwork && !UIDevice.current.isSimulator {
+        if !NetworkStatusManager.shared.isConnectNetwork {
             UIApplication.shared.keyWindow?.show(message: "请检查网络连接状态")
             return
         }

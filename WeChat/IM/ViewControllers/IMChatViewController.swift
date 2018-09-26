@@ -54,7 +54,6 @@ class IMChatViewController: UIViewController {
         addNotification()
         userSendMsg()
         msgStatusChanged()
-        connectionStatusChanged()
         inputFrameChangedHandle()
         loadData()
     }
@@ -144,19 +143,6 @@ class IMChatViewController: UIViewController {
     
     // MARK: -- Socket Status Changed
     
-    private func connectionStatusChanged() {
-        SQWebSocketService.sharedInstance.statusChangedHandle = {
-            [weak self] status in
-            switch status {
-            case .connecting:
-                break
-            case .connectSuccess:
-                break
-            case .connectFailure:
-                break
-            }
-        }
-    }
     
     // MARK: -- 消息接收与发送处理
     

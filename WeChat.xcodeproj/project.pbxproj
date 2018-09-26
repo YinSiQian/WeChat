@@ -14,6 +14,7 @@
 		0A1A226021421CAD00DC9440 /* IMMessageEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1A225F21421CAD00DC9440 /* IMMessageEnums.swift */; };
 		0A1A22622142270D00DC9440 /* IMMessageLayoutService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1A22612142270D00DC9440 /* IMMessageLayoutService.swift */; };
 		0A1A226421422BD200DC9440 /* IMChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1A226321422BD200DC9440 /* IMChatViewController.swift */; };
+		0A1EFA08215B793F00954D00 /* NetworkConnectStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1EFA07215B793F00954D00 /* NetworkConnectStatusView.swift */; };
 		0A588A8C2154875000E7702D /* NetworkStatusManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A588A8B2154875000E7702D /* NetworkStatusManager.swift */; };
 		0A6320822146619B009636A4 /* IMMessageQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6320812146619B009636A4 /* IMMessageQueue.swift */; };
 		0A65638C2112E4FC00B3DB24 /* FriendModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A65638B2112E4FC00B3DB24 /* FriendModel.swift */; };
@@ -113,6 +114,7 @@
 		0A1A225F21421CAD00DC9440 /* IMMessageEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMMessageEnums.swift; sourceTree = "<group>"; };
 		0A1A22612142270D00DC9440 /* IMMessageLayoutService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMMessageLayoutService.swift; sourceTree = "<group>"; };
 		0A1A226321422BD200DC9440 /* IMChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMChatViewController.swift; sourceTree = "<group>"; };
+		0A1EFA07215B793F00954D00 /* NetworkConnectStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConnectStatusView.swift; sourceTree = "<group>"; };
 		0A588A8B2154875000E7702D /* NetworkStatusManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkStatusManager.swift; sourceTree = "<group>"; };
 		0A6320812146619B009636A4 /* IMMessageQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMMessageQueue.swift; sourceTree = "<group>"; };
 		0A65638B2112E4FC00B3DB24 /* FriendModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendModel.swift; sourceTree = "<group>"; };
@@ -542,6 +544,7 @@
 			isa = PBXGroup;
 			children = (
 				8B7417B31F89249D00A5D37E /* SQMessageCell.swift */,
+				0A1EFA07215B793F00954D00 /* NetworkConnectStatusView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -968,6 +971,7 @@
 				0AC270722152324C00FDC397 /* UIDevice+Extension.swift in Sources */,
 				0A65639D21130A4900B3DB24 /* MomentModel.swift in Sources */,
 				8BBBA65E1F7A9014008E18A5 /* SQMineUserInfoCell.swift in Sources */,
+				0A1EFA08215B793F00954D00 /* NetworkConnectStatusView.swift in Sources */,
 				8B1238F1210E0DE10048D25D /* Number+Extension.swift in Sources */,
 				8B5F5B3B1F700A54007C07D0 /* SQDiscoverViewController.swift in Sources */,
 				8BC09DAF2113501400DC463D /* FriendMomentCell.swift in Sources */,
