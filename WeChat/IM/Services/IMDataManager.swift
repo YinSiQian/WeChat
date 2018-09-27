@@ -11,6 +11,9 @@ import Starscream
 
 let kIMReceivedMessageNotification = "kIMReceivedMessageNotification"
 let kIMReceivedMessageKey = "kIMReceivedMessageKey"
+let kIMSendMessageNotification = "kIMSendMessageNotification"
+let kIMSendMessageKey = "kIMSendMessageKey"
+let kIMSendMessageFailureNofication = "kIMSendMessageFailureNofication"
 
 class IMDataManager: NSObject {
     
@@ -30,15 +33,15 @@ class IMDataManager: NSObject {
     
     private override init() {}
     
-    public func sendTextMsg(content: String, chat_id: Int) -> IMMessageModel {
-        return sendMsg(content: content, chat_id: chat_id, msgType: .text)
+    public func sendTextMsg(content: String, chat_id: Int, receivedName: String) -> IMMessageModel {
+        return sendMsg(content: content, chat_id: chat_id, receivedName: receivedName, msgType: .text)
     }
     
-    public func sendImageMsg(image: UIImage, chat_id: Int) -> IMMessageModel {
-        return sendMsg(content: "image url", chat_id: chat_id, msgType: .image)
+    public func sendImageMsg(image: UIImage, chat_id: Int, receivedName: String) -> IMMessageModel {
+        return sendMsg(content: "image url", chat_id: chat_id, receivedName: receivedName, msgType: .image)
     }
     
-    private func sendMsg(content: String, chat_id: Int, msgType: IMMessageType) -> IMMessageModel {
+    private func sendMsg(content: String, chat_id: Int, receivedName: String, msgType: IMMessageType) -> IMMessageModel {
         
         // Note: 发送过快时间按秒计算未变化 造成seq相同..服务器会认为是同一消息.
         let date = Date()
@@ -52,7 +55,6 @@ class IMDataManager: NSObject {
                                   "group_id": 1,
                                   "msg_seq": msg_seq.md5,
                                   "msg_type": msgType.rawValue,
-                                  "sender_name": UserModel.sharedInstance.username,
                                   "status": 6001]
         
         SQWebSocketService.sharedInstance.sendMsg(msg: msg.convertToString()!)
@@ -65,7 +67,9 @@ class IMDataManager: NSObject {
         model.sender_avatar = UserModel.sharedInstance.icon
         model.msg_seq = msg_seq.md5
         model.msg_type = msgType.rawValue
-   
+        model.msg_status = IMMessageSendStatusType.sending.rawValue
+        model.received_name = receivedName
+
         IMMessageQueue.shared.push(element: model)
         IMMessageQueue.shared.timeoutHandle = {
             (drop, index) in
@@ -83,6 +87,7 @@ class IMDataManager: NSObject {
                 SQWebSocketService.sharedInstance.sendMsg(msg: msg.convertToString()!)
             }
         }
+        NotificationCenter.default.post(name: NSNotification.Name.init(kIMSendMessageNotification), object: nil, userInfo: [kIMSendMessageKey: model])
         return model
     }
     
@@ -120,9 +125,11 @@ extension IMDataManager: SQWebSocketServiceDelegate {
             print("server ack: \(msg)")
             let seq = dict["msg_seq"] as? String ?? ""
             let id = dict["msg_id"] as? Int ?? 0
+            let time = dict["creat_time"] as? String ?? ""
             let msg_index = IMMessageQueue.shared.indexForMessage(seq: seq)
             if let index = msg_index {
                 IMMessageQueue.shared.elements[index].msg_id = id
+                IMMessageQueue.shared.elements[index].send_time = time
             }
         case 6003:
             //服务器收到消费者的ack
@@ -145,6 +152,8 @@ extension IMDataManager: SQWebSocketServiceDelegate {
             model.msg_type = IMMessageType(rawValue: dict["msg_type"] as? Int ?? 1)!.rawValue
             model.delivered = 1
             model.sender_name = dict["sender_name"] as? String ?? ""
+            model.send_time = dict["create_time"] as? String ?? ""
+            model.sender_avatar = dict["sender_avatar"] as? String ?? ""
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
                 SQCache.saveMessageInfo(with: model)
             }

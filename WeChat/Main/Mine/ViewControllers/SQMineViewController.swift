@@ -32,7 +32,7 @@ class SQMineViewController: UIViewController {
     
     private func loadUserInfo() {
         
-        NetworkManager.request(targetType: UserAPI.userInfo(id: UserModel.sharedInstance.id)) {
+        NetworkManager.request(targetType: UserAPI.userInfo) {
             (result, error) in
             if !result.isEmpty {
                 let data = result["user"];

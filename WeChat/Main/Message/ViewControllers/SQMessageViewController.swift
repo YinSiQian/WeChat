@@ -32,6 +32,7 @@ class SQMessageViewController: UIViewController {
         setupSubviews()
         loadData()
         receivedMsg()
+        addMsgStatusObserver()
         networkStatusChanged()
         connectionStatusChanged()
     }
@@ -44,6 +45,10 @@ class SQMessageViewController: UIViewController {
     private func setupSubviews() {
         navigationItem.titleView = statusView
         view.addSubview(tableView)
+    }
+    
+    private func addMsgStatusObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(SQMessageViewController.sendMsg(noti:)), name: NSNotification.Name.init(kIMSendMessageNotification), object: nil)
     }
     
     private func connectServer() {
@@ -90,17 +95,32 @@ class SQMessageViewController: UIViewController {
         IMDataManager.sharedInstance.receivedHandler = {
             [weak self] (model) in
             print("received msg in message controller")
-            self?.handleMsg(data: model)
+            self?.handleMsg(data: model, isSend: false)
         }
     }
     
-    private func handleMsg(data: IMMessageModel) {
+    @objc private func sendMsg(noti: Notification) {
+        if let userInfo = noti.userInfo {
+            if let model = userInfo[kIMSendMessageKey] as? IMMessageModel {
+                self.handleMsg(data: model, isSend: true)
+            }
+        }
+    }
+    
+    private func handleMsg(data: IMMessageModel, isSend: Bool) {
         let listModel = MessageListModel()
         listModel.msg_id = data.msg_id
-        listModel.avatar = data.sender_avatar
-        listModel.chatId = data.sender_id
+        if isSend {
+            listModel.chatId = data.received_id
+            listModel.name = data.received_name
+            listModel.avatar = data.received_avatar
+        } else {
+            listModel.avatar = data.sender_avatar
+            listModel.chatId = data.sender_id
+            listModel.name = data.sender_name
+        }
+    
         listModel.content = data.msg_content
-        listModel.name = data.sender_name
         listModel.time = data.send_time
         
         if let index = self.searchForData(id: listModel.chatId) {

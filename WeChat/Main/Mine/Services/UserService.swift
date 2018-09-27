@@ -15,7 +15,7 @@ public enum UserAPI {
     case updateAvatar(url: String)
     case updateSign(sign: String)
     case updateSex(sex: Int)
-    case userInfo(id: Int)
+    case userInfo
 }
 
 extension UserAPI: TargetType {
@@ -32,7 +32,7 @@ extension UserAPI: TargetType {
             return "/user/modifySex"
         case .updateName(username: _):
             return "/user/modifySex"
-        case .userInfo(id: _):
+        case .userInfo:
             return "/user/info"
         }
     }
@@ -49,15 +49,15 @@ extension UserAPI: TargetType {
             return .post
         case .updateName(username: _):
             return .post
-        case .userInfo(id: _):
-            return .post
+        case .userInfo:
+            return .get
         }
     }
     
     public var task: Task {
         switch self {
         case .exit:
-            return .requestPlain
+            return .requestParameters(parameters: ["accessToken": UserModel.sharedInstance.accessToken], encoding: URLEncoding.default)
             
         case .updateSex(let sex):
             return .requestParameters(parameters: ["sex": sex], encoding: URLEncoding.default)
@@ -71,8 +71,8 @@ extension UserAPI: TargetType {
         case .updateName(let username):
             return .requestParameters(parameters: ["username": username], encoding: URLEncoding.default)
 
-        case .userInfo(let id):
-            return .requestParameters(parameters: ["id": id], encoding: URLEncoding.default)
+        case .userInfo:
+            return .requestPlain
 
         }
     }

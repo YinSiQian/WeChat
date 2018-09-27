@@ -155,7 +155,7 @@ class IMChatViewController: UIViewController {
     private func userSendMsg() {
         msgInputView.complectionHandler = {
             [weak self] (text, _) in
-            let msgModel = IMDataManager.sharedInstance.sendTextMsg(content: text, chat_id: (self?.chat_id)!)
+            let msgModel = IMDataManager.sharedInstance.sendTextMsg(content: text, chat_id: (self?.chat_id)!, receivedName: self?.name ?? "")
             self?.handMsgData(model: msgModel)
         }
     }
