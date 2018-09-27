@@ -18,17 +18,16 @@ class SQMessageCell: UITableViewCell {
     
     private var time_layer: CATextLayer?
     
-    public var data: [String: Any] = [:] {
-        didSet {
-            name_layer?.string = data["name"]
-            content_layer?.string = "hello 我是\(String(describing: data["name"]))"
-        }
-    }
-    
     public var model: MessageListModel? {
         didSet {
             name_layer?.string = model?.name
             content_layer?.string = model?.content
+            if "\(String(describing: model?.create_time))".count == 13 {
+                let currentTime = (model?.create_time)! / 1000
+                time_layer?.string = currentTime.timestamp
+            } else {
+                time_layer?.string = model?.create_time.timestamp
+            }
         }
     }
     
@@ -68,7 +67,7 @@ class SQMessageCell: UITableViewCell {
         contentView.layer.addSublayer(name_layer!)
         
         time_layer = CATextLayer()
-        time_layer?.frame = CGRect(x: kScreen_width - 100, y: 10, width: 90, height: 14)
+        time_layer?.frame = CGRect(x: kScreen_width - 130, y: 10, width: 120, height: 14)
         time_layer?.font = "HiraKakuProN-W3" as CFTypeRef
         time_layer?.string = "下午10:30"
         time_layer?.fontSize = 12

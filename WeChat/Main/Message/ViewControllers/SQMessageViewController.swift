@@ -113,7 +113,7 @@ class SQMessageViewController: UIViewController {
             if let model = userInfo[kIMMessageValueKey] as? IMMessageModel {
                 if let index = self.searchForData(id: model.received_id) {
                     let msg = self.listData[index]
-                    SQCache.update(content: msg.content, time: model.create_time, model: msg)
+                    SQCache.update(content: msg.content, time: model.create_time / 1000, model: msg)
                     tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
                 }
             }
