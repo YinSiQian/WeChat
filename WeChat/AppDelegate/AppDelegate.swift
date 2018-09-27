@@ -70,7 +70,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
         if SQWebSocketService.sharedInstance.isConnection {
             //App进入后台 告知服务器当前用户已下线.走推送流程.
-//            SQWebSocketService.sharedInstance.sendMsg(msg: "已下线")
+            SQWebSocketService.sharedInstance.disconnection()
         }
         print(#function)
 
