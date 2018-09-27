@@ -9,11 +9,11 @@
 import UIKit
 import Starscream
 
+let kIMMessageValueKey = "kIMMessageValueKey"
 let kIMReceivedMessageNotification = "kIMReceivedMessageNotification"
-let kIMReceivedMessageKey = "kIMReceivedMessageKey"
 let kIMSendMessageNotification = "kIMSendMessageNotification"
-let kIMSendMessageKey = "kIMSendMessageKey"
 let kIMSendMessageFailureNofication = "kIMSendMessageFailureNofication"
+let kIMMessageValueChangedNofication = "kIMMessageValueChangedNofication"
 
 class IMDataManager: NSObject {
     
@@ -69,7 +69,7 @@ class IMDataManager: NSObject {
         model.msg_type = msgType.rawValue
         model.msg_status = IMMessageSendStatusType.sending.rawValue
         model.received_name = receivedName
-
+        model.create_time = Int(date.timeIntervalSince1970)
         IMMessageQueue.shared.push(element: model)
         IMMessageQueue.shared.timeoutHandle = {
             (drop, index) in
@@ -87,7 +87,7 @@ class IMDataManager: NSObject {
                 SQWebSocketService.sharedInstance.sendMsg(msg: msg.convertToString()!)
             }
         }
-        NotificationCenter.default.post(name: NSNotification.Name.init(kIMSendMessageNotification), object: nil, userInfo: [kIMSendMessageKey: model])
+        NotificationCenter.default.post(name: NSNotification.Name.init(kIMSendMessageNotification), object: nil, userInfo: [kIMMessageValueKey: model])
         return model
     }
     
@@ -125,11 +125,12 @@ extension IMDataManager: SQWebSocketServiceDelegate {
             print("server ack: \(msg)")
             let seq = dict["msg_seq"] as? String ?? ""
             let id = dict["msg_id"] as? Int ?? 0
-            let time = dict["creat_time"] as? String ?? ""
+            let time = dict["create_time"] as? Int ?? 0
             let msg_index = IMMessageQueue.shared.indexForMessage(seq: seq)
             if let index = msg_index {
                 IMMessageQueue.shared.elements[index].msg_id = id
-                IMMessageQueue.shared.elements[index].send_time = time
+                IMMessageQueue.shared.elements[index].create_time = time
+                 NotificationCenter.default.post(name: NSNotification.Name.init(kIMMessageValueChangedNofication), object: nil, userInfo: [kIMMessageValueKey: IMMessageQueue.shared.elements[index]])
             }
         case 6003:
             //服务器收到消费者的ack
@@ -152,12 +153,12 @@ extension IMDataManager: SQWebSocketServiceDelegate {
             model.msg_type = IMMessageType(rawValue: dict["msg_type"] as? Int ?? 1)!.rawValue
             model.delivered = 1
             model.sender_name = dict["sender_name"] as? String ?? ""
-            model.send_time = dict["create_time"] as? String ?? ""
+            model.create_time = dict["create_time"] as? Int ?? 0
             model.sender_avatar = dict["sender_avatar"] as? String ?? ""
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
                 SQCache.saveMessageInfo(with: model)
             }
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: kIMReceivedMessageNotification), object: nil, userInfo: [kIMReceivedMessageKey: model])
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: kIMReceivedMessageNotification), object: nil, userInfo: [kIMMessageValueKey: model])
 
             receivedHandler?(model)
 

@@ -41,6 +41,7 @@
 		8B35E565214965490033A10D /* SQCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B35E564214965490033A10D /* SQCache.swift */; };
 		8B3C2731210F577C0028953F /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3C2730210F577C0028953F /* UIViewController+Extension.swift */; };
 		8B3C2733210F63460028953F /* Extension+TargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3C2732210F63460028953F /* Extension+TargetType.swift */; };
+		8B3C8DC1215D00570082CB6E /* AddFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3C8DC0215D00570082CB6E /* AddFriendViewController.swift */; };
 		8B4818CB21171A8600C290D8 /* UINavigationController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4818CA21171A8600C290D8 /* UINavigationController+Extension.swift */; };
 		8B5F5B371F700A2D007C07D0 /* SQMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5F5B361F700A2D007C07D0 /* SQMessageViewController.swift */; };
 		8B5F5B391F700A45007C07D0 /* SQFriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5F5B381F700A45007C07D0 /* SQFriendsViewController.swift */; };
@@ -146,6 +147,7 @@
 		8B35E564214965490033A10D /* SQCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQCache.swift; sourceTree = "<group>"; };
 		8B3C2730210F577C0028953F /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		8B3C2732210F63460028953F /* Extension+TargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+TargetType.swift"; sourceTree = "<group>"; };
+		8B3C8DC0215D00570082CB6E /* AddFriendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendViewController.swift; sourceTree = "<group>"; };
 		8B4818CA21171A8600C290D8 /* UINavigationController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extension.swift"; sourceTree = "<group>"; };
 		8B5F5B361F700A2D007C07D0 /* SQMessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQMessageViewController.swift; sourceTree = "<group>"; };
 		8B5F5B381F700A45007C07D0 /* SQFriendsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQFriendsViewController.swift; sourceTree = "<group>"; };
@@ -510,6 +512,7 @@
 				8B5F5B381F700A45007C07D0 /* SQFriendsViewController.swift */,
 				8B7417AF1F891AFD00A5D37E /* SQSearchResultViewController.swift */,
 				0A11BEC121549B6F00846ADA /* UserInfoViewController.swift */,
+				8B3C8DC0215D00570082CB6E /* AddFriendViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -981,6 +984,7 @@
 				8B1238EF210DFE9F0048D25D /* UserModel.swift in Sources */,
 				8BC09DB1211359A200DC463D /* TimelineLayoutService.swift in Sources */,
 				8B7417B41F89249D00A5D37E /* SQMessageCell.swift in Sources */,
+				8B3C8DC1215D00570082CB6E /* AddFriendViewController.swift in Sources */,
 				8BF4F91120E28F1C00A6E693 /* TimelineService.swift in Sources */,
 				8B8F39DA210CCB9100E53CBC /* String+Extension.swift in Sources */,
 				0A1A226021421CAD00DC9440 /* IMMessageEnums.swift in Sources */,

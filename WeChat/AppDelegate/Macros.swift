@@ -18,3 +18,5 @@ let baseUrl = URL(string: "http://120.79.10.111:8080/api")!
 let testHostUrl = URL(string: "http://localhost:8080/")!
 
 let kNetworkStatusChanged = Notification.Name(rawValue: "kNetworkStatusChanged")
+
+let kViewBackgroudColor = UIColor(red:0.94, green:0.95, blue:0.95, alpha:1.00)

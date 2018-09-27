@@ -17,14 +17,6 @@ class SQRootViewController: UITabBarController {
         UIApplication.shared.statusBarStyle = .lightContent
         setupViewcontrollers()
         SQWebSocketService.sharedInstance.delegate = IMDataManager.sharedInstance
-        setupRealmForUser()
-    }
-    
-    private func setupRealmForUser() {
-        var realmConfig = Realm.Configuration()
-        realmConfig.fileURL = realmConfig.fileURL!.deletingLastPathComponent().appendingPathComponent("\(UserModel.sharedInstance.username.md5).realm")
-        Realm.Configuration.defaultConfiguration = realmConfig
-        print("url ---> \(String(describing: realmConfig.fileURL))")
     }
     
     fileprivate func setupViewcontrollers() {

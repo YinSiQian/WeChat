@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -23,6 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         NetworkStatusManager.shared.startCheckNetworkStatusChanged()
+        setupRealmConfig()
         setupRootVC()
         
         if #available(iOS 11, *) {
@@ -42,6 +44,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             window?.rootViewController = SQRootViewController()
         }
         window?.makeKeyAndVisible()
+    }
+    
+    private func setupRealmConfig() {
+        
+        var realmConfig = Realm.Configuration (
+            schemaVersion: 1,
+            migrationBlock: { migration, oldSchemaVersion in
+                // We haven’t migrated anything yet, so oldSchemaVersion == 0
+                if (oldSchemaVersion < 3) {
+                    // The renaming operation should be done outside of calls to `enumerateObjects(ofType: _:)`.
+                    //                    migration.renameProperty(onType: Person.className(), from: "yearsSinceBirth", to: "age")
+                }
+        })
+        realmConfig.fileURL = realmConfig.fileURL!.deletingLastPathComponent().appendingPathComponent("\(UserModel.sharedInstance.username.md5).realm")
+        print("url ---> \(String(describing: realmConfig.fileURL))")
+        
+        Realm.Configuration.defaultConfiguration = realmConfig
+            
+        
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

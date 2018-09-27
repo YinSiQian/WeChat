@@ -19,7 +19,7 @@ public class MessageListModel: Object {
     
     @objc dynamic var content: String = ""
     
-    @objc dynamic var time: String = ""
+    @objc dynamic var create_time: Int = 0
     
     @objc dynamic var chatId: Int = 0
     

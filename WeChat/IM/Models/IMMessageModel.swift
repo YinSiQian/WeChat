@@ -33,7 +33,7 @@ class IMMessageModel: Object {
     
     @objc dynamic public var msg_seq: String = ""
     
-    @objc dynamic public var send_time: String = ""
+    @objc dynamic public var create_time: Int = 0
     
     @objc dynamic public var delivered: Int = 0
     

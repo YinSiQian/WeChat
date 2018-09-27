@@ -78,7 +78,7 @@ class SQMessageCell: UITableViewCell {
         contentView.layer.addSublayer(time_layer!)
         
         content_layer = CATextLayer()
-        content_layer?.frame = CGRect(x: 80, y: 35, width: kScreen_width - 80 - 10, height: 20)
+        content_layer?.frame = CGRect(x: 80, y: 40, width: kScreen_width - 80 - 10, height: 20)
         content_layer?.font = "HiraKakuProN-W3" as CFTypeRef
         content_layer?.string = "天刀同人秀: 长假马上就要过去啦,进来查看更多长假信息"
         content_layer?.fontSize = 14

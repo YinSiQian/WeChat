@@ -16,7 +16,7 @@ public enum CacheError: Error {
 
 class SQCache: NSObject {
     
-    public static let shared = SQCache()
+//    public static let shared = SQCache()
     
     private var dataCache = NSCache<NSString, AnyObject>()
     
@@ -108,12 +108,12 @@ class SQCache: NSObject {
         }
     }
     
-    public static func update(content: String, time: String ,model: MessageListModel) {
+    public static func update(content: String, time: Int ,model: MessageListModel) {
         do {
             let realm = try Realm()
             try realm.write {
                 model.content = content
-                model.time = time
+                model.create_time = time
             }
         } catch let error as NSError {
             print("realm insert error \(error.localizedDescription)")

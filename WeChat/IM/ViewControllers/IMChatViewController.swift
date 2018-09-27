@@ -146,7 +146,7 @@ class IMChatViewController: UIViewController {
     @objc private func receivedMsg(notification: Notification) {
         
         if let userInfo = notification.userInfo {
-            if let model = userInfo[kIMReceivedMessageKey] as? IMMessageModel {
+            if let model = userInfo[kIMMessageValueKey] as? IMMessageModel {
                 self.handMsgData(model: model)
             }
         }

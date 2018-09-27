@@ -49,6 +49,7 @@ class SQMessageViewController: UIViewController {
     
     private func addMsgStatusObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(SQMessageViewController.sendMsg(noti:)), name: NSNotification.Name.init(kIMSendMessageNotification), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SQMessageViewController.messageValueChanged(noti:)), name: NSNotification.Name.init(kIMMessageValueChangedNofication), object: nil)
     }
     
     private func connectServer() {
@@ -101,8 +102,20 @@ class SQMessageViewController: UIViewController {
     
     @objc private func sendMsg(noti: Notification) {
         if let userInfo = noti.userInfo {
-            if let model = userInfo[kIMSendMessageKey] as? IMMessageModel {
+            if let model = userInfo[kIMMessageValueKey] as? IMMessageModel {
                 self.handleMsg(data: model, isSend: true)
+            }
+        }
+    }
+    
+    @objc private func messageValueChanged(noti: Notification) {
+        if let userInfo = noti.userInfo {
+            if let model = userInfo[kIMMessageValueKey] as? IMMessageModel {
+                if let index = self.searchForData(id: model.received_id) {
+                    let msg = self.listData[index]
+                    SQCache.update(content: msg.content, time: model.create_time, model: msg)
+                    tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
+                }
             }
         }
     }
@@ -121,7 +134,7 @@ class SQMessageViewController: UIViewController {
         }
     
         listModel.content = data.msg_content
-        listModel.time = data.send_time
+        listModel.create_time = data.create_time
         
         if let index = self.searchForData(id: listModel.chatId) {
                 let oldMsg = self.listData[index]

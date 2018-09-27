@@ -49,7 +49,7 @@ class SQFriendsViewController: UIViewController {
         bar?.delegate = self as? UISearchBarDelegate
         bar?.setBackgroundImage(#imageLiteral(resourceName: "searbar_bg"), for: .any, barMetrics: .default)
         
-        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "contact_barItem_addFriend"), style: .plain, target: self, action: #selector(SQFriendsViewController.addFriend))
     }
     
     // MARK: -- load Data
@@ -65,9 +65,9 @@ class SQFriendsViewController: UIViewController {
         }
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    @objc private func addFriend() {
+        let add = AddFriendViewController()
+        navigationController?.pushViewController(add, animated: true)
     }
 }
 
@@ -135,6 +135,7 @@ extension SQFriendsViewController: UITableViewDataSource, UITableViewDelegate {
             let images = [#imageLiteral(resourceName: "contact_newFriend"), #imageLiteral(resourceName: "contact_addFriend"), #imageLiteral(resourceName: "contact_tag"), #imageLiteral(resourceName: "contact_public")]
             cell?.textLabel?.text = names[indexPath.row]
             cell?.imageView?.image = images[indexPath.row]
+            cell?.textLabel?.font = UIFont.systemFont(ofSize: 14)
             return cell!
 
         } else {
