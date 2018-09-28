@@ -91,8 +91,28 @@ class IMDataManager: NSObject {
         return model
     }
     
-    public func syncMsg() {
-        
+    public func syncMsg(timestamp: String) {
+        NetworkManager.request(targetType: MessageAPI.pullOfflineMessage(timestamp: timestamp)) { (result, error) in
+            print("result --- \(result as Any)")
+            if !result.isEmpty {
+                
+            }
+        }
+    }
+    
+    public func getUnReadMsgCount(chatIds: String) {
+        NetworkManager.request(targetType: MessageAPI.getUnReadMsg(chatIds: chatIds)) {
+            (result, error) in
+            print("result --- \(result as Any)")
+
+        }
+    }
+    
+    public func ackUnReadMsg(msgId: Int) {
+        NetworkManager.request(targetType: MessageAPI.readMsg(msgId: msgId)) {
+            (result, error) in
+            print("result --- \(result as Any)")
+        }
     }
 
 }

@@ -56,7 +56,9 @@ class SQMessageViewController: UIViewController {
     private func connectServer() {
         if !SQWebSocketService.sharedInstance.isConnection {
             SQWebSocketService.sharedInstance.connectionServer(complectionHanlder: {
-                //            [weak self] in
+                [weak self] in
+                
+                self?.syncData()
                 
             }) {_ in
 //                [weak self] (error) in
@@ -64,6 +66,18 @@ class SQMessageViewController: UIViewController {
             }
         }
     }
+    
+    // MARK: -- Sync Data
+    
+    private func syncData() {
+        
+        IMDataManager.sharedInstance.syncMsg(timestamp: "2018-09-11 11:36:34.414000")
+        
+//        IMDataManager.sharedInstance.ackUnReadMsg(msgId: 38)
+//
+//        IMDataManager.sharedInstance.getUnReadMsgCount(chatIds: "2,3,7")
+    }
+    
     
     private func networkStatusChanged() {
         NetworkStatusManager.shared.networkStatusChangedHandle = {

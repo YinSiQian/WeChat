@@ -69,6 +69,7 @@
 		8BE1CD3220936AFA007E017D /* FriendService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1CD3120936AFA007E017D /* FriendService.swift */; };
 		8BE8DFCB21317B0500C4E9CE /* MineSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE8DFCA21317B0500C4E9CE /* MineSettingViewController.swift */; };
 		8BE8DFCD21318D1200C4E9CE /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE8DFCC21318D1200C4E9CE /* UserService.swift */; };
+		8BF12BE8215E675D009CAE8E /* MessageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF12BE7215E675D009CAE8E /* MessageService.swift */; };
 		8BF4F91120E28F1C00A6E693 /* TimelineService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF4F91020E28F1C00A6E693 /* TimelineService.swift */; };
 		8BF5313C2119F4B100DDDD29 /* FriendMomentOpeationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF5313B2119F4B100DDDD29 /* FriendMomentOpeationView.swift */; };
 		8BFA39B12115336C004DAA90 /* SystemPhotoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BFA39B02115336C004DAA90 /* SystemPhotoService.swift */; };
@@ -180,6 +181,7 @@
 		8BE1CD3120936AFA007E017D /* FriendService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendService.swift; sourceTree = "<group>"; };
 		8BE8DFCA21317B0500C4E9CE /* MineSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MineSettingViewController.swift; sourceTree = "<group>"; };
 		8BE8DFCC21318D1200C4E9CE /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		8BF12BE7215E675D009CAE8E /* MessageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageService.swift; sourceTree = "<group>"; };
 		8BF4F91020E28F1C00A6E693 /* TimelineService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineService.swift; sourceTree = "<group>"; };
 		8BF5313B2119F4B100DDDD29 /* FriendMomentOpeationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendMomentOpeationView.swift; sourceTree = "<group>"; };
 		8BFA39B02115336C004DAA90 /* SystemPhotoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemPhotoService.swift; sourceTree = "<group>"; };
@@ -520,6 +522,7 @@
 		8BDCD9161F65884900C53260 /* Message */ = {
 			isa = PBXGroup;
 			children = (
+				8BF12BE4215E6714009CAE8E /* Services */,
 				8BDCD9171F65884900C53260 /* Models */,
 				8BDCD9181F65884900C53260 /* ViewControllers */,
 				8BDCD9191F65884900C53260 /* Views */,
@@ -646,6 +649,14 @@
 			isa = PBXGroup;
 			children = (
 				8BE8DFCC21318D1200C4E9CE /* UserService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		8BF12BE4215E6714009CAE8E /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				8BF12BE7215E675D009CAE8E /* MessageService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -965,6 +976,7 @@
 				0A65638C2112E4FC00B3DB24 /* FriendModel.swift in Sources */,
 				8B4818CB21171A8600C290D8 /* UINavigationController+Extension.swift in Sources */,
 				8B5F5B371F700A2D007C07D0 /* SQMessageViewController.swift in Sources */,
+				8BF12BE8215E675D009CAE8E /* MessageService.swift in Sources */,
 				0A794503211BF2330045FCC9 /* YYFPSLabel.m in Sources */,
 				8B1238E6210DEBE90048D25D /* SQLoginViewController.swift in Sources */,
 				8BFA39E221155914004DAA90 /* UploadService.swift in Sources */,
