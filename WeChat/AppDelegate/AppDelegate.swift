@@ -24,7 +24,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         NetworkStatusManager.shared.startCheckNetworkStatusChanged()
-        setupRealmConfig()
         setupRootVC()
         
         if #available(iOS 11, *) {
@@ -38,7 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func setupRootVC() {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.backgroundColor = UIColor.white
-        if UserModel.sharedInstance.accessToken == "" {
+        if !UserModel.sharedInstance.isLogin {
             window?.rootViewController = SQLoginViewController()
         } else {
             window?.rootViewController = SQRootViewController()
@@ -46,25 +45,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
     }
     
-    private func setupRealmConfig() {
-        
-        var realmConfig = Realm.Configuration (
-            schemaVersion: 1,
-            migrationBlock: { migration, oldSchemaVersion in
-                // We haven’t migrated anything yet, so oldSchemaVersion == 0
-                if (oldSchemaVersion < 3) {
-                    // The renaming operation should be done outside of calls to `enumerateObjects(ofType: _:)`.
-                    //                    migration.renameProperty(onType: Person.className(), from: "yearsSinceBirth", to: "age")
-                }
-        })
-        realmConfig.fileURL = realmConfig.fileURL!.deletingLastPathComponent().appendingPathComponent("\(UserModel.sharedInstance.username.md5).realm")
-        print("url ---> \(String(describing: realmConfig.fileURL))")
-        
-        Realm.Configuration.defaultConfiguration = realmConfig
-            
-        
-    }
-
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.

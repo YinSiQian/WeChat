@@ -25,6 +25,10 @@ struct UserModel {
     var expired: String = ""
     var address: String = ""
     
+    var isLogin: Bool {
+        return accessToken != ""
+    }
+    
     private init() {
         let data = UserDefaults.standard.object(forKey: "userModel") as? [String: Any]
         if data != nil {

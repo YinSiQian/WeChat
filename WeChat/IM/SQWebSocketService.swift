@@ -44,19 +44,21 @@ public class SQWebSocketService {
     
     private var webSocket: WebSocket!
     
-    private init() { setupSocket() }
+    private init() {}
     
-    private func setupSocket() {
-        var request = URLRequest(url: URL(string: "ws://120.79.10.111:8080/api/webSocket")!)
-        request.timeoutInterval = 5
-        request.addValue(UserModel.sharedInstance.accessToken, forHTTPHeaderField: "accessToken")
-        request.addValue(UserModel.sharedInstance.id.StringValue, forHTTPHeaderField: "userId")
-        webSocket = WebSocket(request: request)
-        webSocket.delegate = self
-    }
+   
 }
 
 extension SQWebSocketService {
+    
+    public func setupSocket(accessId: String, accessToken: String) {
+        var request = URLRequest(url: URL(string: "ws://120.79.10.111:8080/api/webSocket")!)
+        request.timeoutInterval = 5
+        request.addValue(accessToken, forHTTPHeaderField: "accessToken")
+        request.addValue(accessId, forHTTPHeaderField: "userId")
+        webSocket = WebSocket(request: request)
+        webSocket.delegate = self
+    }
     
     public func connectionServer(complectionHanlder: (() -> ())? = nil,
                                  errorHanlder: ((_ error: Error?) -> ())? = nil) {
@@ -121,7 +123,9 @@ extension SQWebSocketService: WebSocketDelegate {
         errorHandler?(error)
         delegate?.webSocketServiceDidDisconnect(socket: socket, error: error)
         if numberOfReconnect == 0 {
-            tryToReconnection()
+            if UserModel.sharedInstance.isLogin {
+                tryToReconnection()
+            }
         }
     }
     

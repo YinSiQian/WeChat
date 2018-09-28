@@ -16,8 +16,27 @@ class SQRootViewController: UITabBarController {
         super.viewDidLoad()
         UIApplication.shared.statusBarStyle = .lightContent
         setupViewcontrollers()
+        setupRealmConfig()
         SQWebSocketService.sharedInstance.delegate = IMDataManager.sharedInstance
     }
+    
+    private func setupRealmConfig() {
+        
+        var realmConfig = Realm.Configuration (
+            schemaVersion: 1,
+            migrationBlock: { migration, oldSchemaVersion in
+                // We haven’t migrated anything yet, so oldSchemaVersion == 0
+                if (oldSchemaVersion < 3) {
+                    // The renaming operation should be done outside of calls to `enumerateObjects(ofType: _:)`.
+                    //                    migration.renameProperty(onType: Person.className(), from: "yearsSinceBirth", to: "age")
+                }
+        })
+        realmConfig.fileURL = realmConfig.fileURL!.deletingLastPathComponent().appendingPathComponent("\(UserModel.sharedInstance.username.md5).realm")
+        print("url ---> \(String(describing: realmConfig.fileURL))")
+        
+        Realm.Configuration.defaultConfiguration = realmConfig
+    }
+
     
     fileprivate func setupViewcontrollers() {
         

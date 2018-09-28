@@ -18,15 +18,15 @@ class SQMessageCell: UITableViewCell {
     
     private var time_layer: CATextLayer?
     
-    public var model: MessageListModel? {
+    public var model: MessageListModel = MessageListModel() {
         didSet {
-            name_layer?.string = model?.name
-            content_layer?.string = model?.content
-            if "\(String(describing: model?.create_time))".count == 13 {
-                let currentTime = (model?.create_time)! / 1000
+            name_layer?.string = model.name
+            content_layer?.string = model.content
+            if model.create_time > 1000000000000 {
+                let currentTime = model.create_time / 1000
                 time_layer?.string = currentTime.timestamp
             } else {
-                time_layer?.string = model?.create_time.timestamp
+                time_layer?.string = model.create_time.timestamp
             }
         }
     }

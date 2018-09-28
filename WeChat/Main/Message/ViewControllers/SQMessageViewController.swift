@@ -29,6 +29,7 @@ class SQMessageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        SQWebSocketService.sharedInstance.setupSocket(accessId: UserModel.sharedInstance.id.StringValue, accessToken: UserModel.sharedInstance.accessToken)
         setupSubviews()
         loadData()
         receivedMsg()
