@@ -2,7 +2,7 @@
 //  UserInfoViewController.swift
 //  WeChat
 //
-//  Created by ABJ on 2018/9/21.
+//  Created by ysq on 2018/9/21.
 //  Copyright © 2018年 ysq. All rights reserved.
 //
 
@@ -79,7 +79,7 @@ extension UserInfoViewController: UITableViewDataSource, UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         if indexPath.section == 1 {
             let chat = IMChatViewController()
-            chat.chat_id = (model?.id)!
+            chat.chat_id = model?.id ?? 0
             chat.name = model?.username ?? ""
             navigationController?.pushViewController(chat, animated: true)
         }

@@ -32,7 +32,7 @@ class SQCache: NSObject {
         var models: [IMMessageModel] = []
         do {
             let realm = try Realm()
-            let results = realm.objects(IMMessageModel.self).filter("(sender_id = \(chatId) AND received_id = \(UserModel.sharedInstance.id)) OR (sender_id = \(UserModel.sharedInstance.id) AND received_id = \(chatId)) AND group_id = 1").sorted(byKeyPath: "msg_id", ascending: false)
+            let results = realm.objects(IMMessageModel.self).filter("(sender_id = \(chatId) AND received_id = \(UserModel.sharedInstance.id)) OR (sender_id = \(UserModel.sharedInstance.id) AND received_id = \(chatId)) AND group_id = 1").sorted(byKeyPath: "msg_id", ascending: false).sorted(byKeyPath: "create_time", ascending: false)
 
             offset = page * rows
             if offset > results.count {
@@ -54,6 +54,21 @@ class SQCache: NSObject {
         return []
     }
     
+    public static func messageFor(msgId: Int) -> [IMMessageModel] {
+        do {
+            let realm = try Realm()
+            let results = realm.objects(IMMessageModel.self).filter("msg_id > \(msgId)")
+            var models = [IMMessageModel]()
+            for element in results {
+                models.append(element)
+            }
+            return models
+        } catch let error as NSError {
+            print("realm query error \(error.localizedDescription)")
+        }
+        return []
+    }
+    
     public static func saveMessageInfo(with model: IMMessageModel) {
         print("save message")
         
@@ -61,6 +76,18 @@ class SQCache: NSObject {
             let realm = try Realm()
             try realm.write {
                 realm.add(model)
+            }
+        } catch let error as NSError {
+            print("realm insert error \(error.localizedDescription)")
+        }
+    }
+    
+    public static func saveMessageInfoForBatch(with models: [IMMessageModel]) {
+        print("batch save message")
+        do {
+            let realm = try Realm()
+            try realm.write {
+                realm.add(models, update: true)
             }
         } catch let error as NSError {
             print("realm insert error \(error.localizedDescription)")

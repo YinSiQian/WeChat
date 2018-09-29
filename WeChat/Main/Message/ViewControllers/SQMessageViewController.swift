@@ -70,9 +70,16 @@ class SQMessageViewController: UIViewController {
     // MARK: -- Sync Data
     
     private func syncData() {
-        
-        IMDataManager.sharedInstance.syncMsg(timestamp: "2018-09-11 11:36:34.414000")
-        
+        statusView.updateStatus(connectStatus: .dataReceiving)
+        IMDataManager.sharedInstance.syncMsg(timestamp: 1528560000000) {
+            [weak self] (data, error) in
+            if error {
+                self?.statusView.updateStatus(connectStatus: .dataReceevedFailure)
+
+            } else {
+                self?.statusView.updateStatus(connectStatus: .connectSuccess)
+            }
+        }
 //        IMDataManager.sharedInstance.ackUnReadMsg(msgId: 38)
 //
 //        IMDataManager.sharedInstance.getUnReadMsgCount(chatIds: "2,3,7")

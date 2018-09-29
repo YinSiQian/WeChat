@@ -11,7 +11,7 @@ import Moya
 
 public enum MessageAPI {
     
-    case pullOfflineMessage(timestamp: String)
+    case pullOfflineMessage(timestamp: Int)
     case readMsg(msgId: Int)
     case getUnReadMsg(chatIds: String)
     

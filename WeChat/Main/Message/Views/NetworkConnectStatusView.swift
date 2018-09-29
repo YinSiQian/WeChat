@@ -47,7 +47,16 @@ class NetworkConnectStatusView: UIView {
         case .connectSuccess:
             indicatorView.stopAnimating()
             status.text = "微信(10)"
+        case .dataReceiving:
+            indicatorView.isHidden = false
+            indicatorView.startAnimating()
+            status.text = "收取中..."
+        case .dataReceevedFailure:
+            indicatorView.stopAnimating()
+            status.text = "收取失败"
+
         }
+        
     }
     
     required init?(coder aDecoder: NSCoder) {

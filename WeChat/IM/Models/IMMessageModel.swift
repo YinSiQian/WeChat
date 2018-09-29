@@ -42,7 +42,25 @@ class IMMessageModel: Object {
     @objc dynamic public var msg_status: Int = IMMessageSendStatusType.sending.rawValue
     
     override static func primaryKey() -> String? {
-        return "msg_id"
+        return "msg_seq"
+    }
+    
+    convenience init(data: [String: Any]) {
+        self.init()
+        msg_id = data["msgId"] as? Int ?? 0
+        sender_id = data["sendId"] as? Int ?? 0
+        sender_name = data["senderName"] as? String ?? ""
+        sender_avatar = data["senderIcon"] as? String ?? ""
+        received_id = data["receivedId"] as? Int ?? 0
+        received_avatar = UserModel.sharedInstance.icon
+        group_id = data["groupId"] as? Int ?? 1
+        is_group = data["isGroup"] as? Int ?? 1
+        msg_content = data["msgContent"] as? String ?? ""
+        msg_seq = data["msgSeq"] as? String ?? ""
+        create_time = data["createTime"] as? Int ?? 0
+        delivered = data["delivered"] as? Int ?? 0
+        msg_type = data["msgType"] as? Int ?? 1
+        msg_status = IMMessageSendStatusType.received.rawValue
     }
     
 }

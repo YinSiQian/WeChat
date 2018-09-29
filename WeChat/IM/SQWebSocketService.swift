@@ -52,7 +52,8 @@ public class SQWebSocketService {
 extension SQWebSocketService {
     
     public func setupSocket(accessId: String, accessToken: String) {
-        var request = URLRequest(url: URL(string: "ws://120.79.10.111:8080/api/webSocket")!)
+//        120.79.10.111:8080/api
+        var request = URLRequest(url: URL(string: "ws://localhost:8080/webSocket")!)
         request.timeoutInterval = 5
         request.addValue(accessToken, forHTTPHeaderField: "accessToken")
         request.addValue(accessId, forHTTPHeaderField: "userId")
@@ -120,6 +121,7 @@ extension SQWebSocketService: WebSocketDelegate {
     
     public func websocketDidDisconnect(socket: WebSocketClient, error: Error?) {
         print("it is disconnect")
+        print("error \(String(describing: error?.localizedDescription))")
         errorHandler?(error)
         delegate?.webSocketServiceDidDisconnect(socket: socket, error: error)
         if numberOfReconnect == 0 {

@@ -91,13 +91,29 @@ class IMDataManager: NSObject {
         return model
     }
     
-    public func syncMsg(timestamp: String) {
+    public func syncMsg(timestamp: Int, complectionHandle: ((_ data: [IMMessageModel], _ error: Bool) -> ())?)  {
         NetworkManager.request(targetType: MessageAPI.pullOfflineMessage(timestamp: timestamp)) { (result, error) in
             print("result --- \(result as Any)")
-            if !result.isEmpty {
-                
+            if error == nil {
+                if result.isEmpty {
+                    complectionHandle?([], false)
+                } else {
+                    let data = result["data"] as! [[String: Any]]
+                    var modelArr = [IMMessageModel]()
+                    for element in data {
+                        let model = IMMessageModel(data: element)
+                        modelArr.append(model)
+                    }
+                    if !modelArr.isEmpty {
+                        SQCache.saveMessageInfoForBatch(with: modelArr)
+                    }
+                    complectionHandle?(modelArr, false)
+                }
+            } else {
+                complectionHandle?([], true)
             }
         }
+
     }
     
     public func getUnReadMsgCount(chatIds: String) {

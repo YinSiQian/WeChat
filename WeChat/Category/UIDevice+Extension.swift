@@ -2,7 +2,7 @@
 //  UIDevice+Extension.swift
 //  WeChat
 //
-//  Created by ABJ on 2018/9/19.
+//  Created by ysq on 2018/9/19.
 //  Copyright © 2018年 ysq. All rights reserved.
 //
 

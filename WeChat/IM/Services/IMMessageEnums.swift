@@ -25,4 +25,6 @@ public enum IMSocketConnectionStatus: Int {
     case connecting
     case connectSuccess
     case connectFailure
+    case dataReceiving
+    case dataReceevedFailure
 }
