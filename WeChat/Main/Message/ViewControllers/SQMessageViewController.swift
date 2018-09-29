@@ -56,9 +56,8 @@ class SQMessageViewController: UIViewController {
     private func connectServer() {
         if !SQWebSocketService.sharedInstance.isConnection {
             SQWebSocketService.sharedInstance.connectionServer(complectionHanlder: {
-                [weak self] in
+//                [weak self] in
                 
-                self?.syncData()
                 
             }) {_ in
 //                [weak self] (error) in
@@ -103,6 +102,9 @@ class SQMessageViewController: UIViewController {
     private func connectionStatusChanged() {
         SQWebSocketService.sharedInstance.statusChangedHandle = {
             [weak self] status in
+            if status == IMSocketConnectionStatus.connectSuccess {
+                self?.syncData()
+            }
             self?.statusView.updateStatus(connectStatus: status)
         }
     }

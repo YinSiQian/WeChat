@@ -12,7 +12,7 @@ import Moya
 extension TargetType {
     
     public var baseURL: URL {
-        return testHostUrl
+        return baseUrl
     }
     
     public var headers: [String : String]? {
