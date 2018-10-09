@@ -25,4 +25,6 @@ public class MessageListModel: Object {
     
     @objc dynamic var sort: Int = 0
     
+    @objc dynamic var msg_seq: String = ""
+    
 }

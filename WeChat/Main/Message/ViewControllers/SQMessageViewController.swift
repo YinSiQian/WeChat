@@ -68,9 +68,14 @@ class SQMessageViewController: UIViewController {
     
     // MARK: -- Sync Data
     
-    private func syncData() {
+    private func loadUnPullData() {
         statusView.updateStatus(connectStatus: .dataReceiving)
-        IMDataManager.sharedInstance.syncMsg(timestamp: 1528560000000) {
+        var timestamp = UserDefaults.standard.integer(forKey: "msg_timestamp")
+        if timestamp == 0 {
+            timestamp = 1528560000000
+        }
+        
+        IMDataManager.sharedInstance.syncMsg(timestamp: timestamp) {
             [weak self] (data, error) in
             if error {
                 self?.statusView.updateStatus(connectStatus: .dataReceevedFailure)
@@ -103,7 +108,7 @@ class SQMessageViewController: UIViewController {
         SQWebSocketService.sharedInstance.statusChangedHandle = {
             [weak self] status in
             if status == IMSocketConnectionStatus.connectSuccess {
-                self?.syncData()
+                self?.loadUnPullData()
             }
             self?.statusView.updateStatus(connectStatus: status)
         }
@@ -120,6 +125,7 @@ class SQMessageViewController: UIViewController {
         IMDataManager.sharedInstance.receivedHandler = {
             [weak self] (model) in
             print("received msg in message controller")
+            self?.saveLastMsg(timestamp: model.create_time)
             self?.handleMsg(data: model, isSend: false)
         }
     }
@@ -135,7 +141,7 @@ class SQMessageViewController: UIViewController {
     @objc private func messageValueChanged(noti: Notification) {
         if let userInfo = noti.userInfo {
             if let model = userInfo[kIMMessageValueKey] as? IMMessageModel {
-                if let index = self.searchForData(id: model.received_id) {
+                if let index = self.searchForData(seq: model.msg_seq) {
                     let msg = self.listData[index]
                     SQCache.update(content: msg.content, time: model.create_time / 1000, model: msg)
                     tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
@@ -160,7 +166,7 @@ class SQMessageViewController: UIViewController {
         listModel.content = data.msg_content
         listModel.create_time = data.create_time
         
-        if let index = self.searchForData(id: listModel.chatId) {
+        if let index = self.searchForData(seq: listModel.msg_seq) {
                 let oldMsg = self.listData[index]
                 SQCache.delete(model: oldMsg)
                 self.listData.remove(at: index)
@@ -181,13 +187,18 @@ class SQMessageViewController: UIViewController {
         }
     }
     
-    private func searchForData(id: Int) -> Int? {
+    private func searchForData(seq: String) -> Int? {
         for (index, element) in listData.enumerated() {
-            if element.chatId == id {
+            if element.msg_seq == seq {
                 return index
             }
         }
         return nil
+    }
+    
+    private func saveLastMsg(timestamp: Int) {
+        UserDefaults.standard.set(timestamp, forKey: "msg_timestamp")
+        UserDefaults.standard.synchronize()
     }
     
 }

@@ -98,6 +98,7 @@ class IMDataManager: NSObject {
                 if result.isEmpty {
                     complectionHandle?([], false)
                 } else {
+                    // TODO: 未拉取数据处理, 更新数据 消息列表重新排序
                     let data = result["data"] as! [[String: Any]]
                     var modelArr = [IMMessageModel]()
                     for element in data {

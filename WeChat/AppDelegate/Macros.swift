@@ -13,6 +13,7 @@ let kScreen_width = UIScreen.main.bounds.size.width
 
 let kScreen_height = UIScreen.main.bounds.size.height
 
+//112.74.162.15
 let baseUrl = URL(string: "http://120.79.10.111:8080/api")!
 
 let testHostUrl = URL(string: "http://localhost:8080/")!
