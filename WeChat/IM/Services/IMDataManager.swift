@@ -91,12 +91,12 @@ class IMDataManager: NSObject {
         return model
     }
     
-    public func syncMsg(timestamp: Int, complectionHandle: ((_ data: [IMMessageModel], _ error: Bool) -> ())?)  {
+    public func syncMsg(timestamp: Int, complectionHandle: ((_ data: [IMMessageModel], _ unReceivedData: [IMMessageModel], _ error: Bool) -> ())?)  {
         NetworkManager.request(targetType: MessageAPI.pullOfflineMessage(timestamp: timestamp)) { (result, error) in
             print("result --- \(result as Any)")
             if error == nil {
                 if result.isEmpty {
-                    complectionHandle?([], false)
+                    complectionHandle?([], [],false)
                 } else {
                     // TODO: 未拉取数据处理, 更新数据 消息列表重新排序
                     let data = result["data"] as! [[String: Any]]
@@ -105,13 +105,19 @@ class IMDataManager: NSObject {
                         let model = IMMessageModel(data: element)
                         modelArr.append(model)
                     }
+                    let newDataIndexArr = result["unReceivedMsg"] as! [Int]
+                    var newData = [IMMessageModel]()
+                    for index in newDataIndexArr {
+                        newData.append(modelArr[newDataIndexArr[index]])
+                    }
+                    
                     if !modelArr.isEmpty {
                         SQCache.saveMessageInfoForBatch(with: modelArr)
                     }
-                    complectionHandle?(modelArr, false)
+                    complectionHandle?(modelArr, newData ,false)
                 }
             } else {
-                complectionHandle?([], true)
+                complectionHandle?([], [],true)
             }
         }
 

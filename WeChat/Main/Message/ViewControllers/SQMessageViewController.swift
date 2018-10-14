@@ -76,7 +76,7 @@ class SQMessageViewController: UIViewController {
         }
         
         IMDataManager.sharedInstance.syncMsg(timestamp: timestamp) {
-            [weak self] (data, error) in
+            [weak self] (data, newData ,error) in
             if error {
                 self?.statusView.updateStatus(connectStatus: .dataReceevedFailure)
 

@@ -39,18 +39,17 @@ public class NetworkManager {
                         compection(data, nil)
                     }
                 } else {
-                    let customError = NSError(domain: baseUrl.absoluteString, code: code, userInfo: ["message": value["message"] as Any])
+                    let customError = NSError(domain: baseUrl.absoluteString, code: code, userInfo: ["message": value["msg"] as Any])
                     compection([:], customError)
                     let root = AppDelegate.currentAppdelegate().root
-                    if root is UITabBarController {
-                        (root as! UITabBarController).selectedViewController?.currentControllerInKeyWindow?.showError(error: customError)
-                    } else {
-                        AppDelegate.currentAppdelegate().root?.currentControllerInKeyWindow?.showError(error: customError)
-                    }
+                    root?.showMsg(customError: customError)
                 }
             } catch {
                 print(error.localizedDescription)
-                compection([:], NSError(domain: baseUrl.absoluteString, code: 500, userInfo: nil))
+                let error = NSError(domain: baseUrl.absoluteString, code: 500, userInfo: ["message": "服务器发生错误,请联系系统管理员"] )
+                compection([:], error)
+                let root = AppDelegate.currentAppdelegate().root
+                root?.showMsg(customError: error)
             }
         }
     }

@@ -43,7 +43,7 @@ extension UserModel {
     public mutating func initial(data: [String: Any]) {
         
         self.username = data["username"] as! String
-        self.password = data["password"] as! String
+//        self.password = data["password"] as! String
         self.accessToken = data["accessToken"] as! String
         self.id = data["id"] as! Int
         self.usermobile = data["usermobile"] as! String

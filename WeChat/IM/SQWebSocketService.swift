@@ -53,7 +53,7 @@ extension SQWebSocketService {
     
     public func setupSocket(accessId: String, accessToken: String) {
 //        120.79.10.111:8080/api
-        var request = URLRequest(url: URL(string: "ws://120.79.10.111:8080/api/webSocket")!)
+        var request = URLRequest(url: URL(string: "ws://112.74.162.15:8090/webSocket")!)
         request.timeoutInterval = 5
         request.addValue(accessToken, forHTTPHeaderField: "accessToken")
         request.addValue(accessId, forHTTPHeaderField: "userId")

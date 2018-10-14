@@ -100,6 +100,14 @@ extension UIViewController {
         return self
     }
     
+    func showMsg(customError: NSError) {
+        if self is UITabBarController {
+            (self as! UITabBarController).selectedViewController?.currentControllerInKeyWindow?.showError(error: customError)
+        } else {
+            AppDelegate.currentAppdelegate().root?.currentControllerInKeyWindow?.showError(error: customError)
+        }
+    }
+    
 }
 
 extension DefaultTableView where Self: UIViewController {

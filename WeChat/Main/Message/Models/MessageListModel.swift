@@ -27,4 +27,19 @@ public class MessageListModel: Object {
     
     @objc dynamic var msg_seq: String = ""
     
+    convenience init(with: IMMessageModel) {
+        self.init()
+        convert(with: with)
+    }
+    
+    private func convert(with: IMMessageModel) {
+        msg_id = with.msg_id
+        avatar = with.sender_avatar
+        name = with.sender_name
+        content = with.msg_content
+        create_time = with.create_time
+        chatId = with.sender_id
+        msg_seq = with.msg_seq
+    }
+    
 }

@@ -23,15 +23,15 @@ extension UserAPI: TargetType {
     public var path: String {
         switch self {
         case .exit:
-            return "/user/logout"
+            return "/user/exit"
         case .updateSex(sex: _):
-            return "/user/modifySex"
+            return "/user/updateSex"
         case .updateSign(sign: _):
-            return "/user/info"
+            return "/user/updateSign"
         case .updateAvatar(url: _):
-            return "/user/modifySex"
+            return "/user/updateAvatar"
         case .updateName(username: _):
-            return "/user/modifySex"
+            return "/user/modifyName"
         case .userInfo:
             return "/user/info"
         }

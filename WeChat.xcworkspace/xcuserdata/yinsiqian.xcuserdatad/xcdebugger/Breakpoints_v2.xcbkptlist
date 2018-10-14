@@ -9,13 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "WeChat/Main/Discover/ViewControllers/MomentEditViewController.swift"
-            timestampString = "556900124.7908109"
+            filePath = "WeChat/Category/Dictionary+Extension.swift"
+            timestampString = "560960652.612424"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "117"
-            endingLineNumber = "117"
-            landmarkName = "postMoment()"
+            startingLineNumber = "14"
+            endingLineNumber = "14"
+            landmarkName = "convertToString()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
