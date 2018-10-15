@@ -18,6 +18,7 @@ class SQNavigationViewController: UINavigationController, UIGestureRecognizerDel
         UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         interactivePopGestureRecognizer?.isEnabled = true
         interactivePopGestureRecognizer?.delegate = self
+        
     }
 
     override func pushViewController(_ viewController: UIViewController, animated: Bool) {
