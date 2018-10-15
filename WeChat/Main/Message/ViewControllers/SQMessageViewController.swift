@@ -82,6 +82,9 @@ class SQMessageViewController: UIViewController {
 
             } else {
                 self?.statusView.updateStatus(connectStatus: .connectSuccess)
+                for element in newData {
+                    self?.handleMsg(data: element, isSend: false)
+                }
             }
         }
 //        IMDataManager.sharedInstance.ackUnReadMsg(msgId: 38)
