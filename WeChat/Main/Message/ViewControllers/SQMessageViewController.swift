@@ -85,6 +85,7 @@ class SQMessageViewController: UIViewController {
                 for element in newData {
                     self?.handleMsg(data: element, isSend: false)
                 }
+                
             }
         }
 //        IMDataManager.sharedInstance.ackUnReadMsg(msgId: 38)
@@ -144,9 +145,9 @@ class SQMessageViewController: UIViewController {
     @objc private func messageValueChanged(noti: Notification) {
         if let userInfo = noti.userInfo {
             if let model = userInfo[kIMMessageValueKey] as? IMMessageModel {
-                if let index = self.searchForData(seq: model.msg_seq) {
+                if let index = self.searchForData(id: model.msg_id) {
                     let msg = self.listData[index]
-                    SQCache.update(content: msg.content, time: model.create_time / 1000, model: msg)
+                    SQCache.update(time: model.create_time, msg_id: model.msg_id, model: msg)
                     tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
                 }
             }
@@ -169,7 +170,7 @@ class SQMessageViewController: UIViewController {
         listModel.content = data.msg_content
         listModel.create_time = data.create_time
         
-        if let index = self.searchForData(seq: listModel.msg_seq) {
+        if let index = self.searchForData(id: listModel.msg_id) {
                 let oldMsg = self.listData[index]
                 SQCache.delete(model: oldMsg)
                 self.listData.remove(at: index)
@@ -190,9 +191,9 @@ class SQMessageViewController: UIViewController {
         }
     }
     
-    private func searchForData(seq: String) -> Int? {
+    private func searchForData(id: Int) -> Int? {
         for (index, element) in listData.enumerated() {
-            if element.msg_seq == seq {
+            if element.msg_id == id {
                 return index
             }
         }

@@ -135,12 +135,12 @@ class SQCache: NSObject {
         }
     }
     
-    public static func update(content: String, time: Int ,model: MessageListModel) {
+    public static func update(time: Int, msg_id: Int, model: MessageListModel) {
         do {
             let realm = try Realm()
             try realm.write {
-                model.content = content
                 model.create_time = time
+                model.msg_id = msg_id
             }
         } catch let error as NSError {
             print("realm insert error \(error.localizedDescription)")
