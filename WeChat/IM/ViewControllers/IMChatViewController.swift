@@ -260,7 +260,7 @@ class IMChatViewController: UIViewController {
                 self.tableView.height = self.view.height - rect.height - self.msgInputView.height
                 if self.isAlsoNeedAdjstMinY {
                     self.tableView.height += contentDetla
-                    self.tableView.minY -= contentDetla
+                    self.tableView.minY = -contentDetla
                 }
             } else {
                 self.tableView.minY = self.msgInputView.minY - self.tableView.height

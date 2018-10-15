@@ -70,7 +70,7 @@ class SQMessageViewController: UIViewController {
     
     private func loadUnPullData() {
         statusView.updateStatus(connectStatus: .dataReceiving)
-        var timestamp = UserDefaults.standard.integer(forKey: "msg_timestamp")
+        var timestamp = UserDefaults.standard.integer(forKey: UserModel.sharedInstance.id.StringValue + "msg_timestamp")
         if timestamp == 0 {
             timestamp = 1528560000000
         }
@@ -145,7 +145,7 @@ class SQMessageViewController: UIViewController {
     @objc private func messageValueChanged(noti: Notification) {
         if let userInfo = noti.userInfo {
             if let model = userInfo[kIMMessageValueKey] as? IMMessageModel {
-                if let index = self.searchForData(id: model.msg_id) {
+                if let index = self.searchForData(id: model.received_id) {
                     let msg = self.listData[index]
                     SQCache.update(time: model.create_time, msg_id: model.msg_id, model: msg)
                     tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
@@ -166,11 +166,11 @@ class SQMessageViewController: UIViewController {
             listModel.chatId = data.sender_id
             listModel.name = data.sender_name
         }
-    
+        listModel.msg_seq = data.msg_seq
         listModel.content = data.msg_content
         listModel.create_time = data.create_time
         
-        if let index = self.searchForData(id: listModel.msg_id) {
+        if let index = self.searchForData(id: listModel.chatId) {
                 let oldMsg = self.listData[index]
                 SQCache.delete(model: oldMsg)
                 self.listData.remove(at: index)
@@ -193,7 +193,7 @@ class SQMessageViewController: UIViewController {
     
     private func searchForData(id: Int) -> Int? {
         for (index, element) in listData.enumerated() {
-            if element.msg_id == id {
+            if element.chatId == id {
                 return index
             }
         }
@@ -201,7 +201,7 @@ class SQMessageViewController: UIViewController {
     }
     
     private func saveLastMsg(timestamp: Int) {
-        UserDefaults.standard.set(timestamp, forKey: "msg_timestamp")
+        UserDefaults.standard.set(timestamp, forKey: UserModel.sharedInstance.id.StringValue + "msg_timestamp")
         UserDefaults.standard.synchronize()
     }
     

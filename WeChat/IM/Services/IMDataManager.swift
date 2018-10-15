@@ -107,7 +107,7 @@ class IMDataManager: NSObject {
                     }
                     let newDataIndexArr = result["unReceivedMsg"] as! [Int]
                     var newData = [IMMessageModel]()
-                    for index in newDataIndexArr {
+                    for (index, _) in newDataIndexArr.enumerated() {
                         newData.append(modelArr[newDataIndexArr[index]])
                     }
                     
