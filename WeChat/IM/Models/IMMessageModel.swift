@@ -41,6 +41,8 @@ class IMMessageModel: Object {
     
     @objc dynamic public var msg_status: Int = IMMessageSendStatusType.sending.rawValue
     
+    @objc dynamic public var is_read: Int = 0
+    
     override static func primaryKey() -> String? {
         return "msg_seq"
     }

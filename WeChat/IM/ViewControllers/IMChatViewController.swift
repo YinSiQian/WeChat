@@ -56,6 +56,7 @@ class IMChatViewController: UIViewController {
         msgStatusChanged()
         inputFrameChangedHandle()
         loadData()
+        ack()
     }
     
     override func viewSafeAreaInsetsDidChange() {
@@ -192,10 +193,26 @@ class IMChatViewController: UIViewController {
         }
     }
     
+    private func ack() {
+        if let chatIds = IMMessageAckList.shared.get(chatId: chat_id) {
+            let ids = chatIds.split(separator: ",")
+            
+        }
+    }
+    
     private func indexFor(msgModel: IMMessageModel) -> Int? {
         for (index, element) in msgModels.enumerated() {
             if element.msg_model.msg_seq == msgModel.msg_seq {
                 return index
+            }
+        }
+        return nil
+    }
+    
+    private func search(chatId: Int) -> IMMessageLayoutService? {
+        for (_, element) in msgModels.enumerated() {
+            if element.msg_model.sender_id == chatId {
+                return element
             }
         }
         return nil

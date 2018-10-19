@@ -202,7 +202,7 @@ extension IMDataManager: SQWebSocketServiceDelegate {
                 SQCache.saveMessageInfo(with: model)
             }
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: kIMReceivedMessageNotification), object: nil, userInfo: [kIMMessageValueKey: model])
-
+            IMMessageAckList.shared.append(chatId: model.sender_id)
             receivedHandler?(model)
 
         default:

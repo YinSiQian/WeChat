@@ -40,7 +40,7 @@ class OperationModel: NSObject {
         isCancel = false
     }
     
-    /// 每五秒钟 进行一次消息重发
+    /// 每10秒钟 进行一次消息重发
     @objc private func calculateIsTimeount() {
         DispatchQueue.global().async {
             if self.isCancel {
@@ -49,7 +49,7 @@ class OperationModel: NSObject {
                 return
             }
             self.timeout += 1
-            if self.timeout >= 5.0 {
+            if self.timeout >= 10.0 {
                 self.timeout = 0.0
                 self.retryTimes += 1
                 print("消息重发")
