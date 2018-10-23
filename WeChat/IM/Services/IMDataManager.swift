@@ -104,8 +104,6 @@ class IMDataManager: NSObject {
                     for element in data {
                         let model = IMMessageModel(data: element)
                         modelArr.append(model)
-                        //存储未读id
-                        IMMessageAckList.shared.append(chatId: model.msg_id)
                     }
                     let newDataIndexArr = result["unReceivedMsg"] as! [Int]
                     var newData = [IMMessageModel]()
@@ -133,19 +131,25 @@ class IMDataManager: NSObject {
         }
     }
     
-    public func ackUnReadMsg(msgId: Int, complection: (() -> ())?) {
+    public func ackUnReadMsg(msgId: Int) {
         NetworkManager.request(targetType: MessageAPI.readMsg(msgId: msgId)) {
             (result, error) in
             print("result --- \(result as Any)")
-            complection?()
         }
     }
     
-    public func batchAckUnReadMsg(ids: String, complection: (() -> ())?) {
+    public func batchAckUnReadMsg(ids: String) {
         NetworkManager.request(targetType: MessageAPI.readMsgs(ids: ids)) {
             (data, error) in
             print("result --- \(data as Any)")
-            complection?()
+            if !data.isEmpty {
+                let idArr = ids.split(separator: ",")
+                for element in idArr {
+                    let id = (element as NSString).integerValue
+                    SQCache.updateMessageUnReadStatus(msg_id: id)
+                }
+            }
+            
         }
     }
 
@@ -212,9 +216,7 @@ extension IMDataManager: SQWebSocketServiceDelegate {
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
                 SQCache.saveMessageInfo(with: model)
             }
-            IMMessageAckList.shared.append(chatId: model.msg_id)
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: kIMReceivedMessageNotification), object: nil, userInfo: [kIMMessageValueKey: model])
-            IMMessageAckList.shared.append(chatId: model.sender_id)
             receivedHandler?(model)
 
         default:

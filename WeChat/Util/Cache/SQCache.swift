@@ -24,7 +24,8 @@ class SQCache: NSObject {
         
     }
     
-    public static func messageInfo(with chatId: Int, page: Int) -> [IMMessageModel] {
+    public static func messageInfo(with chatId: Int, page: Int) ->
+                                    (elements: [IMMessageModel], ackIds: String) {
         print("realm query message page \(page)")
         let rows = 20
         var offset = 0
@@ -36,22 +37,26 @@ class SQCache: NSObject {
 
             offset = page * rows
             if offset > results.count {
-                return []
+                return ([], "")
             }
             endOffset = offset + rows
             if endOffset > results.count {
                 endOffset = results.count
             }
-
+            var ids = ""
             for index in offset..<endOffset {
-                models.append(results[index])
+                let model = results[index]
+                models.append(model)
+                if model.is_read == 0 {
+                    ids = ids + "," + "\(model.msg_id)"
+                }
             }
-            return models.reversed()
+            return (models.reversed(), ids)
 
         } catch let error as NSError {
             print("realm query error \(error.localizedDescription)")
         }
-        return []
+        return ([], "")
     }
     
     public static func messageFor(msgId: Int) -> [IMMessageModel] {

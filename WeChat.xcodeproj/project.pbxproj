@@ -58,7 +58,6 @@
 		8B8F39DD210CCE4500E53CBC /* Dictionary+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8F39DC210CCE4500E53CBC /* Dictionary+Extension.swift */; };
 		8B98CBD921305C6200BC1D9F /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B98CBD821305C6200BC1D9F /* LocationService.swift */; };
 		8B9ED8C520BABF06009CA600 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B9ED8C420BABF06009CA600 /* NetworkManager.swift */; };
-		8BA33212217A28E200448784 /* IMMessageAckList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA33211217A28E200448784 /* IMMessageAckList.swift */; };
 		8BBBA65B1F79FCFA008E18A5 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBBA65A1F79FCFA008E18A5 /* UIColor+Extension.swift */; };
 		8BBBA65E1F7A9014008E18A5 /* SQMineUserInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBBA65C1F7A9014008E18A5 /* SQMineUserInfoCell.swift */; };
 		8BBBA65F1F7A9014008E18A5 /* SQMineUserInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BBBA65D1F7A9014008E18A5 /* SQMineUserInfoCell.xib */; };
@@ -167,7 +166,6 @@
 		8B8F39DC210CCE4500E53CBC /* Dictionary+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Extension.swift"; sourceTree = "<group>"; };
 		8B98CBD821305C6200BC1D9F /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		8B9ED8C420BABF06009CA600 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
-		8BA33211217A28E200448784 /* IMMessageAckList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMMessageAckList.swift; sourceTree = "<group>"; };
 		8BBBA65A1F79FCFA008E18A5 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		8BBBA65C1F7A9014008E18A5 /* SQMineUserInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQMineUserInfoCell.swift; sourceTree = "<group>"; };
 		8BBBA65D1F7A9014008E18A5 /* SQMineUserInfoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SQMineUserInfoCell.xib; sourceTree = "<group>"; };
@@ -281,7 +279,6 @@
 				0A1A225F21421CAD00DC9440 /* IMMessageEnums.swift */,
 				0A1A22612142270D00DC9440 /* IMMessageLayoutService.swift */,
 				0A6320812146619B009636A4 /* IMMessageQueue.swift */,
-				8BA33211217A28E200448784 /* IMMessageAckList.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1007,7 +1004,6 @@
 				8BFA39D42115542A004DAA90 /* TZVideoPlayerController.m in Sources */,
 				8BFA39DE2115542A004DAA90 /* TZImagePickerController.m in Sources */,
 				0A1A22622142270D00DC9440 /* IMMessageLayoutService.swift in Sources */,
-				8BA33212217A28E200448784 /* IMMessageAckList.swift in Sources */,
 				0A11BEC221549B6F00846ADA /* UserInfoViewController.swift in Sources */,
 				8B98CBD921305C6200BC1D9F /* LocationService.swift in Sources */,
 				0A794506211BF3530045FCC9 /* YYWeakProxy.m in Sources */,
