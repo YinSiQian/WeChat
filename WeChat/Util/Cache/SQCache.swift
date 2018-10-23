@@ -147,6 +147,21 @@ class SQCache: NSObject {
         }
     }
     
+    public static func updateMessageUnReadStatus(msg_id: Int) {
+        do {
+            let realm = try Realm()
+            let results = realm.objects(IMMessageModel.self).filter("received_id = \(UserModel.sharedInstance.id) AND msg_id = \(msg_id)")
+            for element in results {
+                try realm.write {
+                    element.is_read = 1
+                }
+            }
+            
+        } catch let error as NSError {
+            print("realm update error \(error.localizedDescription)")
+        }
+    }
+    
 }
 
 extension SQCache {

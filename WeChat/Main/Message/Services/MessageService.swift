@@ -14,6 +14,7 @@ public enum MessageAPI {
     case pullOfflineMessage(timestamp: Int)
     case readMsg(msgId: Int)
     case getUnReadMsg(chatIds: String)
+    case readMsgs(ids: String)
     
 }
 
@@ -26,6 +27,8 @@ extension MessageAPI: TargetType {
             return "/im/getMsg"
         case .readMsg(msgId: _):
             return "/im/readMsg"
+        case .readMsgs(ids: _):
+            return "/im/readMsgs"
         }
     }
     
@@ -35,8 +38,9 @@ extension MessageAPI: TargetType {
             return .get
         case .pullOfflineMessage(timestamp: _):
             return .get
-        case .readMsg(msgId: _):
+        case .readMsg(msgId: _), .readMsgs(ids: _):
             return .post
+            
         }
     }
     
@@ -48,6 +52,8 @@ extension MessageAPI: TargetType {
             return .requestParameters(parameters: ["timestamp": timestamp], encoding: URLEncoding.default)
         case .readMsg(let msgId):
             return .requestParameters(parameters: ["msgId": msgId], encoding: URLEncoding.default)
+        case .readMsgs(let ids):
+            return .requestParameters(parameters: ["msgIds": ids], encoding: URLEncoding.default)
         }
     }
     
