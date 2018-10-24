@@ -82,17 +82,31 @@ class SQMessageViewController: UIViewController {
 
             } else {
                 self?.statusView.updateStatus(connectStatus: .connectSuccess)
+                
                 for element in newData {
                     self?.handleMsg(data: element, isSend: false)
                 }
                 if let lastTime = data.last?.create_time {
                     self?.saveLastMsg(timestamp: lastTime)
+                    //有可能还有未拉取的数据, 当前是一次拉取20条数据
+                    if data.count == 20 {
+                        self?.loadUnPullData()
+                    } else {
+                        //所有数据拉取完了...拉取未读条数
+                        self?.loadUnReadMsgCount()
+                    }
                 }
             }
         }
-//        IMDataManager.sharedInstance.ackUnReadMsg(msgId: 38)
-//
 //        IMDataManager.sharedInstance.getUnReadMsgCount(chatIds: "2,3,7")
+    }
+    
+    private func loadUnReadMsgCount() {
+        var ids = ""
+        for element in listData {
+            ids = ids + "," + element.chatId.StringValue
+        }
+        IMDataManager.sharedInstance.getUnReadMsgCount(chatIds: ids)
     }
     
     
@@ -230,6 +244,9 @@ extension SQMessageViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        if let cell = tableView.cellForRow(at: indexPath) as? SQMessageCell {
+            cell.showRedMessage = false
+        }
         let chat = IMChatViewController()
         chat.chat_id = listData[indexPath.row].chatId
         chat.name = listData[indexPath.row].name

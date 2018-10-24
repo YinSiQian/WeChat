@@ -18,6 +18,8 @@ class SQMessageCell: UITableViewCell {
     
     private var time_layer: CATextLayer?
     
+    private var redView: UIView!
+    
     public var model: MessageListModel = MessageListModel() {
         didSet {
             name_layer?.string = model.name
@@ -28,6 +30,12 @@ class SQMessageCell: UITableViewCell {
             } else {
                 time_layer?.string = model.create_time.timestamp
             }
+        }
+    }
+    
+    public var showRedMessage: Bool = false {
+        didSet {
+            redView.isHidden = !showRedMessage
         }
     }
     
@@ -48,6 +56,7 @@ class SQMessageCell: UITableViewCell {
 //        print(font)
 //
 //        let sysFont = UIFont(name: "Helvetica-Light", size: 16)
+        
         let fontName = "Helvetica-Bold"
         
         icon_layer = CALayer()
@@ -56,6 +65,12 @@ class SQMessageCell: UITableViewCell {
         icon_layer?.cornerRadius = 4
         icon_layer?.masksToBounds = true
         contentView.layer.addSublayer(icon_layer!)
+        
+        redView = UIView(frame: CGRect(x: 64, y: 7, width: 8, height: 8))
+        redView.backgroundColor = UIColor.red
+        redView.layer.cornerRadius = 4
+        redView.isHidden = true
+        contentView.addSubview(redView)
         
         name_layer = CATextLayer()
         name_layer?.frame = CGRect(x: 80, y: 8, width: kScreen_width - 90 - 100, height: 20)
@@ -86,10 +101,7 @@ class SQMessageCell: UITableViewCell {
         content_layer?.truncationMode = CATextLayerTruncationMode.end
         contentView.layer.addSublayer(content_layer!)
         
-        
     }
-    
-    
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
