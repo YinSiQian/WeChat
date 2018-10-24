@@ -325,6 +325,7 @@ class FriendMomentCell: UITableViewCell {
                     rect.origin.y = CGFloat(index / 3) * (kPicWidth + kPicsPadding);
                 }
                 imageView.frame = rect
+                //?imageMogr2/gravity/Center/crop/300x300 缩略图裁剪规格(按中间裁剪)
                 let urlString = urlInfo.baseUrl + "/" + urlInfo.path
                 imageView.kf.setImage(with: urlString.url(), placeholder: nil, options: nil, progressBlock: nil) { (image, error, cacheType, url) in
                     if let currentImage = image {

@@ -11,7 +11,7 @@ import Starscream
 
 protocol SQWebSocketServiceDelegate: class {
     
-    func webSocketService(received msg: String)
+    func webSocketService(received msg: [String: Any])
     
     func webSocketServiceDidDisconnect(socket: WebSocketClient, error: Error?)
     
@@ -132,7 +132,17 @@ extension SQWebSocketService: WebSocketDelegate {
     }
     
     public func websocketDidReceiveMessage(socket: WebSocketClient, text: String) {
-        delegate?.webSocketService(received: text)
+        let dict = text.convertToDict()
+        let status = dict["status"] as? Int ?? 0
+        switch status {
+        case 5010:
+            //当前账号在其他设备上登录
+            Helper.show(message: "当前账号已在其他设备上登录")
+            
+        default:
+            break
+        }
+        delegate?.webSocketService(received: dict)
     }
     
     public func websocketDidReceiveData(socket: WebSocketClient, data: Data) {

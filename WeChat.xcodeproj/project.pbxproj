@@ -53,6 +53,7 @@
 		8B7417B01F891AFD00A5D37E /* SQSearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B7417AF1F891AFD00A5D37E /* SQSearchResultViewController.swift */; };
 		8B7417B21F891B2B00A5D37E /* Macros.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B7417B11F891B2B00A5D37E /* Macros.swift */; };
 		8B7417B41F89249D00A5D37E /* SQMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B7417B31F89249D00A5D37E /* SQMessageCell.swift */; };
+		8B8946E72180C111000DC871 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8946E62180C111000DC871 /* Helper.swift */; };
 		8B8F39D8210CC10600E53CBC /* SQWebSocketService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8F39D7210CC10600E53CBC /* SQWebSocketService.swift */; };
 		8B8F39DA210CCB9100E53CBC /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8F39D9210CCB9100E53CBC /* String+Extension.swift */; };
 		8B8F39DD210CCE4500E53CBC /* Dictionary+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8F39DC210CCE4500E53CBC /* Dictionary+Extension.swift */; };
@@ -160,6 +161,7 @@
 		8B7417AF1F891AFD00A5D37E /* SQSearchResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQSearchResultViewController.swift; sourceTree = "<group>"; };
 		8B7417B11F891B2B00A5D37E /* Macros.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Macros.swift; sourceTree = "<group>"; };
 		8B7417B31F89249D00A5D37E /* SQMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQMessageCell.swift; sourceTree = "<group>"; };
+		8B8946E62180C111000DC871 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		8B8F39D7210CC10600E53CBC /* SQWebSocketService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQWebSocketService.swift; sourceTree = "<group>"; };
 		8B8F39D9210CCB9100E53CBC /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		8B8F39DB210CCC7A00E53CBC /* swift-bridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "swift-bridge.h"; sourceTree = "<group>"; };
@@ -297,6 +299,7 @@
 				8B35E563214965280033A10D /* Cache */,
 				0A65638F2112EA2C00B3DB24 /* Mappable.swift */,
 				8BFA39B02115336C004DAA90 /* SystemPhotoService.swift */,
+				8B8946E62180C111000DC871 /* Helper.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -996,6 +999,7 @@
 				8B1238EF210DFE9F0048D25D /* UserModel.swift in Sources */,
 				8BC09DB1211359A200DC463D /* TimelineLayoutService.swift in Sources */,
 				8B7417B41F89249D00A5D37E /* SQMessageCell.swift in Sources */,
+				8B8946E72180C111000DC871 /* Helper.swift in Sources */,
 				8B3C8DC1215D00570082CB6E /* AddFriendViewController.swift in Sources */,
 				8BF4F91120E28F1C00A6E693 /* TimelineService.swift in Sources */,
 				8B8F39DA210CCB9100E53CBC /* String+Extension.swift in Sources */,

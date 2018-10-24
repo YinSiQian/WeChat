@@ -157,20 +157,20 @@ class IMDataManager: NSObject {
 
 extension IMDataManager: SQWebSocketServiceDelegate {
     
-    func webSocketService(received msg: String) {
+    
+    func webSocketService(received msg: [String : Any]) {
         
-        let dict = msg.convertToDict()
-        let status = dict["status"] as! Int
+        let status = msg["status"] as! Int
         switch status {
         case 5000:
             //消息推送: 添加好友, 点赞, 朋友圈回复, 评论
-            print("接收到推送\(dict["content"] ?? 0)")
+            print("接收到推送\(msg["content"] ?? 0)")
+            
         case 6000:
             //消息发送成功
             print("消息发送成功: \(msg)")
-            let seq = dict["msg_seq"] as? String ?? ""
-            let msg_index = IMMessageQueue.shared.indexForMessage(seq: seq)
-            if let index = msg_index {
+            let seq = msg["msg_seq"] as? String ?? ""
+            if let index = IMMessageQueue.shared.indexForMessage(seq: seq) {
                 IMMessageQueue.shared.elements[index].msg_status = IMMessageSendStatusType.received.rawValue
                 IMMessageQueue.shared.elements[index].delivered = 1
                 sendStatusChanged?(IMMessageQueue.shared.elements[index])
@@ -181,9 +181,9 @@ extension IMDataManager: SQWebSocketServiceDelegate {
         case 6002:
             //服务器收到生产者的消息 服务器ACK
             print("server ack: \(msg)")
-            let seq = dict["msg_seq"] as? String ?? ""
-            let id = dict["msg_id"] as? Int ?? 0
-            let time = dict["create_time"] as? Int ?? 0
+            let seq = msg["msg_seq"] as? String ?? ""
+            let id = msg["msg_id"] as? Int ?? 0
+            let time = msg["create_time"] as? Int ?? 0
             let msg_index = IMMessageQueue.shared.indexForMessage(seq: seq)
             if let index = msg_index {
                 IMMessageQueue.shared.elements[index].msg_id = id
@@ -196,23 +196,23 @@ extension IMDataManager: SQWebSocketServiceDelegate {
         case 6004:
             //服务器转发消息给消费者
             print("server send msg to consumers: \(msg)")
-            let msg_seq = dict["msg_seq"] as! String
+            let msg_seq = msg["msg_seq"] as! String
             let msg: [String: Any] = ["status": 6003, "msg_seq": msg_seq]
             SQWebSocketService.sharedInstance.sendMsg(msg: msg.convertToString()!)
             
             let model = IMMessageModel()
-            model.msg_content = dict["content"] as? String ?? ""
-            model.msg_id = dict["msg_id"] as? Int ?? 0
-            model.sender_id = dict["send_id"] as? Int ?? 0
-            model.received_id = dict["received_id"] as? Int ?? 0
+            model.msg_content = msg["content"] as? String ?? ""
+            model.msg_id = msg["msg_id"] as? Int ?? 0
+            model.sender_id = msg["send_id"] as? Int ?? 0
+            model.received_id = msg["received_id"] as? Int ?? 0
             model.received_avatar = UserModel.sharedInstance.icon
             model.received_name = UserModel.sharedInstance.username
             model.msg_seq = msg_seq
-            model.msg_type = IMMessageType(rawValue: dict["msg_type"] as? Int ?? 1)!.rawValue
+            model.msg_type = IMMessageType(rawValue: msg["msg_type"] as? Int ?? 1)!.rawValue
             model.delivered = 1
-            model.sender_name = dict["sender_name"] as? String ?? ""
-            model.create_time = dict["create_time"] as? Int ?? 0
-            model.sender_avatar = dict["sender_avatar"] as? String ?? ""
+            model.sender_name = msg["sender_name"] as? String ?? ""
+            model.create_time = msg["create_time"] as? Int ?? 0
+            model.sender_avatar = msg["sender_avatar"] as? String ?? ""
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
                 SQCache.saveMessageInfo(with: model)
             }
