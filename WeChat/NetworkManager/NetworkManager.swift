@@ -30,6 +30,9 @@ public class NetworkManager {
             do {
                 let response = try result.dematerialize()
                 let value = try response.mapJSON() as! [String: Any]
+                if let _ = value["status"] as? Int {
+                    return
+                }
                 let code = value["code"] as! Int
                 if code == 200 {
                     let data = value["data"] as! [String: Any]

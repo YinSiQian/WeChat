@@ -85,7 +85,9 @@ class SQMessageViewController: UIViewController {
                 for element in newData {
                     self?.handleMsg(data: element, isSend: false)
                 }
-                
+                if let lastTime = data.last?.create_time {
+                    self?.saveLastMsg(timestamp: lastTime)
+                }
             }
         }
 //        IMDataManager.sharedInstance.ackUnReadMsg(msgId: 38)

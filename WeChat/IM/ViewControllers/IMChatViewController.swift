@@ -203,6 +203,9 @@ class IMChatViewController: UIViewController {
     ///
     /// - Parameter ids: 消息字符串
     private func ack(ids: String) {
+        if ids == "" {
+            return
+        }
         IMDataManager.sharedInstance.batchAckUnReadMsg(ids: ids)
     }
     
