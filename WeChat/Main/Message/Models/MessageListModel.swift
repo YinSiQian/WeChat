@@ -27,6 +27,10 @@ public class MessageListModel: Object {
     
     @objc dynamic var msg_seq: String = ""
     
+    @objc dynamic var is_show = false
+    
+    @objc dynamic var unread_count = 0
+    
     convenience init(with: IMMessageModel) {
         self.init()
         convert(with: with)

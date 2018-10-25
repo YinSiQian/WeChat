@@ -11,9 +11,12 @@ import Foundation
 
 class Helper: NSObject {
     
-    public static func show(message: String) {
-//        let action = UIAlertAction(title: <#T##String?#>, style: <#T##UIAlertAction.Style#>, handler: <#T##((UIAlertAction) -> Void)?##((UIAlertAction) -> Void)?##(UIAlertAction) -> Void#>)
+    public static func show(message: String, sureComplection:(() -> ())?) {
+        let action = UIAlertAction(title: "确定", style: .default) { (_) in
+            sureComplection?()
+        }
         let alertController = UIAlertController(title: "提示", message: message, preferredStyle: .alert)
+        alertController.addAction(action)
         UIApplication.shared.keyWindow?.rootViewController?.present(alertController, animated: true, completion: nil)
         
     }

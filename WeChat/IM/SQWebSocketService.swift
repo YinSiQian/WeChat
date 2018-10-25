@@ -137,8 +137,13 @@ extension SQWebSocketService: WebSocketDelegate {
         switch status {
         case 5010:
             //当前账号在其他设备上登录
-            Helper.show(message: "当前账号已在其他设备上登录")
-            
+            //清除本地token
+            UserModel.sharedInstance.removeAccessToken()
+            UserModel.sharedInstance.syncUserInfo()
+            disconnection()
+            Helper.show(message: "当前账号已在其他设备登录") {
+                AppDelegate.currentAppdelegate().window?.rootViewController = SQLoginViewController()
+            }
         default:
             break
         }

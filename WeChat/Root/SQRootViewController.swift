@@ -23,7 +23,7 @@ class SQRootViewController: UITabBarController {
     private func setupRealmConfig() {
         
         var realmConfig = Realm.Configuration (
-            schemaVersion: 2,
+            schemaVersion: 3,
             migrationBlock: { migration, oldSchemaVersion in
                 // We haven’t migrated anything yet, so oldSchemaVersion == 0
                 if (oldSchemaVersion < 3) {
