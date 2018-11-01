@@ -69,7 +69,7 @@ class IMDataManager: NSObject {
         model.msg_type = msgType.rawValue
         model.msg_status = IMMessageSendStatusType.sending.rawValue
         model.received_name = receivedName
-        model.create_time = Int(date.timeIntervalSince1970)
+        model.create_time = Int(date.timeIntervalSince1970) * 1000 //毫秒
         IMMessageQueue.shared.push(element: model)
         IMMessageQueue.shared.timeoutHandle = {
             (drop, index) in

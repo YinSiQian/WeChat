@@ -33,7 +33,7 @@ class SQCache: NSObject {
         var models: [IMMessageModel] = []
         do {
             let realm = try Realm()
-            let results = realm.objects(IMMessageModel.self).filter("(sender_id = \(chatId) AND received_id = \(UserModel.sharedInstance.id)) OR (sender_id = \(UserModel.sharedInstance.id) AND received_id = \(chatId)) AND group_id = 1").sorted(byKeyPath: "msg_id", ascending: false).sorted(byKeyPath: "create_time", ascending: false)
+            let results = realm.objects(IMMessageModel.self).filter("(sender_id = \(chatId) AND received_id = \(UserModel.sharedInstance.id)) OR (sender_id = \(UserModel.sharedInstance.id) AND received_id = \(chatId)) AND group_id = 1").sorted(byKeyPath: "create_time", ascending: false)
 
             offset = page * rows
             if offset > results.count {
@@ -47,7 +47,7 @@ class SQCache: NSObject {
             for index in offset..<endOffset {
                 let model = results[index]
                 models.append(model)
-                if model.is_read == 0 {
+                if model.is_read == 0 && model.delivered == 1 {
                     ids = ids + "," + "\(model.msg_id)"
                 }
             }
