@@ -38,6 +38,8 @@ public class SQWebSocketService {
     
     private var numberOfReconnect: Int = 0
     
+    public var isEnterBackgroud = false
+    
     public var isConnection: Bool {
         return webSocket.isConnected
     }
@@ -125,7 +127,8 @@ extension SQWebSocketService: WebSocketDelegate {
         errorHandler?(error)
         delegate?.webSocketServiceDidDisconnect(socket: socket, error: error)
         if numberOfReconnect == 0 {
-            if UserModel.sharedInstance.isLogin {
+            //只有在登录以及前台状态才进行重连操作.
+            if UserModel.sharedInstance.isLogin && !isEnterBackgroud {
                 tryToReconnection()
             }
         }

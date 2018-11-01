@@ -197,8 +197,8 @@ extension IMDataManager: SQWebSocketServiceDelegate {
             //服务器转发消息给消费者
             print("server send msg to consumers: \(msg)")
             let msg_seq = msg["msg_seq"] as! String
-            let msg: [String: Any] = ["status": 6003, "msg_seq": msg_seq]
-            SQWebSocketService.sharedInstance.sendMsg(msg: msg.convertToString()!)
+            let ack_msg: [String: Any] = ["status": 6003, "msg_seq": msg_seq]
+            SQWebSocketService.sharedInstance.sendMsg(msg: ack_msg.convertToString()!)
             
             let model = IMMessageModel()
             model.msg_content = msg["content"] as? String ?? ""

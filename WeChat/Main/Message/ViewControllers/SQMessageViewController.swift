@@ -10,7 +10,7 @@ import UIKit
 import RealmSwift
 
 class SQMessageViewController: UIViewController {
-
+    
     private lazy var statusView: NetworkConnectStatusView = {
         let view = NetworkConnectStatusView(frame: CGRect(x: 0, y: 0, width: 140, height: 40))
         view.backgroundColor = UIColor.clear
@@ -24,6 +24,8 @@ class SQMessageViewController: UIViewController {
         table.tableFooterView = UIView()
         return table
     }()
+    
+    private var in_chatId = 0
     
     private var listData: [MessageListModel] = []
     
@@ -40,6 +42,7 @@ class SQMessageViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        in_chatId = 0
         connectServer()
     }
     
@@ -181,16 +184,23 @@ class SQMessageViewController: UIViewController {
             listModel.avatar = data.sender_avatar
             listModel.chatId = data.sender_id
             listModel.name = data.sender_name
+            listModel.unread_count = 1
         }
         listModel.msg_seq = data.msg_seq
         listModel.content = data.msg_content
         listModel.create_time = data.create_time
         
         if let index = self.searchForData(id: listModel.chatId) {
-                let oldMsg = self.listData[index]
-                SQCache.delete(model: oldMsg)
-                self.listData.remove(at: index)
+            let oldMsg = self.listData[index]
+            //如果是正在聊天的或者是自己发送的 就不登记未读数
+            if !isSend && oldMsg.chatId != in_chatId {
+                listModel.unread_count = oldMsg.unread_count + 1
+            }
+            SQCache.delete(model: oldMsg)
+            
+            self.listData.remove(at: index)
         }
+        
         self.listData.insert(listModel, at: 0)
         self.listDataSort()
         SQCache.saveMsgListInfo(with: listModel)
@@ -251,6 +261,12 @@ extension SQMessageViewController: UITableViewDelegate, UITableViewDataSource {
         chat.chat_id = listData[indexPath.row].chatId
         chat.name = listData[indexPath.row].name
         navigationController?.pushViewController(chat, animated: true)
+        let realm = try! Realm()
+        try! realm.write {
+            listData[indexPath.row].unread_count = 0
+        }
+        //记录当前正在聊天的id
+        in_chatId = chat.chat_id
     }
     
 }

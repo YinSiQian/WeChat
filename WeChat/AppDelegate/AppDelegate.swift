@@ -47,6 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
+        SQWebSocketService.sharedInstance.isEnterBackgroud = true
         if SQWebSocketService.sharedInstance.isConnection {
             //App进入后台 告知服务器当前用户已下线.走推送流程.
             SQWebSocketService.sharedInstance.disconnection()
@@ -63,6 +64,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+        SQWebSocketService.sharedInstance.isEnterBackgroud = false
         if !SQWebSocketService.sharedInstance.isConnection {
             SQWebSocketService.sharedInstance.connectionServer()
         }

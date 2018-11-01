@@ -23,12 +23,19 @@ class SQMessageCell: UITableViewCell {
     public var model: MessageListModel = MessageListModel() {
         didSet {
             name_layer?.string = model.name
-            content_layer?.string = model.content
             if model.create_time > 1000000000000 {
                 let currentTime = model.create_time / 1000
                 time_layer?.string = currentTime.timestamp
             } else {
                 time_layer?.string = model.create_time.timestamp
+            }
+            if model.unread_count > 0 {
+                redView.isHidden = false
+                if model.unread_count > 1 {
+                    content_layer?.string = "[\(model.unread_count)条]" + model.content
+                }
+            } else {
+                content_layer?.string = model.content
             }
         }
     }
