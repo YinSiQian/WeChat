@@ -30,7 +30,7 @@ struct UserModel {
     }
     
     private init() {
-        let data = UserDefaults.standard.object(forKey: "userModel") as? [String: Any]
+        let data = UserDefaults.standard.object(forKey: "userModel + \(host)") as? [String: Any]
         if data != nil {
             initial(data: data!)
         }
@@ -67,7 +67,7 @@ extension UserModel {
         for (key, value) in mirror.children {
             data.updateValue(value, forKey: key!)
         }
-        UserDefaults.standard.set(data, forKey: "userModel")
+        UserDefaults.standard.set(data, forKey: "userModel + \(host)")
     }
     
 }

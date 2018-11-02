@@ -33,6 +33,8 @@ class SQMessageCell: UITableViewCell {
                 redView.isHidden = false
                 if model.unread_count > 1 {
                     content_layer?.string = "[\(model.unread_count)条]" + model.content
+                } else {
+                    content_layer?.string = model.content
                 }
             } else {
                 content_layer?.string = model.content

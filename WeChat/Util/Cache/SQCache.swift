@@ -47,8 +47,12 @@ class SQCache: NSObject {
             for index in offset..<endOffset {
                 let model = results[index]
                 models.append(model)
-                if model.is_read == 0 && model.delivered == 1 {
-                    ids = ids + "," + "\(model.msg_id)"
+                if model.is_read == 0 && model.delivered == 1 && model.sender_id != UserModel.sharedInstance.id {
+                    if ids == "" {
+                        ids = model.msg_id.StringValue
+                    } else {
+                        ids = ids + "," + model.msg_id.StringValue
+                    }
                 }
             }
             return (models.reversed(), ids)
