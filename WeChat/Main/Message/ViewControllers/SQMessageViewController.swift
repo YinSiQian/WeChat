@@ -75,7 +75,7 @@ class SQMessageViewController: UIViewController {
         statusView.updateStatus(connectStatus: .dataReceiving)
         var timestamp = UserDefaults.standard.integer(forKey: UserModel.sharedInstance.id.StringValue + "msg_timestamp")
         if timestamp == 0 {
-            timestamp = 1528560000000
+            timestamp = Int(Date().timeIntervalSince1970) * 1000
         }
         
         IMDataManager.sharedInstance.syncMsg(timestamp: timestamp) {
