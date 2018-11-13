@@ -14,7 +14,8 @@ PODS:
   - RealmSwift (3.9.0):
     - Realm (= 3.9.0)
   - Result (3.2.4)
-  - Starscream (3.0.5)
+  - Starscream (3.0.6)
+  - WoodPeckeriOS (1.1.4)
   - YYText (1.0.7)
 
 DEPENDENCIES:
@@ -24,6 +25,7 @@ DEPENDENCIES:
   - ReachabilitySwift (~> 4.2.1)
   - RealmSwift (~> 3.9.0)
   - Starscream (~> 3.0.2)
+  - WoodPeckeriOS
   - YYText (~> 1.0.7)
 
 SPEC REPOS:
@@ -37,6 +39,7 @@ SPEC REPOS:
     - RealmSwift
     - Result
     - Starscream
+    - WoodPeckeriOS
     - YYText
 
 SPEC CHECKSUMS:
@@ -48,9 +51,10 @@ SPEC CHECKSUMS:
   Realm: 3d36f208bf3aff8335dc3298742140182bde4edb
   RealmSwift: aa4d11917bfcfaa3ed51f219102a487ecd895447
   Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
-  Starscream: faf918b2f2eff7d5dd21180646bf015a669673bd
+  Starscream: ef3ece99d765eeccb67de105bfa143f929026cf5
+  WoodPeckeriOS: e12af9296607e7febefd52666d210cefdef1c44c
   YYText: 5c461d709e24d55a182d1441c41dc639a18a4849
 
-PODFILE CHECKSUM: 91f056e4463ea1dba60ae2d87eff88b3036c74cf
+PODFILE CHECKSUM: e193b61bb13a1e5115837f2f6bf93ecfa66887eb
 
 COCOAPODS: 1.6.0.beta.1

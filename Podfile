@@ -10,6 +10,7 @@ target 'WeChat' do
   pod 'Kingfisher', '~> 4.8.1'
   pod 'RealmSwift', '~> 3.9.0'
   pod 'ReachabilitySwift', '~> 4.2.1'
+  pod 'WoodPeckeriOS', :configurations => ['Debug']
   
   # OC
   pod 'YYText', '~> 1.0.7'

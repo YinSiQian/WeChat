@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 // 1 表示测试 0表示正式环境
-let TEST = 1
+let TEST = 0
 
 let host = TEST == 1 ? "localhost" : "112.74.162.15"
 
