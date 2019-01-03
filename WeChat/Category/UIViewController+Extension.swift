@@ -62,7 +62,13 @@ extension NetworkErrorHandler where Self: UIViewController {
         let code = error!.code
         let msg = error!.userInfo["message"] as! String
         print("msg--->\(msg)   code---->\(code)")
-        self.view.show(message: msg)
+        if code == 5001 {
+            let login = SQLoginViewController()
+            UIApplication.shared.keyWindow?.rootViewController = login
+            login.view.show(message: msg)
+            return
+        }
+        self.view.show(message: msg)  
     }
 }
 
