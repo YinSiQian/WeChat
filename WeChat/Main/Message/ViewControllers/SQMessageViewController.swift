@@ -42,6 +42,7 @@ class SQMessageViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        loadNavbarTheme()
         in_chatId = 0
         connectServer()
     }

@@ -22,6 +22,11 @@ class SQFriendsViewController: UIViewController {
         loadData()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        loadNavbarTheme()
+    }
+    
     fileprivate func setupSubviews() {
         tableView = UITableView(frame: view.bounds, style: .plain)
         tableView?.delegate = self

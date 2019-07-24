@@ -42,6 +42,10 @@ class SQFriendsMomentsController: UIViewController {
         loadData()
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .default
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         loadNavbarTheme(theme: .white)

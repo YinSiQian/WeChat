@@ -9,16 +9,30 @@
 import Foundation
 import Moya
 
+
+
+
 public enum MessageAPI {
     
     case pullOfflineMessage(timestamp: Int)
     case readMsg(msgId: Int)
     case getUnReadMsg(chatIds: String)
     case readMsgs(ids: String)
+    case trending
     
 }
 
 extension MessageAPI: TargetType {
+    
+    public var baseURL: URL {
+        switch self {
+        case .getUnReadMsg(chatIds: _), .pullOfflineMessage(timestamp: _), .readMsgs(ids: _), .readMsg(msgId: _):
+            return baseUrl
+        default:
+            return URL(string: "https://github-trending-api.now.sh/")!
+        }
+    }
+    
     public var path: String {
         switch self {
         case .getUnReadMsg(chatIds: _):
@@ -29,12 +43,14 @@ extension MessageAPI: TargetType {
             return "/im/readMsg"
         case .readMsgs(ids: _):
             return "/im/readMsgs"
+        case .trending:
+            return "developers"
         }
     }
     
     public var method: Moya.Method {
         switch self {
-        case .getUnReadMsg(chatIds: _):
+        case .getUnReadMsg(chatIds: _), .trending:
             return .get
         case .pullOfflineMessage(timestamp: _):
             return .get
@@ -54,6 +70,9 @@ extension MessageAPI: TargetType {
             return .requestParameters(parameters: ["msgId": msgId], encoding: URLEncoding.default)
         case .readMsgs(let ids):
             return .requestParameters(parameters: ["msgIds": ids], encoding: URLEncoding.default)
+            
+        case .trending:
+            return .requestParameters(parameters: ["language": "", "since": "daily"], encoding: URLEncoding.default)
         }
     }
     

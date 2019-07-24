@@ -48,7 +48,7 @@ class SQRootViewController: UITabBarController {
         friendVC.title = "通讯录";
         let friendNav = SQNavigationViewController(rootViewController: friendVC);
         
-        let discoverVC = SQDiscoverViewController()
+        let discoverVC = SQFriendsMomentsController()
         discoverVC.title = "发现";
         let discoverNav = SQNavigationViewController(rootViewController: discoverVC);
         

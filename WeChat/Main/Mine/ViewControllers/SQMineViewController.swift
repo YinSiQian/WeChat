@@ -20,7 +20,10 @@ class SQMineViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         loadUserInfo()
+        loadNavbarTheme()
     }
+    
+   
 
     fileprivate func setupSubviews() {
         tableView = UITableView(frame: view.bounds, style: .grouped)
