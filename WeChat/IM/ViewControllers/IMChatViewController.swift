@@ -8,6 +8,7 @@
 
 import UIKit
 import RealmSwift
+import MJRefresh
 
 class IMChatViewController: UIViewController {
     
@@ -87,11 +88,18 @@ class IMChatViewController: UIViewController {
         view.addSubview(tableView)
         view.addSubview(msgInputView)
         
-        let refreshControl = UIRefreshControl(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
-        refreshControl.attributedTitle = NSAttributedString(string: "正在加载中...")
-        refreshControl.tintColor = UIColor.white
-        refreshControl.addTarget(self, action: #selector(IMChatViewController.loadHistoryData), for: .valueChanged)
-        tableView.refreshControl = refreshControl
+//        let refreshControl = UIRefreshControl(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+//        refreshControl.attributedTitle = NSAttributedString(string: "正在加载中...")
+//        refreshControl.tintColor = UIColor.white
+//        refreshControl.addTarget(self, action: #selector(IMChatViewController.loadHistoryData), for: .valueChanged)
+//        tableView.refreshControl = refreshControl
+        
+        let header = MJRefreshNormalHeader {
+            [weak self] in
+            self?.loadHistoryData()
+        }
+        tableView.mj_header = header
+        
     }
     
     // MARK: -- Load Data
@@ -115,7 +123,7 @@ class IMChatViewController: UIViewController {
                 self.msgModels.append(layout)
             }
         }
-        tableView.refreshControl?.endRefreshing()
+        tableView.mj_header.endRefreshing()
         self.tableView.reloadData()
         isBeginLoadData = false
         
@@ -135,11 +143,11 @@ class IMChatViewController: UIViewController {
     }
     
     @objc private func loadHistoryData() {
-        if !isBeginLoadData {
-            tableView.refreshControl?.beginRefreshing()
-            isBeginLoadData = true
-            loadData()
-        }
+        loadData()
+//        if !isBeginLoadData {
+//            isBeginLoadData = true
+//            loadData()
+//        }
     }
     
     // MARK: -- 消息接收与发送处理

@@ -15,6 +15,8 @@ target 'WeChat' do
   # OC
   pod 'YYText', '~> 1.0.7'
   pod 'MBProgressHUD', '~> 1.1.0'
+  pod 'MJRefresh', '~> 3.1.15.3'
+
   # Pods for WeChat
 
   target 'WeChatTests' do
