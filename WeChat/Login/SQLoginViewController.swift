@@ -50,7 +50,7 @@ class SQLoginViewController: UIViewController {
                 })
             }
         }
-        
+        print("hello world")
         
     }
     
